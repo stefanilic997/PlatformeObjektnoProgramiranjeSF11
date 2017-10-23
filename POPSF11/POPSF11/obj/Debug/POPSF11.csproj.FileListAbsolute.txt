@@ -4,3 +4,6 @@ c:\users\sf11-2016\documents\visual studio 2015\Projects\POPSF11\POPSF11\bin\Deb
 c:\users\sf11-2016\documents\visual studio 2015\Projects\POPSF11\POPSF11\obj\Debug\POPSF11.csprojResolveAssemblyReference.cache
 c:\users\sf11-2016\documents\visual studio 2015\Projects\POPSF11\POPSF11\obj\Debug\POPSF11.exe
 c:\users\sf11-2016\documents\visual studio 2015\Projects\POPSF11\POPSF11\obj\Debug\POPSF11.pdb
+C:\Users\sf11-2016\Desktop\SF11-2016\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\bin\Debug\POPSF11.exe.config
+C:\Users\sf11-2016\Desktop\SF11-2016\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.exe
+C:\Users\sf11-2016\Desktop\SF11-2016\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.pdb
