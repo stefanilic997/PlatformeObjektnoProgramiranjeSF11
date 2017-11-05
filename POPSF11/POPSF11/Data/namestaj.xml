@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Namestaj>
+    <Id>1</Id>
+    <Naziv>super svetlo</Naziv>
+    <Cena>28</Cena>
+    <Kolicina>3</Kolicina>
+    <Obrisan>false</Obrisan>
+    <TipNamestaja>
+      <Id>4</Id>
+      <Obrisan>false</Obrisan>
+      <Naziv>proba</Naziv>
+    </TipNamestaja>
+  </Namestaj>
+  <Namestaj>
+    <Id>3</Id>
+    <Naziv>super lampa</Naziv>
+    <Cena>35</Cena>
+    <Kolicina>13</Kolicina>
+    <Obrisan>false</Obrisan>
+    <TipNamestaja>
+      <Id>4</Id>
+      <Obrisan>false</Obrisan>
+      <Naziv>proba</Naziv>
+    </TipNamestaja>
+  </Namestaj>
+</ArrayOfNamestaj>

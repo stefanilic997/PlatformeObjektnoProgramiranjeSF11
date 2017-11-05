@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace POPSF11.Model
 {
+    [Serializable]
+    public enum TipNamestaja1
+    {
+        sofaTipNamestaja
+    }
     public class TipNamestaja
     {
         public int Id { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POPSF11.Model
 {
-
+    [Serializable]
     public enum TipKorisnika
     {
         Administrator,

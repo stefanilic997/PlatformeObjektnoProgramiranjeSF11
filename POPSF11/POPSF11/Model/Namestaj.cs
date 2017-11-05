@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace POPSF11.Model
 {
+    [Serializable]
     public class Namestaj
     {
         public int Id { get; set;}
@@ -14,5 +15,6 @@ namespace POPSF11.Model
         public int Kolicina { get; set; }
         public bool Obrisan { get; set; }
         public TipNamestaja TipNamestaja { get; set; }
+        public AkcijskaProdaja Akcija { get; set; }
     }
 }

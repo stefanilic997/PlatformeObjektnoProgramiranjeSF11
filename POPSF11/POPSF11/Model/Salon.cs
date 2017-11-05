@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace POPSF11.Model
 {
+    [Serializable]
     public class Salon
     {
         public int Id { get; set; }
@@ -19,4 +20,6 @@ namespace POPSF11.Model
         public string BrojZiroRacuna { get; set; }
         
     }
+
+    
 }
