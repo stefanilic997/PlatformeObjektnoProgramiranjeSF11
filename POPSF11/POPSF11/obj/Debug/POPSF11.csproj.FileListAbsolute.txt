@@ -17,3 +17,10 @@ C:\Users\sf11-2016\Downloads\PlatformeObjektnoProgramiranjeSF11-master (1)\Platf
 C:\Users\sf11-2016\Downloads\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master\POPSF11\POPSF11\obj\Debug\POPSF11.csproj.CoreCompileInputs.cache
 C:\Users\sf11-2016\Downloads\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master\POPSF11\POPSF11\obj\Debug\POPSF11.exe
 C:\Users\sf11-2016\Downloads\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master (1)\PlatformeObjektnoProgramiranjeSF11-master\POPSF11\POPSF11\obj\Debug\POPSF11.pdb
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\bin\Debug\POPSF11.exe.config
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\bin\Debug\POPSF11.exe
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\bin\Debug\POPSF11.pdb
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.csprojResolveAssemblyReference.cache
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.csproj.CoreCompileInputs.cache
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.exe
+C:\Users\IlaGila\Desktop\POP2017-18\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POPSF11.pdb

@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
-    <Id>1</Id>
-    <Naziv>super svetlo</Naziv>
-    <Cena>28</Cena>
-    <Kolicina>3</Kolicina>
+    <Id>2</Id>
+    <Naziv>Kauc</Naziv>
+    <Cena>540</Cena>
+    <Kolicina>2</Kolicina>
     <Obrisan>false</Obrisan>
     <TipNamestaja>
       <Id>4</Id>
       <Obrisan>false</Obrisan>
       <Naziv>proba</Naziv>
     </TipNamestaja>
-  </Namestaj>
-  <Namestaj>
-    <Id>3</Id>
-    <Naziv>super lampa</Naziv>
-    <Cena>35</Cena>
-    <Kolicina>13</Kolicina>
-    <Obrisan>false</Obrisan>
-    <TipNamestaja>
-      <Id>4</Id>
+    <Akcija>
+      <Id>1</Id>
+      <DatumPocetka>0001-01-01T00:00:00</DatumPocetka>
+      <DatumZavresetka>0001-01-01T00:00:00</DatumZavresetka>
+      <Popust>10</Popust>
       <Obrisan>false</Obrisan>
-      <Naziv>proba</Naziv>
-    </TipNamestaja>
+    </Akcija>
   </Namestaj>
 </ArrayOfNamestaj>

@@ -16,5 +16,6 @@ namespace POPSF11.Model
         public bool Obrisan { get; set; }
         public TipNamestaja TipNamestaja { get; set; }
         public AkcijskaProdaja Akcija { get; set; }
+
     }
 }
