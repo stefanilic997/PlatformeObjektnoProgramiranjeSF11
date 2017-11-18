@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Release\
 POP_SF_11_GUI
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\App.xaml
 4398102348
 
@@ -16,5 +16,5 @@ C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11
 131569487696
 MainWindow.xaml;UI\NamestajWindow.xaml;UI\TipNamestajaUIWindow.xaml;UI\LoginWindow.xaml;
 
-False
+True
 

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POP-SF-11-GUI", "POPSF11\POP-SF-11-GUI.csproj", "{456B3F5E-5267-4602-91A8-434DCCF7455F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{456B3F5E-5267-4602-91A8-434DCCF7455F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456B3F5E-5267-4602-91A8-434DCCF7455F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456B3F5E-5267-4602-91A8-434DCCF7455F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456B3F5E-5267-4602-91A8-434DCCF7455F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5983112D-528D-4DDE-ADEA-9AE74FFC1521}
+	EndGlobalSection
+EndGlobal
