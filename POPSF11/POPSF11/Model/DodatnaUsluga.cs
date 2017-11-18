@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POPSF11.Model
+namespace POP_SF_11_GUI.Model
 {
     [Serializable]
     public class DodatnaUsluga

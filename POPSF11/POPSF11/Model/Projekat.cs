@@ -1,17 +1,19 @@
-﻿using POPSF11.util;
+﻿using POP_SF_11_GUI.Model;
+using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POPSF11.Model
+namespace POP_SF_11_GUI.Model
 {
     public class Projekat
     {
-        public Projekat Instance { get;  } = new Projekat();
-        public List<TipNamestaja> TipoviNamestaja { get; set; }
+        public static Projekat Instance { get; private set; } = new Projekat();
+        private List<TipNamestaja> tipNamestaja = new List<Model.TipNamestaja>();
         private List<Namestaj> namestaj = new List<Model.Namestaj>();
+        private List<Korisnik> korisnici = new List<Model.Korisnik>();
 
         public List<Namestaj> Namestaj
         {
@@ -24,12 +26,31 @@ namespace POPSF11.Model
                 GenericSerializer.Serialize<Namestaj>("namestaj.xml",this.namestaj);
             }
         }
-        public Projekat()
+        public List<TipNamestaja> TipoviNamestaja
         {
-            Instance = new Projekat();
-
-             
-
+            get
+            {
+                this.tipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipoviNamestaja.xml");
+                return this.tipNamestaja;
+            }
+            set
+            {
+                this.tipNamestaja = value;
+                GenericSerializer.Serialize<TipNamestaja>("tipoviNamestaja.xml", this.tipNamestaja);
+            }
+        }
+        public List<Korisnik> Korisnici
+        {
+            get
+            {
+                this.korisnici = GenericSerializer.Deserialize<Korisnik>("Korisnici.xml");
+                return this.korisnici;
+            }
+            set
+            {
+                this.korisnici = value;
+                GenericSerializer.Serialize<Korisnik>("Korisnici.xml", this.korisnici);
+            }
         }
     }
 }
