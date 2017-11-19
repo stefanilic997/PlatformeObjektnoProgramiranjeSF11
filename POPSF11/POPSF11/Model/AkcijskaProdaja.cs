@@ -15,5 +15,18 @@ namespace POP_SF_11_GUI.Model
         public decimal Popust { get; set; }
         public bool Obrisan { get; set; }
 
+        public static AkcijskaProdaja GetByIdAkcija(int id)
+        {
+            foreach (var AkcijskaProdaja in Projekat.Instance.AkcijskeProdaje)
+            {
+                if (AkcijskaProdaja.Id == id)
+                {
+                    return AkcijskaProdaja;
+                }
+
+            }
+            return null;
+
+        }
     }
 }

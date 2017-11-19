@@ -17,9 +17,14 @@
         <Button Content="Obrisi" FontSize="20" Click="IzbrisiNamestaj" RenderTransformOrigin="0.75,0.58" Margin="181,11,479,39" Grid.Row="2"/>
         <Button Content="Izmeni" FontSize="20" Click="IzmeniNamestaj" Margin="96,11,566,39" Grid.Row="2"/>
         <Button Content="Dodaj" FontSize="20" Click="DodajNamestaj" Margin="10,11,651,39" Grid.Row="2"/>
-        <Menu HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="321">
+        <!-- Button grupa za rad sa tipNamestaja, treba da se pojave pri prelazak na rad sa tipovima
+        <Button Content="Obrisi" FontSize="20" Click="IzbrisiTipNamestaja" RenderTransformOrigin="0.75,0.58" Margin="181,11,479,39" Grid.Row="2" Visibility="Hidden"/>
+        <Button Content="Izmeni" FontSize="20" Click="IzmeniTipNamestaja" Margin="96,11,566,39" Grid.Row="2" Visibility="Hidden"/>
+        <Button Content="Dodaj" FontSize="20" Click="DodajTipNamestaja" Margin="10,11,651,39" Grid.Row="2" Visibility="Hidden"/>-->
+        <Menu HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="742">
             <MenuItem Header="Tipovi Namestaja" Height="35" Width="100" Click="TipoviNamestajaPrelaz"/>
-            <MenuItem Header="Namestaj" Height="35" Width="100"/>
+            <MenuItem x:Name="Namestaj" Header="Namestaj" Height="35" Width="100" Click="NamestajPrelaz"/>
+            <MenuItem x:Name="AkcijskeProdaje" Header="Akcijske Prodaje" Height="35" Width="100" Click="AkcijskeProdajePrelaz"/>
         </Menu>
     </Grid>
 </Window>

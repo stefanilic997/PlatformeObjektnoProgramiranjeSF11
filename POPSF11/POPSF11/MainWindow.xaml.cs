@@ -26,19 +26,19 @@ namespace POP_SF_11_GUI
         {
             InitializeComponent();
 
-            OsveziPrikaz();
+            OsveziPrikazNamestaj();
             listBoxNamestaj.SelectedIndex = 0;
         }
-        private void OsveziPrikaz()
+        private void OsveziPrikazNamestaj()
         {
             listBoxNamestaj.Items.Clear();
             foreach (var namestaj in Projekat.Instance.Namestaj)
             {
-                if(namestaj.Obrisan == false)
+                if (namestaj.Obrisan == false)
                 {
                     listBoxNamestaj.Items.Add(namestaj);
                 }
-                
+
             }
         }
 
@@ -52,19 +52,19 @@ namespace POP_SF_11_GUI
             {
                 Naziv = ""
             };
-            var namestajProzor = new NamestajWindow(noviNamestaj,NamestajWindow.Operacija.DODAVANJE);
+            var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.DODAVANJE);
             namestajProzor.ShowDialog();
 
-            OsveziPrikaz();
+            OsveziPrikazNamestaj();
         }
 
         private void IzmeniNamestaj(object sender, RoutedEventArgs e)
         {
             var selektovaniNamestaj = (Namestaj)listBoxNamestaj.SelectedItem;
-            var namestajProzor = new NamestajWindow(selektovaniNamestaj,NamestajWindow.Operacija.IZMENA);
+            var namestajProzor = new NamestajWindow(selektovaniNamestaj, NamestajWindow.Operacija.IZMENA);
             namestajProzor.ShowDialog();
 
-            OsveziPrikaz();
+            OsveziPrikazNamestaj();
         }
 
         private void IzbrisiNamestaj(object sender, RoutedEventArgs e)
@@ -86,16 +86,42 @@ namespace POP_SF_11_GUI
 
                 Projekat.Instance.Namestaj = staraLista;
                 //listBoxNamestaj.Items.Remove(selektovaniNamestaj);
-                OsveziPrikaz();
+                OsveziPrikazNamestaj();
             }
-            
+
 
         }
 
         private void TipoviNamestajaPrelaz(object sender, RoutedEventArgs e)
         {
-            // Treba drugi prozor/frejm/tab za ispis svih tipova, kao ovaj mainwindow
-           // var tipoviNamestaja = new TipNamestajaUIWindow();
+
+            listBoxNamestaj.Items.Clear();
+            foreach (var tipNamestaja in Projekat.Instance.TipoviNamestaja)
+            {
+                if (tipNamestaja.Obrisan == false)
+                {
+                    listBoxNamestaj.Items.Add(tipNamestaja);
+                }
+
+            }
+        }
+
+        private void NamestajPrelaz(object sender, RoutedEventArgs e)
+        {
+            OsveziPrikazNamestaj();
+        }
+
+        private void AkcijskeProdajePrelaz(object sender, RoutedEventArgs e)
+        {
+            listBoxNamestaj.Items.Clear();
+            foreach (var akcija in Projekat.Instance.AkcijskeProdaje)
+            {
+                if (akcija.Obrisan == false)
+                {
+                    listBoxNamestaj.Items.Add(akcija);
+                }
+
+            }
         }
     }
 }

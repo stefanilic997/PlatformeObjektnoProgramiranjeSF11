@@ -14,6 +14,7 @@ namespace POP_SF_11_GUI.Model
         private List<TipNamestaja> tipNamestaja = new List<Model.TipNamestaja>();
         private List<Namestaj> namestaj = new List<Model.Namestaj>();
         private List<Korisnik> korisnici = new List<Model.Korisnik>();
+        private List<AkcijskaProdaja> akcije = new List<Model.AkcijskaProdaja>();
 
         public List<Namestaj> Namestaj
         {
@@ -50,6 +51,19 @@ namespace POP_SF_11_GUI.Model
             {
                 this.korisnici = value;
                 GenericSerializer.Serialize<Korisnik>("Korisnici.xml", this.korisnici);
+            }
+        }
+        public List<AkcijskaProdaja> AkcijskeProdaje
+        {
+            get
+            {
+                this.akcije = GenericSerializer.Deserialize<AkcijskaProdaja>("Akcije.xml");
+                return this.akcije;
+            }
+            set
+            {
+                this.akcije = value;
+                GenericSerializer.Serialize<AkcijskaProdaja>("Akcije.xml", this.akcije);
             }
         }
     }

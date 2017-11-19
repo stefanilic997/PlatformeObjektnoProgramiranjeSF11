@@ -40,3 +40,5 @@ C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POP-SF-11-GUI.csproj.CoreCompileInputs.cache
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POP-SF-11-GUI.exe
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POP-SF-11-GUI.pdb
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\AkcijskaProdajaUIWindow.g.cs
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\AkcijskaProdajaUIWindow.baml

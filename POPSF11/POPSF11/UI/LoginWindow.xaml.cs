@@ -35,6 +35,7 @@ namespace POP_SF_11_GUI.UI
                 {
                     Console.WriteLine("Uspesno ste se ulogovali");
                     var mainWindow = new MainWindow();
+                    mainWindow.ShowDialog();
                 }
                 else
                 {

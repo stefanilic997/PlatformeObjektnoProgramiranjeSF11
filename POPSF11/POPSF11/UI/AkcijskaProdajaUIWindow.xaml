@@ -1,0 +1,31 @@
+﻿<Window x:Class="POP_SF_11_GUI.UI.AkcijskaProdajaUIWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF_11_GUI.UI"
+        mc:Ignorable="d"
+        Title="Rad sa namestajem" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="233"/>
+            <ColumnDefinition Width="144"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Popust" HorizontalAlignment="Left" Width="105" Margin="0,0,0,10"/>
+        <TextBox Grid.Row="0" FontSize="15" HorizontalAlignment="Left" Name="tbPopust" Margin="110,0,0,10" Width="68"/>
+        <Label Content="Datum zavrsetka"  HorizontalAlignment="Left" Width="105" Grid.Row="2" Margin="0,9,0,10"/>
+        <Label Content="Datum pocetka"  HorizontalAlignment="Left" Width="105" Margin="0,0,0,10" Grid.Row="1" />
+        <Button Content="Sacuvaj" HorizontalAlignment="Right" Click="SacuvajAkcijskuProdaju" Margin="0,94,10,-101" Grid.Row="3" Width="44"/>
+        <Button Content="Izlaz" HorizontalAlignment="Right" Click="Izlaz" Margin="0,94,95,-101" Grid.Row="3" Width="42" Grid.Column="1" />
+        <DatePicker x:Name="datumPocetka" HorizontalAlignment="Left" Margin="110,1,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="113"/>
+        <DatePicker x:Name="datumZavrsetka" HorizontalAlignment="Left" Margin="110,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="113" Height="24"/>
+
+    </Grid>
+</Window>

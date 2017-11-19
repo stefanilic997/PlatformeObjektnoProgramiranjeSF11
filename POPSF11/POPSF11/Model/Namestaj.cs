@@ -19,6 +19,7 @@ namespace POP_SF_11_GUI.Model
         /*Treba int TipNamestajId*/
         public int AkcijaId { get; set; }
 
+        
         public static Namestaj GetById(int id)
         {
             foreach (var Namestaj in Projekat.Instance.Namestaj)
