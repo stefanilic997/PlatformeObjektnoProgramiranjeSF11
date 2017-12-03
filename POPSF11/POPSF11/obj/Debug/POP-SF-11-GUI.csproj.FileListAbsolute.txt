@@ -42,3 +42,11 @@ C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POP-SF-11-GUI.pdb
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\AkcijskaProdajaUIWindow.g.cs
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\AkcijskaProdajaUIWindow.baml
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\KorisniciUI.g.cs
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\KorisniciUI.baml
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\DodatneUslugeWindow.g.cs
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\DodatneUslugeWindow.baml
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\ProdajaNamestajaWindow.g.cs
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\ProdajaNamestajaWindow.baml
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\mainProdavacWindow.g.cs
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\mainProdavacWindow.baml

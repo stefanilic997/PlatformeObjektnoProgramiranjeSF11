@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Naziv:" HorizontalAlignment="Left" Width="45" Margin="0,0,0,10"/>
-        <TextBox Grid.Row="0" FontSize="15" HorizontalAlignment="Left" Name="tbNaziv" Margin="50,0,0,10" Width="79"/>
+        <TextBox Grid.Row="0" FontSize="15" HorizontalAlignment="Left" Text="{Binding Path=Naziv}" Name="tbNaziv" Margin="50,0,0,10" Width="79"/>
         <Button Content="Sacuvaj" HorizontalAlignment="Right" Click="SacuvajTipNamestaja" Margin="0,94,29,-101" Grid.Row="3"/>
         <Button Content="Izlaz" HorizontalAlignment="Right" Click="Izlaz" Grid.ColumnSpan="2" Margin="0,94,95,-101" Grid.Row="3" Width="42" />
 

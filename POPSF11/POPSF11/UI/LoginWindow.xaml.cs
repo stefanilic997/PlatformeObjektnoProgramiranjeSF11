@@ -1,6 +1,8 @@
 ﻿using POP_SF_11_GUI.Model;
+using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,20 +25,32 @@ namespace POP_SF_11_GUI.UI
         public LoginWindow()
         {
             InitializeComponent();
+        
         }
 
         private void Submit(object sender, RoutedEventArgs e)
         {
-            List<Korisnik> postojeciKorisnici = Projekat.Instance.Korisnici;
-
+            ObservableCollection<Korisnik> postojeciKorisnici = Projekat.Instance.Korisnici;
+            string korIme = tbKorisnickoIme.Text;
+            string password = pbLozinka.Password;
+            
             foreach (var korisnik in postojeciKorisnici)
             {
-                if (tbKorisnickoIme.Text == korisnik.KorisnickoIme && pbLozinka.Password == korisnik.Lozinka)
+                
+                if (korIme == korisnik.KorisnickoIme && password== korisnik.Lozinka)
                 {
-                    Console.WriteLine("Uspesno ste se ulogovali");
-                    var mainWindow = new MainWindow();
-                    mainWindow.ShowDialog();
+                    if (korisnik.TipKorisnika == TipKorisnika.Administrator)
+                    {
+                        var mainWindow = new MainWindow();
+                        mainWindow.ShowDialog();
+                    }else if (korisnik.TipKorisnika == TipKorisnika.Prodavac)
+                    {
+                        var mainProdavacWindow = new mainProdavacWindow();
+                        mainProdavacWindow.ShowDialog();
+                    }
+                    
                 }
+
                 else
                 {
                     Console.WriteLine("Neispravni login podaci");

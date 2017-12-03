@@ -19,13 +19,13 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Popust" HorizontalAlignment="Left" Width="105" Margin="0,0,0,10"/>
-        <TextBox Grid.Row="0" FontSize="15" HorizontalAlignment="Left" Name="tbPopust" Margin="110,0,0,10" Width="68"/>
+        <TextBox Grid.Row="0" FontSize="15" HorizontalAlignment="Left" Name="tbPopust" Text="{Binding Path=Popust}"  Margin="110,0,0,10" Width="68"/>
         <Label Content="Datum zavrsetka"  HorizontalAlignment="Left" Width="105" Grid.Row="2" Margin="0,9,0,10"/>
         <Label Content="Datum pocetka"  HorizontalAlignment="Left" Width="105" Margin="0,0,0,10" Grid.Row="1" />
         <Button Content="Sacuvaj" HorizontalAlignment="Right" Click="SacuvajAkcijskuProdaju" Margin="0,94,10,-101" Grid.Row="3" Width="44"/>
         <Button Content="Izlaz" HorizontalAlignment="Right" Click="Izlaz" Margin="0,94,95,-101" Grid.Row="3" Width="42" Grid.Column="1" />
-        <DatePicker x:Name="datumPocetka" HorizontalAlignment="Left" Margin="110,1,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="113"/>
-        <DatePicker x:Name="datumZavrsetka" HorizontalAlignment="Left" Margin="110,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="113" Height="24"/>
+        <DatePicker x:Name="datumPocetka" HorizontalAlignment="Left"  DisplayDate="{Binding Path=DatumPocetka}" Margin="110,1,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="113"/>
+        <DatePicker x:Name="datumZavrsetka" HorizontalAlignment="Left" Margin="110,9,0,0" DisplayDate="{Binding Path=DatumZavresetka}" Grid.Row="2" VerticalAlignment="Top" Width="113" Height="24"/>
 
     </Grid>
 </Window>

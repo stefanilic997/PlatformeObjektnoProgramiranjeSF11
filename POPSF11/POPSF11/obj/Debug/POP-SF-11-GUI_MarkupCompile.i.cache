@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\App.xaml
-5-780842703
+9-4650639
 
-23-8603239
+26149707404
 131569487696
-MainWindow.xaml;UI\AkcijskaProdajaUIWindow.xaml;UI\NamestajWindow.xaml;UI\TipNamestajaUIWindow.xaml;UI\LoginWindow.xaml;
+mainProdavacWindow.xaml;MainWindow.xaml;UI\AkcijskaProdajaUIWindow.xaml;UI\DodatneUslugeWindow.xaml;UI\KorisniciUI.xaml;UI\NamestajWindow.xaml;UI\ProdajaNamestajaWindow.xaml;UI\TipNamestajaUIWindow.xaml;UI\LoginWindow.xaml;
 
 False
 

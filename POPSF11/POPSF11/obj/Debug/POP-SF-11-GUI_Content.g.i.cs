@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/akcije.xml")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("data/racuni.xml")]
 
 

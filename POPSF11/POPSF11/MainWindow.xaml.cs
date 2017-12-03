@@ -1,7 +1,9 @@
 ﻿using POP_SF_11_GUI.Model;
+using POP_SF_11_GUI.Model.util;
 using POP_SF_11_GUI.UI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,31 +24,248 @@ namespace POP_SF_11_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        ICollectionView view;
+        private Podaci podaci;
+
+
+        public enum Podaci
+        {
+            Namestaj,
+            TipNamestaja,
+            AkcijskeProdaje,
+            Korisnici,
+            DodatneUsluge,
+            RacunProdaje
+        }
         public MainWindow()
         {
             InitializeComponent();
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+            dgNamestaj.ItemsSource = view;
+            view.Filter = NamestajFilter;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            dgNamestaj.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
 
-            OsveziPrikazNamestaj();
-            listBoxNamestaj.SelectedIndex = 0;
         }
-        private void OsveziPrikazNamestaj()
-        {
-            listBoxNamestaj.Items.Clear();
-            foreach (var namestaj in Projekat.Instance.Namestaj)
-            {
-                if (namestaj.Obrisan == false)
-                {
-                    listBoxNamestaj.Items.Add(namestaj);
-                }
 
-            }
+        
+
+        
+
+        private bool NamestajFilter(object obj)
+        {
+            return ((Namestaj)obj).Obrisan == false;
         }
 
         private void Izlaz(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        private void DodajNamestaj(object sender, RoutedEventArgs e)
+        private void Dodaj(object sender, RoutedEventArgs e)
+        {
+
+            switch (podaci)
+            {
+                case Podaci.Namestaj:
+                    DodajNamestaj();
+                    break;
+                case Podaci.TipNamestaja:
+                    DodajTipNamestaja();
+                    break;
+                case Podaci.AkcijskeProdaje:
+                    DodajAkciju();
+                    break;
+                case Podaci.Korisnici:
+                    DodajKorisnika();
+                    break;
+                case Podaci.DodatneUsluge:
+                    DodajDodatnuUslugu();
+                    break;
+                case Podaci.RacunProdaje:
+                    DodajRacunProdaje();
+                    break;
+
+            }
+        }
+
+        
+
+        private void Izmeni(object sender, RoutedEventArgs e)
+        {
+
+            switch (podaci)
+            {
+                case Podaci.Namestaj:
+                    IzmeniNamestaj();
+                    break;
+                case Podaci.TipNamestaja:
+                    IzmeniTipNamestaja();
+                    break;
+                case Podaci.AkcijskeProdaje:
+                    IzmeniAkciju();
+                    break;
+                case Podaci.Korisnici:
+                    IzmeniKorisnika();
+                    break;
+                case Podaci.DodatneUsluge:
+                    IzmeniDodatnuUslugu();
+                    break;
+                case Podaci.RacunProdaje:
+                    IzmeniRacunProdaje();
+                    break;
+            }
+        }
+
+
+        private void Obrisi(object sender, RoutedEventArgs e)
+        {
+
+            switch (podaci)
+            {
+                case Podaci.Namestaj:
+                    ObrisiNamestaj();
+                    break;
+                case Podaci.TipNamestaja:
+                    ObrisiTipNamestaja();
+                    break;
+                case Podaci.AkcijskeProdaje:
+                    ObrisiAkciju();
+                    break;
+                case Podaci.Korisnici:
+                    ObrisiKorisnika();
+                    break;
+                case Podaci.DodatneUsluge:
+                    ObrisiDodatnuUslugu();
+                    break;
+                case Podaci.RacunProdaje:
+                    ObrisiRacunProdaje();
+                    break;
+            }
+        }
+
+
+        private void DodajDodatnuUslugu()
+        {
+            var novaDodatnaUsluga = new DodatnaUsluga()
+            {
+                Naziv = "",
+                Cena = 0
+            };
+            var dodatneUslugeProzor = new DodatneUslugeWindow(novaDodatnaUsluga, DodatneUslugeWindow.Operacija.DODAVANJE);
+            dodatneUslugeProzor.ShowDialog();
+        }
+        private void IzmeniDodatnuUslugu()
+        {
+            var selektovanaUsluga = (DodatnaUsluga)dgNamestaj.SelectedItem;
+            var dodatnaUslugaProzor = new DodatneUslugeWindow(selektovanaUsluga, DodatneUslugeWindow.Operacija.IZMENA);
+            dodatnaUslugaProzor.ShowDialog();
+        }
+
+        private void ObrisiDodatnuUslugu()
+        {
+            var selektovanaUsluga = (DodatnaUsluga)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovanaUsluga.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.DodatneUsluge)
+                {
+                    if (n.Id == selektovanaUsluga.Id)
+                    {
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
+        }
+
+        private void DodajRacunProdaje()
+        {
+            var noviRacun = new Racun()
+            {
+                Kolicina = 0,
+                Kupac = "",
+                BrojRacuna = ""
+
+            };
+            var racuniProzor = new ProdajaNamestajaWindow(noviRacun, ProdajaNamestajaWindow.Operacija.DODAVANJE);
+            racuniProzor.ShowDialog();
+        }
+
+        private void IzmeniRacunProdaje()
+        {
+            var selektovaniRacun = (Racun)dgNamestaj.SelectedItem;
+            var racuniProzor = new ProdajaNamestajaWindow(selektovaniRacun, ProdajaNamestajaWindow.Operacija.IZMENA);
+            racuniProzor.ShowDialog();
+        }
+        private void ObrisiRacunProdaje()
+        {
+            var selektovaniRacun = (Racun)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniRacun.BrojRacuna}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.Korisnici)
+                {
+                    if (n.Id == selektovaniRacun.Id)
+                    {
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("Racuni.xml", Projekat.Instance.Racuni);
+        }
+
+        private void DodajKorisnika()
+        {
+            var noviKorisnik = new Korisnik()
+            {
+                Ime = "",
+                Prezime = "",
+                KorisnickoIme = "",
+                Lozinka = "",
+                TipKorisnika = TipKorisnika.Prodavac
+            };
+            var korisniciProzor = new KorisniciUI(noviKorisnik, KorisniciUI.Operacija.DODAVANJE);
+            korisniciProzor.ShowDialog();
+        }
+
+        private void IzmeniKorisnika()
+        {
+            var selektovaniKorisnik = (Korisnik)dgNamestaj.SelectedItem;
+            var korisniciProzor = new KorisniciUI(selektovaniKorisnik, KorisniciUI.Operacija.IZMENA);
+            korisniciProzor.ShowDialog();
+        }
+
+        private void ObrisiKorisnika()
+        {
+            var selektovaniKorisnik = (Korisnik)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniKorisnik.KorisnickoIme}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.Korisnici)
+                {
+                    if (n.Id == selektovaniKorisnik.Id)
+                    {
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("Korisnici.xml", Projekat.Instance.Korisnici);
+        }
+
+        
+
+        
+
+        private void DodajNamestaj()
         {
             var noviNamestaj = new Namestaj()
             {
@@ -55,73 +274,204 @@ namespace POP_SF_11_GUI
             var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.DODAVANJE);
             namestajProzor.ShowDialog();
 
-            OsveziPrikazNamestaj();
         }
 
-        private void IzmeniNamestaj(object sender, RoutedEventArgs e)
+        private void IzmeniNamestaj()
         {
-            var selektovaniNamestaj = (Namestaj)listBoxNamestaj.SelectedItem;
+            var selektovaniNamestaj = (Namestaj)dgNamestaj.SelectedItem;
             var namestajProzor = new NamestajWindow(selektovaniNamestaj, NamestajWindow.Operacija.IZMENA);
             namestajProzor.ShowDialog();
 
-            OsveziPrikazNamestaj();
         }
 
-        private void IzbrisiNamestaj(object sender, RoutedEventArgs e)
+        private void ObrisiNamestaj()
         {
-            var selektovaniNamestaj = (Namestaj)listBoxNamestaj.SelectedItem;
-            var staraLista = Projekat.Instance.Namestaj;
+            var selektovaniNamestaj = (Namestaj)dgNamestaj.SelectedItem;
 
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniNamestaj.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                Namestaj namestaj = null;
-                foreach (var n in staraLista)
+                foreach (var n in Projekat.Instance.Namestaj)
                 {
                     if (n.Id == selektovaniNamestaj.Id)
                     {
-                        namestaj = n;
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
                     }
                 }
-                namestaj.Obrisan = true;
-
-                Projekat.Instance.Namestaj = staraLista;
-                //listBoxNamestaj.Items.Remove(selektovaniNamestaj);
-                OsveziPrikazNamestaj();
             }
+            GenericSerializer.Serialize("namestaj.xml", Projekat.Instance.Namestaj);
+
+        }
 
 
+
+        private void ObrisiTipNamestaja()
+        {
+            var selektovaniTipNamestaja = (TipNamestaja)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniTipNamestaja.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.TipoviNamestaja)
+                {
+                    if (n.Id == selektovaniTipNamestaja.Id)
+                    {
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("tipoviNamestaja.xml", Projekat.Instance.TipoviNamestaja);
+
+        }
+
+        private void IzmeniTipNamestaja()
+        {
+            var selektovaniTipNamestaja = (TipNamestaja)dgNamestaj.SelectedItem;
+            var tipNamestajaProzor = new TipNamestajaUIWindow(selektovaniTipNamestaja, TipNamestajaUIWindow.Operacija.IZMENA);
+            tipNamestajaProzor.ShowDialog();
+
+        }
+
+        private void DodajTipNamestaja()
+        {
+            var noviTipNamestaja = new TipNamestaja()
+            {
+                Naziv = ""
+            };
+            var tipNamestajaProzor = new TipNamestajaUIWindow(noviTipNamestaja, TipNamestajaUIWindow.Operacija.DODAVANJE);
+            tipNamestajaProzor.ShowDialog();
+        }
+
+        private void ObrisiAkciju()
+        {
+            var selektovanaAkcija = (AkcijskaProdaja)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovanaAkcija.Id}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.AkcijskeProdaje)
+                {
+                    if (n.Id == selektovanaAkcija.Id)
+                    {
+                        
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("Akcije.xml", Projekat.Instance.AkcijskeProdaje);
+
+        }
+
+        private void IzmeniAkciju()
+        {
+            var selektovanaAkcija = (AkcijskaProdaja)dgNamestaj.SelectedItem;
+            var akcijeProzor = new AkcijskaProdajaUIWindow(selektovanaAkcija, AkcijskaProdajaUIWindow.Operacija.IZMENA);
+            akcijeProzor.ShowDialog();
+        }
+
+        private void DodajAkciju()
+        {
+            var novaAkcija = new AkcijskaProdaja()
+            {
+                Popust = 0,
+                DatumPocetka = DateTime.Today,
+                DatumZavresetka = DateTime.Today
+            };
+            var akcijeProzor = new AkcijskaProdajaUIWindow(novaAkcija, AkcijskaProdajaUIWindow.Operacija.DODAVANJE);
+            akcijeProzor.ShowDialog();
+        }
+
+        private void dgNamestaj_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            {
+                e.Cancel = true;
+            }
         }
 
         private void TipoviNamestajaPrelaz(object sender, RoutedEventArgs e)
         {
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
+            view.Filter = TipNamestajaFilter;
+            podaci = Podaci.TipNamestaja;
+            dgNamestaj.ItemsSource = Projekat.Instance.TipoviNamestaja;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
-            listBoxNamestaj.Items.Clear();
-            foreach (var tipNamestaja in Projekat.Instance.TipoviNamestaja)
+            bool TipNamestajaFilter(object obj)
             {
-                if (tipNamestaja.Obrisan == false)
-                {
-                    listBoxNamestaj.Items.Add(tipNamestaja);
-                }
-
+                return ((TipNamestaja)obj).Obrisan == false;
             }
+
+        }
+
+
+        private void AkcijskeProdajePrelaz(object sender, RoutedEventArgs e)
+        {
+            
+            podaci = Podaci.AkcijskeProdaje;
+            dgNamestaj.ItemsSource = Projekat.Instance.AkcijskeProdaje;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.AkcijskeProdaje);
+            view.Filter = AkcijeFilter;
+            bool AkcijeFilter(object obj)
+            {
+                return ((AkcijskaProdaja)obj).Obrisan == false;
+            }
+
         }
 
         private void NamestajPrelaz(object sender, RoutedEventArgs e)
         {
-            OsveziPrikazNamestaj();
+            podaci = Podaci.Namestaj;
+            dgNamestaj.ItemsSource = Projekat.Instance.Namestaj;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+
+
         }
 
-        private void AkcijskeProdajePrelaz(object sender, RoutedEventArgs e)
+        private void DodatneUslugePrelaz(object sender, RoutedEventArgs e)
         {
-            listBoxNamestaj.Items.Clear();
-            foreach (var akcija in Projekat.Instance.AkcijskeProdaje)
+            podaci = Podaci.DodatneUsluge;
+            dgNamestaj.ItemsSource = Projekat.Instance.DodatneUsluge;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatneUsluge);
+            view.Filter = uslugeFilter;
+            bool uslugeFilter(object obj)
             {
-                if (akcija.Obrisan == false)
-                {
-                    listBoxNamestaj.Items.Add(akcija);
-                }
-
+                return ((DodatnaUsluga)obj).Obrisan == false;
             }
         }
+        private void KorisniciPrelaz(object sender, RoutedEventArgs e)
+        {
+            podaci = Podaci.Korisnici;
+            dgNamestaj.ItemsSource = Projekat.Instance.Korisnici;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnici);
+            view.Filter = KorisniciFilter;
+            bool KorisniciFilter(object obj)
+            {
+                return ((Korisnik)obj).Obrisan == false;
+            }
+        }
+        private void RacuniPrelaz(object sender, RoutedEventArgs e)
+        {
+            podaci = Podaci.RacunProdaje;
+            dgNamestaj.ItemsSource = Projekat.Instance.Racuni;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
+            view.Filter = RacuniFilter;
+            bool RacuniFilter(object obj)
+            {
+                return ((Racun)obj).Obrisan == false;
+            }
+        }
+
+
     }
 }

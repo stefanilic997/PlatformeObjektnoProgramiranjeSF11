@@ -12,19 +12,18 @@
             <RowDefinition Height="465"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <ListBox Name="listBoxNamestaj" Grid.Row="1" FontSize="15"/>
+        <DataGrid CanUserAddRows="False" AutoGeneratingColumn="dgNamestaj_AutoGeneratingColumn" Name="dgNamestaj" Grid.Row="1" FontSize="15"/>
         <Button Content="Izlaz" Width="70" FontSize="20" HorizontalAlignment="Right" Click="Izlaz" Margin="0,11,10,39" Grid.Row="2"/>
-        <Button Content="Obrisi" FontSize="20" Click="IzbrisiNamestaj" RenderTransformOrigin="0.75,0.58" Margin="181,11,479,39" Grid.Row="2"/>
-        <Button Content="Izmeni" FontSize="20" Click="IzmeniNamestaj" Margin="96,11,566,39" Grid.Row="2"/>
-        <Button Content="Dodaj" FontSize="20" Click="DodajNamestaj" Margin="10,11,651,39" Grid.Row="2"/>
-        <!-- Button grupa za rad sa tipNamestaja, treba da se pojave pri prelazak na rad sa tipovima
-        <Button Content="Obrisi" FontSize="20" Click="IzbrisiTipNamestaja" RenderTransformOrigin="0.75,0.58" Margin="181,11,479,39" Grid.Row="2" Visibility="Hidden"/>
-        <Button Content="Izmeni" FontSize="20" Click="IzmeniTipNamestaja" Margin="96,11,566,39" Grid.Row="2" Visibility="Hidden"/>
-        <Button Content="Dodaj" FontSize="20" Click="DodajTipNamestaja" Margin="10,11,651,39" Grid.Row="2" Visibility="Hidden"/>-->
+        <Button Content="Obrisi" Name="ObrisiNamestajButton" FontSize="20" Click="Obrisi" RenderTransformOrigin="0.75,0.58" Margin="181,11,479,39" Grid.Row="2" Width="82" Height="50" HorizontalContentAlignment="Center"/>
+        <Button Content="Izmeni" Name="IzmeniNamestajButton" FontSize="20" Click="Izmeni" Margin="96,11,566,39" Grid.Row="2" Width="80" Height="50"/>
+        <Button Content="Dodaj" Name="DodajNamestajButton" FontSize="20" Click="Dodaj" Margin="10,11,651,39" Grid.Row="2" Width="81" Height="50"/>
         <Menu HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="742">
             <MenuItem Header="Tipovi Namestaja" Height="35" Width="100" Click="TipoviNamestajaPrelaz"/>
-            <MenuItem x:Name="Namestaj" Header="Namestaj" Height="35" Width="100" Click="NamestajPrelaz"/>
+            <MenuItem x:Name="Namestaj" Header="     Namestaj" Height="35" Width="100" Click="NamestajPrelaz"/>
             <MenuItem x:Name="AkcijskeProdaje" Header="Akcijske Prodaje" Height="35" Width="100" Click="AkcijskeProdajePrelaz"/>
+            <MenuItem Header="Dodatne usluge" Height="35" Width="100" Click="DodatneUslugePrelaz"/>
+            <MenuItem Header="     Korisnici" Height="35" Width="100" Click="KorisniciPrelaz"/>
+            <MenuItem Header="       Racuni" Height="35" Width="100" Click="RacuniPrelaz"/>
         </Menu>
     </Grid>
 </Window>

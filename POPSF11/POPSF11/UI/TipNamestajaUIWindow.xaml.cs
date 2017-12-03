@@ -1,6 +1,8 @@
 ﻿using POP_SF_11_GUI.Model;
+using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,38 +31,29 @@ namespace POP_SF_11_GUI.UI
             BRISANJE
         };
 
-        public TipNamestajaUIWindow()
+        public TipNamestajaUIWindow(TipNamestaja tipNamestaja,Operacija operacija)
         {
             InitializeComponent();
-            InicijalizujVrednosti(tipNamestaja, operacija);
-        }
 
-        private void InicijalizujVrednosti(TipNamestaja tipNamestaja, Operacija operacija)
-        {
             this.tipNamestaja = tipNamestaja;
             this.operacija = operacija;
-
-            tbNaziv.Text = tipNamestaja.Naziv;
-
+            tbNaziv.DataContext = tipNamestaja;
         }
+
         private void Izlaz(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
         private void SacuvajTipNamestaja(object sender, RoutedEventArgs e)
         {
-            List<TipNamestaja> postojeciTipoviNamestaja = Projekat.Instance.TipoviNamestaja;
+            var postojeciTipoviNamestaja = Projekat.Instance.TipoviNamestaja;
             switch (operacija)
             {
 
                 case Operacija.DODAVANJE:
-                    var noviTipNamestaja = new TipNamestaja()
-                    {
-                        Naziv = tbNaziv.Text
-
-
-                    };
-                    postojeciTipoviNamestaja.Add(noviTipNamestaja);
+                    tipNamestaja.Id = postojeciTipoviNamestaja.Count + 1;
+                    tipNamestaja.Naziv = tbNaziv.Text;
+                    postojeciTipoviNamestaja.Add(tipNamestaja);
                     break;
                 case Operacija.IZMENA:
                     foreach (var n in postojeciTipoviNamestaja)
@@ -75,7 +68,7 @@ namespace POP_SF_11_GUI.UI
 
 
             }
-            Projekat.Instance.TipoviNamestaja = postojeciTipoviNamestaja;
+            GenericSerializer.Serialize("tipoviNamestaja.xml", postojeciTipoviNamestaja);
             this.Close();
         }
     }

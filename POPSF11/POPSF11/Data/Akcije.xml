@@ -1,11 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAkcijskaProdaja xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <AkcijskaProdaja>
     <Id>1</Id>
-    <DatumPocetka>2017-11-11T00:00:00</DatumPocetka>
-    <DatumZavrsetka>2017-11-18T00:00:00</DatumZavrsetka>
     <Popust>5</Popust>
+    <DatumPocetka>2017-11-11T00:00:00</DatumPocetka>
+    <DatumZavresetka>2017-11-18T00:00:00</DatumZavresetka>
     <Obrisan>false</Obrisan>
   </AkcijskaProdaja>
+  <AkcijskaProdaja>
+    <Id>2</Id>
+    <Popust>8</Popust>
+    <DatumPocetka>2017-12-04T00:00:00</DatumPocetka>
+    <DatumZavresetka>2017-12-20T00:00:00</DatumZavresetka>
+    <Obrisan>false</Obrisan>
+  </AkcijskaProdaja>
+  <AkcijskaProdaja>
+    <Id>3</Id>
+    <Popust>2</Popust>
+    <DatumPocetka>2017-12-03T00:00:00+01:00</DatumPocetka>
+    <DatumZavresetka>2017-12-28T00:00:00</DatumZavresetka>
+    <Obrisan>true</Obrisan>
+  </AkcijskaProdaja>
+  <AkcijskaProdaja>
+    <Id>4</Id>
+    <Popust>1</Popust>
+    <DatumPocetka>2017-12-03T00:00:00+01:00</DatumPocetka>
+    <DatumZavresetka>2017-12-13T00:00:00</DatumZavresetka>
+    <Obrisan>true</Obrisan>
+  </AkcijskaProdaja>
 </ArrayOfAkcijskaProdaja>
-

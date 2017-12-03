@@ -1,6 +1,8 @@
 ﻿using POP_SF_11_GUI.Model;
+using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,23 +27,17 @@ namespace POP_SF_11_GUI.UI
         public enum Operacija
         {
             DODAVANJE,
-            IZMENA,
-            BRISANJE
+            IZMENA
         };
 
         public AkcijskaProdajaUIWindow(AkcijskaProdaja akcijskaProdaja, Operacija operacija)
         {
             InitializeComponent();
 
-            InicijalizujVrednost(akcijskaProdaja, operacija);
-        }
-
-        private void InicijalizujVrednost(AkcijskaProdaja akcijskaProdaja, Operacija operacija)
-        {
             this.akcijskaProdaja = akcijskaProdaja;
             this.operacija = operacija;
 
-            tbPopust.Text = akcijskaProdaja.Popust.ToString();
+            tbPopust.DataContext = akcijskaProdaja;
             datumPocetka.SelectedDate = akcijskaProdaja.DatumPocetka;
             datumZavrsetka.SelectedDate = akcijskaProdaja.DatumZavresetka;
 
@@ -53,19 +49,15 @@ namespace POP_SF_11_GUI.UI
         }
         private void SacuvajAkcijskuProdaju(object sender, RoutedEventArgs e)
         {
-            List<AkcijskaProdaja> postojeceAkcije = Projekat.Instance.AkcijskeProdaje;
-            AkcijskaProdaja akcijaZaIzmenu = null;
+            var postojeceAkcije = Projekat.Instance.AkcijskeProdaje;
             switch (operacija)
             {
 
                 case Operacija.DODAVANJE:
-                    akcijskaProdaja = new AkcijskaProdaja()
-                    {
-                        Id = postojeceAkcije.Count + 1,
-                        Popust = int.Parse(tbPopust.Text),
-                        DatumPocetka = (DateTime)datumPocetka.SelectedDate,
-                        DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate,
-                    };
+                    akcijskaProdaja.Id = postojeceAkcije.Count + 1;
+                    akcijskaProdaja.Popust = int.Parse(tbPopust.Text);
+                    akcijskaProdaja.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
+                    akcijskaProdaja.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
                     postojeceAkcije.Add(akcijskaProdaja);
                     break;
                 case Operacija.IZMENA:
@@ -74,19 +66,16 @@ namespace POP_SF_11_GUI.UI
                         if (n.Id == akcijskaProdaja.Id)
                         {
 
-                            akcijaZaIzmenu = n;
-
+                            n.Popust = int.Parse(tbPopust.Text);
+                            n.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
+                            n.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
 
 
                         }
                     }
-                    akcijaZaIzmenu.Popust = int.Parse(tbPopust.Text);
-                    akcijaZaIzmenu.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
-                    akcijaZaIzmenu.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
                     break;
-                    
             }
-            Projekat.Instance.AkcijskeProdaje = postojeceAkcije;
+            GenericSerializer.Serialize("Akcije.xml", postojeceAkcije);
             this.Close();
         }
     }

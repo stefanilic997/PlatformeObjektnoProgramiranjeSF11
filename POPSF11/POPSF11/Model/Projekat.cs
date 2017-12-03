@@ -2,6 +2,7 @@
 using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,60 +12,21 @@ namespace POP_SF_11_GUI.Model
     public class Projekat
     {
         public static Projekat Instance { get; private set; } = new Projekat();
-        private List<TipNamestaja> tipNamestaja = new List<Model.TipNamestaja>();
-        private List<Namestaj> namestaj = new List<Model.Namestaj>();
-        private List<Korisnik> korisnici = new List<Model.Korisnik>();
-        private List<AkcijskaProdaja> akcije = new List<Model.AkcijskaProdaja>();
+        public ObservableCollection<TipNamestaja> TipoviNamestaja;
+        public ObservableCollection<Namestaj> Namestaj;
+        public ObservableCollection<Korisnik> Korisnici;
+        public ObservableCollection<AkcijskaProdaja> AkcijskeProdaje;
+        public ObservableCollection<DodatnaUsluga> DodatneUsluge;
+        public ObservableCollection<Racun> Racuni;
 
-        public List<Namestaj> Namestaj
+        private Projekat()
         {
-            get {
-                this.namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
-                return this.namestaj;
-            }
-            set {
-                this.namestaj = value;
-                GenericSerializer.Serialize<Namestaj>("namestaj.xml",this.namestaj);
-            }
-        }
-        public List<TipNamestaja> TipoviNamestaja
-        {
-            get
-            {
-                this.tipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipoviNamestaja.xml");
-                return this.tipNamestaja;
-            }
-            set
-            {
-                this.tipNamestaja = value;
-                GenericSerializer.Serialize<TipNamestaja>("tipoviNamestaja.xml", this.tipNamestaja);
-            }
-        }
-        public List<Korisnik> Korisnici
-        {
-            get
-            {
-                this.korisnici = GenericSerializer.Deserialize<Korisnik>("Korisnici.xml");
-                return this.korisnici;
-            }
-            set
-            {
-                this.korisnici = value;
-                GenericSerializer.Serialize<Korisnik>("Korisnici.xml", this.korisnici);
-            }
-        }
-        public List<AkcijskaProdaja> AkcijskeProdaje
-        {
-            get
-            {
-                this.akcije = GenericSerializer.Deserialize<AkcijskaProdaja>("Akcije.xml");
-                return this.akcije;
-            }
-            set
-            {
-                this.akcije = value;
-                GenericSerializer.Serialize<AkcijskaProdaja>("Akcije.xml", this.akcije);
-            }
+            TipoviNamestaja = new ObservableCollection<TipNamestaja>(GenericSerializer.Deserialize<TipNamestaja>("tipoviNamestaja.xml"));
+            Namestaj = new ObservableCollection<Namestaj>(GenericSerializer.Deserialize<Namestaj>("namestaj.xml"));
+            Korisnici = new ObservableCollection<Korisnik>(GenericSerializer.Deserialize<Korisnik>("Korisnici.xml"));
+            AkcijskeProdaje = new ObservableCollection<AkcijskaProdaja>(GenericSerializer.Deserialize<AkcijskaProdaja>("Akcije.xml"));
+            DodatneUsluge = new ObservableCollection<DodatnaUsluga>(GenericSerializer.Deserialize<DodatnaUsluga>("DodatneUsluge.xml"));
+            Racuni = new ObservableCollection<Racun>(GenericSerializer.Deserialize<Racun>("Racuni.xml"));
         }
     }
 }

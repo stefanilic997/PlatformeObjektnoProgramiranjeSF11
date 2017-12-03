@@ -5,62 +5,79 @@
     <Naziv>Kauc</Naziv>
     <Cena>540</Cena>
     <Kolicina>2</Kolicina>
+    <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
-    <TipNamestajaId>4</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
   </Namestaj>
   <Namestaj>
     <Id>3</Id>
     <Naziv>Sofa</Naziv>
     <Cena>530</Cena>
     <Kolicina>2</Kolicina>
-    <Obrisan>false</Obrisan>
     <TipNamestajaId>2</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
+    <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>5</Id>
     <Naziv>Stolica</Naziv>
     <Cena>530</Cena>
     <Kolicina>2</Kolicina>
+    <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
-    <TipNamestajaId>4</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
   </Namestaj>
   <Namestaj>
     <Id>1</Id>
     <Naziv>Kauc2</Naziv>
     <Cena>550</Cena>
     <Kolicina>0</Kolicina>
-    <Obrisan>false</Obrisan>
-    <TipNamestajaId>4</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
+    <TipNamestajaId>1</TipNamestajaId>
+    <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>4</Id>
     <Naziv>Lampa</Naziv>
     <Cena>524</Cena>
     <Kolicina>0</Kolicina>
-    <Obrisan>false</Obrisan>
-    <TipNamestajaId>4</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
+    <TipNamestajaId>1</TipNamestajaId>
+    <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>6</Id>
     <Naziv>Sto</Naziv>
-    <Cena>2123</Cena>
+    <Cena>212</Cena>
     <Kolicina>0</Kolicina>
+    <TipNamestajaId>4</TipNamestajaId>
     <Obrisan>false</Obrisan>
-    <TipNamestajaId>0</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
   </Namestaj>
   <Namestaj>
     <Id>7</Id>
     <Naziv>proba</Naziv>
-    <Cena>123</Cena>
+    <Cena>124</Cena>
     <Kolicina>0</Kolicina>
-    <Obrisan>true</Obrisan>
     <TipNamestajaId>2</TipNamestajaId>
-    <AkcijaId>0</AkcijaId>
+    <Obrisan>true</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>8</Id>
+    <Naziv>Krevet</Naziv>
+    <Cena>235</Cena>
+    <Kolicina>0</Kolicina>
+    <TipNamestajaId>3</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>9</Id>
+    <Naziv>21</Naziv>
+    <Cena>21</Cena>
+    <Kolicina>0</Kolicina>
+    <TipNamestajaId>1</TipNamestajaId>
+    <Obrisan>true</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>10</Id>
+    <Naziv>1</Naziv>
+    <Cena>3</Cena>
+    <Kolicina>0</Kolicina>
+    <TipNamestajaId>1</TipNamestajaId>
+    <Obrisan>true</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>
