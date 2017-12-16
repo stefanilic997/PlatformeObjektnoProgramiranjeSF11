@@ -95,7 +95,8 @@ namespace POP_SF_11_GUI.UI
 
         private void Izracunaj(object sender, RoutedEventArgs e)
         {
-            tbUkupnaCena.Text = (int.Parse(tbKolicina.Text) * ((Namestaj)cbNamestaj.SelectedItem).Cena).ToString();
+            tbUkupnaCena.Text = ((int.Parse(tbKolicina.Text) * ((Namestaj)cbNamestaj.SelectedItem).Cena)+((DodatnaUsluga)cbDodatneUsluge.SelectedItem).Cena
+                + (int.Parse(tbKolicina.Text) * ((Namestaj)cbNamestaj.SelectedItem).Cena) + ((DodatnaUsluga)cbDodatneUsluge.SelectedItem).Cena  * Racun.PDV).ToString();
         }
     }
 }

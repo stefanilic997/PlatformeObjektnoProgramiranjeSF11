@@ -27,4 +27,13 @@
     <TipKorisnika>Prodavac</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>
+  <Korisnik>
+    <Id>4</Id>
+    <Ime>sad</Ime>
+    <Prezime>ffas</Prezime>
+    <KorisnickoIme>h</KorisnickoIme>
+    <Lozinka>h</Lozinka>
+    <TipKorisnika>Prodavac</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
 </ArrayOfKorisnik>

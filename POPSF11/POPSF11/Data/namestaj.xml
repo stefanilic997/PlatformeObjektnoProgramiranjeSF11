@@ -80,4 +80,12 @@
     <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
+  <Namestaj>
+    <Id>11</Id>
+    <Naziv>soff212</Naziv>
+    <Cena>21312</Cena>
+    <Kolicina>0</Kolicina>
+    <TipNamestajaId>2</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
 </ArrayOfNamestaj>

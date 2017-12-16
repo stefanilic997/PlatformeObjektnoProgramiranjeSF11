@@ -24,6 +24,7 @@ namespace POP_SF_11_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+
         ICollectionView view;
         private Podaci podaci;
 
@@ -35,11 +36,16 @@ namespace POP_SF_11_GUI
             AkcijskeProdaje,
             Korisnici,
             DodatneUsluge,
-            RacunProdaje
+            RacunProdaje,
+            Salon
         }
         public MainWindow()
         {
             InitializeComponent();
+            TipNamestaja noviTip = TipNamestaja.Create(new TipNamestaja(){
+                Naziv = "cekam Id",
+                Obrisan = false
+            });
             view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
             dgNamestaj.ItemsSource = view;
             view.Filter = NamestajFilter;
@@ -84,7 +90,9 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     DodajRacunProdaje();
                     break;
-
+                case Podaci.Salon:
+                    DodajSalon();
+                    break;
             }
         }
 
@@ -113,9 +121,13 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     IzmeniRacunProdaje();
                     break;
+                case Podaci.Salon:
+                    IzmeniSalon();
+                    break;
             }
         }
 
+       
 
         private void Obrisi(object sender, RoutedEventArgs e)
         {
@@ -140,9 +152,56 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     ObrisiRacunProdaje();
                     break;
+                case Podaci.Salon:
+                    ObrisiSalon();
+                    break;
             }
         }
+        private void DodajSalon()
+        {
 
+            var noviSalon = new Salon()
+            {
+                Naziv = "",
+                Adresa = "",
+                Telefon = "",
+                Email = "",
+                AdresaSajta = "",
+                PIB = 0,
+                MaticniBroj = 0,
+                BrojZiroRacuna = ""
+
+            };
+            var saloniProzor = new SalonWindow(noviSalon, SalonWindow.Operacija.DODAVANJE);
+            saloniProzor.ShowDialog();
+
+        }
+        private void IzmeniSalon()
+        {
+            var selektovaniSalon = (Salon)dgNamestaj.SelectedItem;
+            var saloniProzor = new SalonWindow(selektovaniSalon, SalonWindow.Operacija.IZMENA);
+            saloniProzor.ShowDialog();
+        }
+
+        private void ObrisiSalon()
+        {
+            var selektovaniSalon = (Salon)dgNamestaj.SelectedItem;
+
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniSalon.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                foreach (var n in Projekat.Instance.Saloni)
+                {
+                    if (n.Id == selektovaniSalon.Id)
+                    {
+
+                        n.Obrisan = true;
+                        view.Refresh();
+                        break;
+                    }
+                }
+            }
+            GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
+        }
 
         private void DodajDodatnuUslugu()
         {
@@ -328,6 +387,8 @@ namespace POP_SF_11_GUI
 
         }
 
+
+
         private void IzmeniTipNamestaja()
         {
             var selektovaniTipNamestaja = (TipNamestaja)dgNamestaj.SelectedItem;
@@ -472,6 +533,17 @@ namespace POP_SF_11_GUI
             }
         }
 
-
+        private void SalonPrelaz(object sender, RoutedEventArgs e)
+        {
+            podaci = Podaci.Salon;
+            dgNamestaj.ItemsSource = Projekat.Instance.Saloni;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Saloni);
+            view.Filter = saloniFilter;
+            bool saloniFilter(object obj)
+            {
+                return ((Salon)obj).Obrisan == false;
+            }
+        }
     }
 }

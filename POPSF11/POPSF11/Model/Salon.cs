@@ -18,6 +18,7 @@ namespace POP_SF_11_GUI.Model
         public int PIB { get; set; }
         public int MaticniBroj {get;set; }
         public string BrojZiroRacuna { get; set; }
+        public bool Obrisan { get; set; }
         
     }
 

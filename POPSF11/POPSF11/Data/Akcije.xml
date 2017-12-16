@@ -28,4 +28,11 @@
     <DatumZavresetka>2017-12-13T00:00:00</DatumZavresetka>
     <Obrisan>true</Obrisan>
   </AkcijskaProdaja>
+  <AkcijskaProdaja>
+    <Id>5</Id>
+    <Popust>11</Popust>
+    <DatumPocetka>2017-12-05T00:00:00</DatumPocetka>
+    <DatumZavresetka>2017-12-20T00:00:00</DatumZavresetka>
+    <Obrisan>false</Obrisan>
+  </AkcijskaProdaja>
 </ArrayOfAkcijskaProdaja>

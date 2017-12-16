@@ -30,4 +30,9 @@
     <Naziv>sadsad</Naziv>
     <Obrisan>true</Obrisan>
   </TipNamestaja>
+  <TipNamestaja>
+    <Id>7</Id>
+    <Naziv>sofa22</Naziv>
+    <Obrisan>false</Obrisan>
+  </TipNamestaja>
 </ArrayOfTipNamestaja>

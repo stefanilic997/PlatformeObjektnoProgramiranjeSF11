@@ -88,7 +88,7 @@ namespace POP_SF_11_GUI.Model
         public double UkupnaCena
         {
             get { return ukupnaCena; }
-            set { ukupnaCena = Namestaj.Cena * kolicina + DodatneUsluge.Cena;
+            set { ukupnaCena = (Namestaj.Cena * kolicina + DodatneUsluge.Cena)+ (Namestaj.Cena * kolicina + DodatneUsluge.Cena)*PDV;
                 OnPropertyChanged("UkupnaCena");
             }
         }

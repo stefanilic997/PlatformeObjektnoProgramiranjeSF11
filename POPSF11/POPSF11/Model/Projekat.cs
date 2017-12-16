@@ -18,15 +18,17 @@ namespace POP_SF_11_GUI.Model
         public ObservableCollection<AkcijskaProdaja> AkcijskeProdaje;
         public ObservableCollection<DodatnaUsluga> DodatneUsluge;
         public ObservableCollection<Racun> Racuni;
+        public ObservableCollection<Salon> Saloni;
 
         private Projekat()
         {
-            TipoviNamestaja = new ObservableCollection<TipNamestaja>(GenericSerializer.Deserialize<TipNamestaja>("tipoviNamestaja.xml"));
+            TipoviNamestaja = TipNamestaja.GetAll();
             Namestaj = new ObservableCollection<Namestaj>(GenericSerializer.Deserialize<Namestaj>("namestaj.xml"));
             Korisnici = new ObservableCollection<Korisnik>(GenericSerializer.Deserialize<Korisnik>("Korisnici.xml"));
             AkcijskeProdaje = new ObservableCollection<AkcijskaProdaja>(GenericSerializer.Deserialize<AkcijskaProdaja>("Akcije.xml"));
             DodatneUsluge = new ObservableCollection<DodatnaUsluga>(GenericSerializer.Deserialize<DodatnaUsluga>("DodatneUsluge.xml"));
             Racuni = new ObservableCollection<Racun>(GenericSerializer.Deserialize<Racun>("Racuni.xml"));
+            Saloni = new ObservableCollection<Salon>(GenericSerializer.Deserialize<Salon>("Saloni.xml"));
         }
     }
 }

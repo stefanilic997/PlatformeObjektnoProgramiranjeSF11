@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSalon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Salon>
+    <Id>1</Id>
+    <Naziv>salon1</Naziv>
+    <Adresa>ispod mosta bb</Adresa>
+    <Telefon>14532</Telefon>
+    <Email>salon@email.rs</Email>
+    <AdresaSajta>salon.com</AdresaSajta>
+    <PIB>21512</PIB>
+    <MaticniBroj>5523</MaticniBroj>
+    <BrojZiroRacuna>sadkl21</BrojZiroRacuna>
+    <Obrisan>false</Obrisan>
+  </Salon>
+</ArrayOfSalon>

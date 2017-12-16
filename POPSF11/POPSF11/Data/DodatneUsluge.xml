@@ -12,4 +12,10 @@
     <Cena>524</Cena>
     <Obrisan>true</Obrisan>
   </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>3</Id>
+    <Naziv>montaza</Naziv>
+    <Cena>380</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
 </ArrayOfDodatnaUsluga>

@@ -24,6 +24,7 @@
             <MenuItem Header="Dodatne usluge" Height="35" Width="100" Click="DodatneUslugePrelaz"/>
             <MenuItem Header="     Korisnici" Height="35" Width="100" Click="KorisniciPrelaz"/>
             <MenuItem Header="       Racuni" Height="35" Width="100" Click="RacuniPrelaz"/>
+            <MenuItem Header="Salon" Height="35" Width="100" Click="SalonPrelaz"/>
         </Menu>
     </Grid>
 </Window>
