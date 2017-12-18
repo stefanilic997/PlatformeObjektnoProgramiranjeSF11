@@ -46,7 +46,7 @@ namespace POP_SF_11_GUI
                 Naziv = "cekam Id",
                 Obrisan = false
             });
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.sviNamestaji);
             dgNamestaj.ItemsSource = view;
             view.Filter = NamestajFilter;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
@@ -349,7 +349,7 @@ namespace POP_SF_11_GUI
 
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniNamestaj.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (var n in Projekat.Instance.Namestaj)
+                foreach (var n in Projekat.Instance.sviNamestaji)
                 {
                     if (n.Id == selektovaniNamestaj.Id)
                     {
@@ -360,7 +360,7 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("namestaj.xml", Projekat.Instance.Namestaj);
+            GenericSerializer.Serialize("namestaj.xml", Projekat.Instance.sviNamestaji);
 
         }
 
@@ -489,7 +489,7 @@ namespace POP_SF_11_GUI
         private void NamestajPrelaz(object sender, RoutedEventArgs e)
         {
             podaci = Podaci.Namestaj;
-            dgNamestaj.ItemsSource = Projekat.Instance.Namestaj;
+            dgNamestaj.ItemsSource = Projekat.Instance.sviNamestaji;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
 

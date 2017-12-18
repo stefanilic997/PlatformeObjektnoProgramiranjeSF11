@@ -26,6 +26,10 @@
         <Button Content="Izlaz" HorizontalAlignment="Right" Click="Izlaz" Grid.ColumnSpan="2" Margin="0,94,95,-101" Grid.Row="3" Width="42" />
         <ComboBox Name="cbTipNamestaja" HorizontalAlignment="Left" SelectedItem="{Binding Path=TipNamestaja}" Margin="100,4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="142"/>
         <TextBox Name="tbCena" HorizontalAlignment="Left" Text="{Binding Path=Cena}" Height="23" Margin="100,10,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="142"/>
+        <Label x:Name="lblAkcija" Content="Akcija" HorizontalAlignment="Left" Width="87" Margin="0,42,0,-32" Grid.Row="3" />
+        <ComboBox x:Name="cbAkcija" HorizontalAlignment="Left" SelectedItem="{Binding Path=AkcijskaProdaja}" Margin="100,46,0,-32" Grid.Row="3" VerticalAlignment="Top" Width="142"/>
+        <Label x:Name="lblKolicina" Content="Kolicina" HorizontalAlignment="Left" Width="87" Grid.Row="3" Margin="0,9,0,3"/>
+        <TextBox x:Name="tbKolicina" HorizontalAlignment="Left" Text="{Binding Path=Kolicina}" Height="23" Margin="100,10,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="142"/>
 
     </Grid>
 </Window>

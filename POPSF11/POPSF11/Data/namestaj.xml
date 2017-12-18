@@ -6,6 +6,7 @@
     <Cena>540</Cena>
     <Kolicina>2</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -14,6 +15,7 @@
     <Cena>530</Cena>
     <Kolicina>2</Kolicina>
     <TipNamestajaId>2</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -22,6 +24,7 @@
     <Cena>530</Cena>
     <Kolicina>2</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -30,6 +33,7 @@
     <Cena>550</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -38,6 +42,7 @@
     <Cena>524</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -46,6 +51,7 @@
     <Cena>212</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>4</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -54,6 +60,7 @@
     <Cena>124</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>2</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -62,6 +69,7 @@
     <Cena>235</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>3</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -70,6 +78,7 @@
     <Cena>21</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -78,6 +87,7 @@
     <Cena>3</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
@@ -86,6 +96,7 @@
     <Cena>21312</Cena>
     <Kolicina>0</Kolicina>
     <TipNamestajaId>2</TipNamestajaId>
+    <AkcijaId>1</AkcijaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

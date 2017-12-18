@@ -65,6 +65,7 @@ namespace POP_SF_11_GUI.Model
             return null;
 
         }
+
         public override string ToString()
         {
             return Naziv;
@@ -76,6 +77,7 @@ namespace POP_SF_11_GUI.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         #region Database
         public static ObservableCollection<TipNamestaja> GetAll()
         {
@@ -157,6 +159,7 @@ namespace POP_SF_11_GUI.Model
         }
 
         #endregion
+        
     }
     
 }

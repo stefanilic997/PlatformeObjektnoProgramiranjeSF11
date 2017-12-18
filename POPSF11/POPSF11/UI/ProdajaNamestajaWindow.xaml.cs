@@ -34,7 +34,7 @@ namespace POP_SF_11_GUI.UI
 
             this.racun = racun;
             this.operacija = operacija;
-            cbNamestaj.ItemsSource = Projekat.Instance.Namestaj;
+            cbNamestaj.ItemsSource = Projekat.Instance.sviNamestaji;
             cbDodatneUsluge.ItemsSource = Projekat.Instance.DodatneUsluge;
 
             tbKolicina.DataContext = racun;

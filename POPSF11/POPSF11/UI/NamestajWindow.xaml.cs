@@ -39,7 +39,9 @@ namespace POP_SF_11_GUI.UI
 
             tbNaziv.DataContext = namestaj;
             tbCena.DataContext = namestaj;
+            tbKolicina.DataContext = namestaj;
             cbTipNamestaja.DataContext = namestaj;
+            cbAkcija.DataContext = namestaj;
 
         }
 
@@ -49,7 +51,7 @@ namespace POP_SF_11_GUI.UI
         }
         private void SacuvajNamestaj(object sender, RoutedEventArgs e)
         {
-            var postojeciNamestaj = Projekat.Instance.Namestaj;
+            var postojeciNamestaj = Projekat.Instance.sviNamestaji;
             switch (operacija)
             {
                 
@@ -57,7 +59,9 @@ namespace POP_SF_11_GUI.UI
                     namestaj.Id = postojeciNamestaj.Count + 1;
                     namestaj.Naziv = tbNaziv.Text;
                     namestaj.Cena = int.Parse(tbCena.Text);
+                    namestaj.Kolicina = int.Parse(tbKolicina.Text);
                     namestaj.TipNamestajaId = ((TipNamestaja)cbTipNamestaja.SelectedItem).Id;
+                    namestaj.AkcijaId = ((AkcijskaProdaja)cbAkcija.SelectedItem).Id;
 
                     postojeciNamestaj.Add(namestaj);
                     break;
@@ -69,13 +73,15 @@ namespace POP_SF_11_GUI.UI
 
                             n.Naziv = tbNaziv.Text;
                             n.Cena = int.Parse(tbCena.Text);
+                            n.Kolicina = int.Parse(tbKolicina.Text);
+                            n.AkcijaId = ((AkcijskaProdaja)cbAkcija.SelectedItem).Id;
                             n.TipNamestajaId = ((TipNamestaja)cbTipNamestaja.SelectedItem).Id;
 
                         }
                     }
                     break;
               // ISTO KAO I FOR EACH IZNAD ^^^^
-              //  Projekat.Instance.Namestaj - postojeciNamestaja.singleordefault( x=> x.Id == namestaj.Id)
+              //  Projekat.Instance.sviNamestaji - postojeciNamestaja.singleordefault( x=> x.Id == namestaj.Id)
                     
             }
             GenericSerializer.Serialize("namestaj.xml", postojeciNamestaj);
