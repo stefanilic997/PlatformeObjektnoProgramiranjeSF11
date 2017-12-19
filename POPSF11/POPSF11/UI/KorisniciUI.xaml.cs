@@ -53,7 +53,7 @@ namespace POP_SF_11_GUI.UI
 
         private void sacuvajKorisnika(object sender, RoutedEventArgs e)
         {
-            var postojeciKorisnici = Projekat.Instance.Korisnici;
+            var postojeciKorisnici = Korisnik.GetAll();
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
@@ -65,6 +65,7 @@ namespace POP_SF_11_GUI.UI
                     korisnik.TipKorisnika = ((TipKorisnika)cbTipKorisnika.SelectedItem);
 
                     postojeciKorisnici.Add(korisnik);
+                    Korisnik.Create(korisnik);
                     break;
                 case Operacija.IZMENA:
                     foreach (var k in postojeciKorisnici)
@@ -76,11 +77,12 @@ namespace POP_SF_11_GUI.UI
                             k.KorisnickoIme = tbKorisnickoIme.Text;
                             k.Lozinka = tbLozinka.Text;
                             k.TipKorisnika = ((TipKorisnika)cbTipKorisnika.SelectedItem);
+                            Korisnik.Update(k);
                         }
                     }
                     break;
             }
-            GenericSerializer.Serialize("Korisnici.xml", postojeciKorisnici);
+            
             this.Close();
 
         }

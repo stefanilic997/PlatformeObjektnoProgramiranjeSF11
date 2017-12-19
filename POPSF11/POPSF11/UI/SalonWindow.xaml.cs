@@ -69,6 +69,7 @@ namespace POP_SF_11_GUI.UI
                     salon.MaticniBroj = int.Parse(tbMaticniBroj.Text);
                     salon.BrojZiroRacuna = tbZiroRacun.Text;
 
+                    Salon.Create(salon);
                     postojeciSaloni.Add(salon);
                     break;
                 case Operacija.IZMENA:
@@ -85,13 +86,13 @@ namespace POP_SF_11_GUI.UI
                             n.PIB = int.Parse(tbPib.Text);
                             n.MaticniBroj = int.Parse(tbMaticniBroj.Text);
                             n.BrojZiroRacuna = tbZiroRacun.Text;
-
+                            Salon.Update(n);
                         }
                     }
                     break;
                     
             }
-            GenericSerializer.Serialize("Saloni.xml", postojeciSaloni);
+            //GenericSerializer.Serialize("Saloni.xml", postojeciSaloni);
             this.Close();
         }
     }

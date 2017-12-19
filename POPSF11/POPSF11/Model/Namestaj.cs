@@ -159,8 +159,9 @@ namespace POP_SF_11_GUI.Model
             var sviNamestaji = new ObservableCollection<Namestaj>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
-                SqlCommand smd = con.CreateCommand();
-                smd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = @Obrisan";
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = @Obrisan";
+                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
 
                 DataSet ds = new DataSet();//smestanje podataka koje dobijemo
                 SqlDataAdapter adapter = new SqlDataAdapter();//podatke smestamo u dataset s njim
@@ -189,6 +190,7 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 // vise komada namestaja u racunu, ni kolicina kod dodavanja
                 cmd.CommandText = $"INSERT INTO Namestaj (Naziv,Cena,Kolicina,TipNamestajaId,AkcijaId,Obrisan) VALUES(@Naziv,@Cena,@Kolicina,@TipNamestajaId,@AkcijaId,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
@@ -213,6 +215,7 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 cmd.CommandText = "UPDATE Namestaj SET Naziv=@Naziv,Cena=@Cena,Kolicina=@Kolicina,TipNamestajaId=@TipNamestajaId,AkcijaId=@AkcijaId,Obrisan=@Obrisan WHERE Id=@Id;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 

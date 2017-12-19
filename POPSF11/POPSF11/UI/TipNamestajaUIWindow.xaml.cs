@@ -46,14 +46,16 @@ namespace POP_SF_11_GUI.UI
         }
         private void SacuvajTipNamestaja(object sender, RoutedEventArgs e)
         {
-            var postojeciTipoviNamestaja = Projekat.Instance.TipoviNamestaja;
+            var postojeciTipoviNamestaja = TipNamestaja.GetAll();
             switch (operacija)
             {
 
                 case Operacija.DODAVANJE:
                     tipNamestaja.Id = postojeciTipoviNamestaja.Count + 1;
                     tipNamestaja.Naziv = tbNaziv.Text;
+
                     postojeciTipoviNamestaja.Add(tipNamestaja);
+                    TipNamestaja.Create(tipNamestaja);
                     break;
                 case Operacija.IZMENA:
                     foreach (var n in postojeciTipoviNamestaja)
@@ -61,14 +63,15 @@ namespace POP_SF_11_GUI.UI
                         if (n.Id == tipNamestaja.Id)
                         {
                             n.Naziv = tbNaziv.Text;
-                            break;
+                            TipNamestaja.Update(n);
+                            
                         }
                     }
                     break;
 
 
             }
-            GenericSerializer.Serialize("tipoviNamestaja.xml", postojeciTipoviNamestaja);
+          //  GenericSerializer.Serialize("tipoviNamestaja.xml", postojeciTipoviNamestaja);
             this.Close();
         }
     }

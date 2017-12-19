@@ -110,13 +110,13 @@ namespace POP_SF_11_GUI.Model
             var sviKorisnici =new ObservableCollection<Korisnik>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
-                SqlCommand smd = con.CreateCommand();
-                smd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan =@Obrisan";
-
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan=@Obrisan";
+                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
                 DataSet ds = new DataSet();
-                SqlDataAdapter adapter = new SqlDataAdapter();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(ds, "Korisnici");
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                foreach (DataRow row in ds.Tables["Korisnici"].Rows)
                 {
                     var korisnik = new Korisnik();
                     korisnik.Id = int.Parse(row["Id"].ToString());
@@ -124,8 +124,8 @@ namespace POP_SF_11_GUI.Model
                     korisnik.Prezime = row["Prezime"].ToString();
                     korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
                     korisnik.Lozinka = row["Lozinka"].ToString();
-                    //nije reseno,u bazi koristi enum kao int,  ima na stackoveerflowu
-                    korisnik.TipKorisnika = (TipKorisnika)row["TipKorisnika"];
+                    //nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
+                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika),row["TipKorisnika"].ToString());
                     korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
                     sviKorisnici.Add(korisnik);
 
@@ -140,6 +140,7 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 cmd.CommandText = $"INSERT INTO Korisnici (Ime,Prezime,KorisnickoIme,Lozinka,TipKorisnika,Obrisan) VALUES(@Ime,@Prezime,@KorisnickoIme,@Lozinka,@TipKorisnika,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
@@ -151,6 +152,10 @@ namespace POP_SF_11_GUI.Model
                 cmd.Parameters.AddWithValue("Obrisan", korisnik.Obrisan);
 
                 int newId = int.Parse(cmd.ExecuteScalar().ToString());
+                //System.Data.SqlClient.SqlException:
+                //'The INSERT statement conflicted with the CHECK constraint "CK__Korisnici__TipKo__25869641". 
+                //The conflict occurred in database "POP", table "dbo.Korisnici", column 'TipKorisnika'.
+               // The statement has been terminated.'
                 korisnik.Id = newId;
             }
             Projekat.Instance.Korisnici.Add(korisnik);
@@ -162,6 +167,7 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 cmd.CommandText = "UPDATE Korisnici SET Ime=@Ime,Prezime=@Prezime,KorisnickoIme=@KorisnickoIme,Lozinka=@Lozinka,TipKorisnika=@TipKorisnika,Obrisan=@Obrisan WHERE Id=@Id;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 

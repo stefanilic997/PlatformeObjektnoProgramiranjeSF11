@@ -28,7 +28,7 @@ namespace POP_SF_11_GUI.Model
             AkcijskeProdaje = AkcijskaProdaja.GetAll();
             DodatneUsluge = DodatnaUsluga.GetAll();
             Racuni = new ObservableCollection<Racun>(GenericSerializer.Deserialize<Racun>("Racuni.xml"));
-            Saloni = new ObservableCollection<Salon>(GenericSerializer.Deserialize<Salon>("Saloni.xml"));
+            Saloni = Salon.GetAll();
         }
     }
 }

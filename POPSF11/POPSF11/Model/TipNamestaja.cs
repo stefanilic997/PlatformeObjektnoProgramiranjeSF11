@@ -84,11 +84,12 @@ namespace POP_SF_11_GUI.Model
             var tipoviNamestaja = new ObservableCollection<TipNamestaja>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
-                SqlCommand smd = con.CreateCommand();
-                smd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan = @Obrisan";
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan = @Obrisan";
+                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
 
                 DataSet ds = new DataSet();//smestanje podataka koje dobijemo
-                SqlDataAdapter adapter = new SqlDataAdapter();//podatke smestamo u dataset s njim
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
                 adapter.Fill(ds, "TipNamestaja"); //ovde se izvrsava query nad bazom
                 foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
                 {
@@ -110,6 +111,8 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
                 cmd.CommandText = $"INSERT INTO TipNamestaja (Naziv,Obrisan) VALUES(@Naziv,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
@@ -129,6 +132,8 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
                 cmd.CommandText = "UPDATE TipNamestaja SET Naziv=@Naziv,Obrisan=@Obrisan WHERE Id=@Id;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 

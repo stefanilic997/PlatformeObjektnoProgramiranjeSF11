@@ -30,7 +30,7 @@ namespace POP_SF_11_GUI.UI
 
         private void Submit(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Korisnik> postojeciKorisnici = Projekat.Instance.Korisnici;
+            ObservableCollection<Korisnik> postojeciKorisnici = Korisnik.GetAll();
             string korIme = tbKorisnickoIme.Text;
             string password = pbLozinka.Password;
             

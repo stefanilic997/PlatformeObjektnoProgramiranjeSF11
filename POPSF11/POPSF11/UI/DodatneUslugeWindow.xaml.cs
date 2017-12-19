@@ -54,6 +54,7 @@ namespace POP_SF_11_GUI.UI
                         dodatnaUsluga.Naziv = tbNaziv.Text;
                         dodatnaUsluga.Cena = double.Parse(tbCena.Text);
                         postojeceDodatneUsluge.Add(dodatnaUsluga);
+                        DodatnaUsluga.Create(dodatnaUsluga);
                         break;
                     case Operacija.IZMENA:
                         foreach (var n in postojeceDodatneUsluge)
@@ -62,6 +63,7 @@ namespace POP_SF_11_GUI.UI
                             {
                                 n.Naziv = tbNaziv.Text;
                                 n.Cena = double.Parse(tbCena.Text);
+                                DodatnaUsluga.Update(n);
                                 break;
                             }
                         }

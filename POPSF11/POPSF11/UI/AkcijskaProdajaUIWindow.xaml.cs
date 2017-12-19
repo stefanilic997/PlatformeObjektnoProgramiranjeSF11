@@ -59,6 +59,7 @@ namespace POP_SF_11_GUI.UI
                     akcijskaProdaja.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
                     akcijskaProdaja.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
                     postojeceAkcije.Add(akcijskaProdaja);
+                    AkcijskaProdaja.Create(akcijskaProdaja);
                     break;
                 case Operacija.IZMENA:
                     foreach (var n in postojeceAkcije)
@@ -70,12 +71,13 @@ namespace POP_SF_11_GUI.UI
                             n.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
                             n.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
 
+                            AkcijskaProdaja.Update(n);
 
                         }
                     }
                     break;
             }
-            GenericSerializer.Serialize("Akcije.xml", postojeceAkcije);
+           // GenericSerializer.Serialize("Akcije.xml", postojeceAkcije);
             this.Close();
         }
     }

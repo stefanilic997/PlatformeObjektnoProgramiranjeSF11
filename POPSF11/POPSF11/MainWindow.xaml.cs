@@ -31,26 +31,19 @@ namespace POP_SF_11_GUI
 
         public enum Podaci
         {
-            Namestaj,
+            savNamestaj,
             TipNamestaja,
             AkcijskeProdaje,
             Korisnici,
             DodatneUsluge,
             RacunProdaje,
-            Salon
+            Saloni
         }
         public MainWindow()
         {
             InitializeComponent();
-            TipNamestaja noviTip = TipNamestaja.Create(new TipNamestaja(){
-                Naziv = "cekam Id",
-                Obrisan = false
-            });
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.sviNamestaji);
-            dgNamestaj.ItemsSource = view;
-            view.Filter = NamestajFilter;
-            dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            dgNamestaj.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+            
+            
 
         }
 
@@ -72,7 +65,7 @@ namespace POP_SF_11_GUI
 
             switch (podaci)
             {
-                case Podaci.Namestaj:
+                case Podaci.savNamestaj:
                     DodajNamestaj();
                     break;
                 case Podaci.TipNamestaja:
@@ -90,7 +83,7 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     DodajRacunProdaje();
                     break;
-                case Podaci.Salon:
+                case Podaci.Saloni:
                     DodajSalon();
                     break;
             }
@@ -103,7 +96,7 @@ namespace POP_SF_11_GUI
 
             switch (podaci)
             {
-                case Podaci.Namestaj:
+                case Podaci.savNamestaj:
                     IzmeniNamestaj();
                     break;
                 case Podaci.TipNamestaja:
@@ -121,7 +114,7 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     IzmeniRacunProdaje();
                     break;
-                case Podaci.Salon:
+                case Podaci.Saloni:
                     IzmeniSalon();
                     break;
             }
@@ -134,7 +127,7 @@ namespace POP_SF_11_GUI
 
             switch (podaci)
             {
-                case Podaci.Namestaj:
+                case Podaci.savNamestaj:
                     ObrisiNamestaj();
                     break;
                 case Podaci.TipNamestaja:
@@ -152,7 +145,7 @@ namespace POP_SF_11_GUI
                 case Podaci.RacunProdaje:
                     ObrisiRacunProdaje();
                     break;
-                case Podaci.Salon:
+                case Podaci.Saloni:
                     ObrisiSalon();
                     break;
             }
@@ -195,6 +188,7 @@ namespace POP_SF_11_GUI
                     {
 
                         n.Obrisan = true;
+                        Salon.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -232,6 +226,7 @@ namespace POP_SF_11_GUI
                     {
                         
                         n.Obrisan = true;
+                        DodatnaUsluga.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -312,6 +307,7 @@ namespace POP_SF_11_GUI
                     {
                         
                         n.Obrisan = true;
+                        Korisnik.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -355,6 +351,7 @@ namespace POP_SF_11_GUI
                     {
                         
                         n.Obrisan = true;
+                        Model.Namestaj.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -378,6 +375,7 @@ namespace POP_SF_11_GUI
                     {
                         
                         n.Obrisan = true;
+                        TipNamestaja.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -419,6 +417,7 @@ namespace POP_SF_11_GUI
                     {
                         
                         n.Obrisan = true;
+                        AkcijskaProdaja.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -457,10 +456,10 @@ namespace POP_SF_11_GUI
 
         private void TipoviNamestajaPrelaz(object sender, RoutedEventArgs e)
         {
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
+            view = CollectionViewSource.GetDefaultView(TipNamestaja.GetAll());
             view.Filter = TipNamestajaFilter;
             podaci = Podaci.TipNamestaja;
-            dgNamestaj.ItemsSource = Projekat.Instance.TipoviNamestaja;
+            dgNamestaj.ItemsSource = TipNamestaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
             bool TipNamestajaFilter(object obj)
@@ -475,9 +474,9 @@ namespace POP_SF_11_GUI
         {
             
             podaci = Podaci.AkcijskeProdaje;
-            dgNamestaj.ItemsSource = Projekat.Instance.AkcijskeProdaje;
+            dgNamestaj.ItemsSource = AkcijskaProdaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.AkcijskeProdaje);
+            view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.GetAll());
             view.Filter = AkcijeFilter;
             bool AkcijeFilter(object obj)
             {
@@ -488,8 +487,8 @@ namespace POP_SF_11_GUI
 
         private void NamestajPrelaz(object sender, RoutedEventArgs e)
         {
-            podaci = Podaci.Namestaj;
-            dgNamestaj.ItemsSource = Projekat.Instance.sviNamestaji;
+            podaci = Podaci.savNamestaj;
+            dgNamestaj.ItemsSource = Model.Namestaj.GetAll() ;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
 
@@ -498,9 +497,9 @@ namespace POP_SF_11_GUI
         private void DodatneUslugePrelaz(object sender, RoutedEventArgs e)
         {
             podaci = Podaci.DodatneUsluge;
-            dgNamestaj.ItemsSource = Projekat.Instance.DodatneUsluge;
+            dgNamestaj.ItemsSource =DodatnaUsluga.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatneUsluge);
+            view = CollectionViewSource.GetDefaultView(DodatnaUsluga.GetAll());
             view.Filter = uslugeFilter;
             bool uslugeFilter(object obj)
             {
@@ -510,10 +509,10 @@ namespace POP_SF_11_GUI
         private void KorisniciPrelaz(object sender, RoutedEventArgs e)
         {
             podaci = Podaci.Korisnici;
-            dgNamestaj.ItemsSource = Projekat.Instance.Korisnici;
+            dgNamestaj.ItemsSource = Korisnik.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnici);
+            view = CollectionViewSource.GetDefaultView(Korisnik.GetAll());
             view.Filter = KorisniciFilter;
             bool KorisniciFilter(object obj)
             {
@@ -523,6 +522,7 @@ namespace POP_SF_11_GUI
         private void RacuniPrelaz(object sender, RoutedEventArgs e)
         {
             podaci = Podaci.RacunProdaje;
+            //ZAVRSI RACUN SQL
             dgNamestaj.ItemsSource = Projekat.Instance.Racuni;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
@@ -535,10 +535,10 @@ namespace POP_SF_11_GUI
 
         private void SalonPrelaz(object sender, RoutedEventArgs e)
         {
-            podaci = Podaci.Salon;
-            dgNamestaj.ItemsSource = Projekat.Instance.Saloni;
+            podaci = Podaci.Saloni;
+            dgNamestaj.ItemsSource = Salon.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Saloni);
+            view = CollectionViewSource.GetDefaultView(Salon.GetAll());
             view.Filter = saloniFilter;
             bool saloniFilter(object obj)
             {

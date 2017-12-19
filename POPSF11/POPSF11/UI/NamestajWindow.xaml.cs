@@ -63,6 +63,7 @@ namespace POP_SF_11_GUI.UI
                     namestaj.TipNamestajaId = ((TipNamestaja)cbTipNamestaja.SelectedItem).Id;
                     namestaj.AkcijaId = ((AkcijskaProdaja)cbAkcija.SelectedItem).Id;
 
+                    Namestaj.Create(namestaj);
                     postojeciNamestaj.Add(namestaj);
                     break;
                 case Operacija.IZMENA:
@@ -77,6 +78,7 @@ namespace POP_SF_11_GUI.UI
                             n.AkcijaId = ((AkcijskaProdaja)cbAkcija.SelectedItem).Id;
                             n.TipNamestajaId = ((TipNamestaja)cbTipNamestaja.SelectedItem).Id;
 
+                            Namestaj.Update(n);
                         }
                     }
                     break;
@@ -84,7 +86,7 @@ namespace POP_SF_11_GUI.UI
               //  Projekat.Instance.sviNamestaji - postojeciNamestaja.singleordefault( x=> x.Id == namestaj.Id)
                     
             }
-            GenericSerializer.Serialize("namestaj.xml", postojeciNamestaj);
+           // GenericSerializer.Serialize("namestaj.xml", postojeciNamestaj);
             this.Close();
         }
     }
