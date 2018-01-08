@@ -42,19 +42,14 @@ namespace POP_SF_11_GUI
         public MainWindow()
         {
             InitializeComponent();
-            
-            
+
+            podaci = Podaci.savNamestaj;
+            dgNamestaj.ItemsSource = Model.Namestaj.GetAll();
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Model.Namestaj.GetAll());
 
         }
 
-        
-
-        
-
-        private bool NamestajFilter(object obj)
-        {
-            return ((Namestaj)obj).Obrisan == false;
-        }
 
         private void Izlaz(object sender, RoutedEventArgs e)
         {
@@ -439,7 +434,8 @@ namespace POP_SF_11_GUI
 
         private void dgNamestaj_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id" 
+                || (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "AkcijaId")
             {
                 e.Cancel = true;
             }
@@ -448,15 +444,9 @@ namespace POP_SF_11_GUI
         private void TipoviNamestajaPrelaz(object sender, RoutedEventArgs e)
         {
             view = CollectionViewSource.GetDefaultView(TipNamestaja.GetAll());
-            view.Filter = TipNamestajaFilter;
             podaci = Podaci.TipNamestaja;
             dgNamestaj.ItemsSource = TipNamestaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-
-            bool TipNamestajaFilter(object obj)
-            {
-                return ((TipNamestaja)obj).Obrisan == false;
-            }
 
         }
 
@@ -468,11 +458,7 @@ namespace POP_SF_11_GUI
             dgNamestaj.ItemsSource = AkcijskaProdaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.GetAll());
-            view.Filter = AkcijeFilter;
-            bool AkcijeFilter(object obj)
-            {
-                return ((AkcijskaProdaja)obj).Obrisan == false;
-            }
+
 
         }
 
@@ -481,6 +467,7 @@ namespace POP_SF_11_GUI
             podaci = Podaci.savNamestaj;
             dgNamestaj.ItemsSource = Model.Namestaj.GetAll() ;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
+            view = CollectionViewSource.GetDefaultView(Model.Namestaj.GetAll());
 
 
         }
@@ -491,11 +478,7 @@ namespace POP_SF_11_GUI
             dgNamestaj.ItemsSource =DodatnaUsluga.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(DodatnaUsluga.GetAll());
-            view.Filter = uslugeFilter;
-            bool uslugeFilter(object obj)
-            {
-                return ((DodatnaUsluga)obj).Obrisan == false;
-            }
+
         }
         private void KorisniciPrelaz(object sender, RoutedEventArgs e)
         {
@@ -504,11 +487,6 @@ namespace POP_SF_11_GUI
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
             view = CollectionViewSource.GetDefaultView(Korisnik.GetAll());
-            view.Filter = KorisniciFilter;
-            bool KorisniciFilter(object obj)
-            {
-                return ((Korisnik)obj).Obrisan == false;
-            }
         }
         private void RacuniPrelaz(object sender, RoutedEventArgs e)
         {
@@ -517,11 +495,7 @@ namespace POP_SF_11_GUI
             dgNamestaj.ItemsSource = Projekat.Instance.Racuni;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
-            view.Filter = RacuniFilter;
-            bool RacuniFilter(object obj)
-            {
-                return ((Racun)obj).Obrisan == false;
-            }
+
         }
 
         private void SalonPrelaz(object sender, RoutedEventArgs e)
@@ -530,11 +504,7 @@ namespace POP_SF_11_GUI
             dgNamestaj.ItemsSource = Salon.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(Salon.GetAll());
-            view.Filter = saloniFilter;
-            bool saloniFilter(object obj)
-            {
-                return ((Salon)obj).Obrisan == false;
-            }
+
         }
     }
 }

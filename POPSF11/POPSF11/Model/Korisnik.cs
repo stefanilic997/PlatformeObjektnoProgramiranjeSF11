@@ -127,7 +127,6 @@ namespace POP_SF_11_GUI.Model
                     //nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
                     korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika),row["TipKorisnika"].ToString());
                     korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
                     sviKorisnici.Add(korisnik);
 
                 }
@@ -149,7 +148,7 @@ namespace POP_SF_11_GUI.Model
                 cmd.Parameters.AddWithValue("Prezime", korisnik.Prezime);
                 cmd.Parameters.AddWithValue("KorisnickoIme", korisnik.KorisnickoIme);
                 cmd.Parameters.AddWithValue("Lozinka", korisnik.Lozinka);
-                cmd.Parameters.AddWithValue("TipKorisnika", korisnik.TipKorisnika.ToString());
+                cmd.Parameters.AddWithValue("TipKorisnika", korisnik.TipKorisnika);
                 cmd.Parameters.AddWithValue("Obrisan", korisnik.Obrisan);
 
                 int newId = int.Parse(cmd.ExecuteScalar().ToString());
@@ -177,7 +176,7 @@ namespace POP_SF_11_GUI.Model
                 cmd.Parameters.AddWithValue("Prezime", korisnik.Prezime);
                 cmd.Parameters.AddWithValue("KorisnickoIme", korisnik.KorisnickoIme);
                 cmd.Parameters.AddWithValue("Lozinka", korisnik.Lozinka);
-                cmd.Parameters.AddWithValue("TipKorisnika", korisnik.TipKorisnika.ToString());
+                cmd.Parameters.AddWithValue("TipKorisnika", korisnik.TipKorisnika);
                 cmd.Parameters.AddWithValue("Obrisan", korisnik.Obrisan);
 
                 cmd.ExecuteNonQuery();

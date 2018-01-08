@@ -12,12 +12,15 @@ namespace POP_SF_11_GUI.Model
     public class Projekat
     {
         public static Projekat Instance { get; private set; } = new Projekat();
+
         public ObservableCollection<TipNamestaja> TipoviNamestaja;
         public ObservableCollection<Namestaj> sviNamestaji;
         public ObservableCollection<Korisnik> Korisnici;
         public ObservableCollection<AkcijskaProdaja> AkcijskeProdaje;
         public ObservableCollection<DodatnaUsluga> DodatneUsluge;
         public ObservableCollection<Racun> Racuni;
+        public ObservableCollection<StavkaProdajeNamestaj> StavkeProdajeNamestaja;
+        public ObservableCollection<StavkaProdajeDodatnaUsluga> StavkeProdajeDodatneUsluge;
         public ObservableCollection<Salon> Saloni;
 
         private Projekat()
@@ -27,8 +30,11 @@ namespace POP_SF_11_GUI.Model
             Korisnici = Korisnik.GetAll();
             AkcijskeProdaje = AkcijskaProdaja.GetAll();
             DodatneUsluge = DodatnaUsluga.GetAll();
-            Racuni = new ObservableCollection<Racun>(GenericSerializer.Deserialize<Racun>("Racuni.xml"));
+            Racuni = Racun.GetAll();
+            StavkeProdajeNamestaja = StavkaProdajeNamestaj.GetAll();
+            StavkeProdajeDodatneUsluge = StavkaProdajeDodatnaUsluga.GetAll();
             Saloni = Salon.GetAll();
+
         }
     }
 }
