@@ -1,102 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
+    <AkcijskaProdaja>
+      <Id>2</Id>
+      <Popust>5</Popust>
+      <DatumPocetka>2018-01-01T00:00:00</DatumPocetka>
+      <DatumZavresetka>2018-01-15T00:00:00</DatumZavresetka>
+      <Obrisan>false</Obrisan>
+    </AkcijskaProdaja>
+    <Id>1</Id>
+    <Naziv>Sofa</Naziv>
+    <Cena>1253</Cena>
+    <Kolicina>4</Kolicina>
+    <TipNamestajaId>1</TipNamestajaId>
+    <AkcijaId>2</AkcijaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <AkcijskaProdaja>
+      <Id>2</Id>
+      <Popust>5</Popust>
+      <DatumPocetka>2018-01-01T00:00:00</DatumPocetka>
+      <DatumZavresetka>2018-01-15T00:00:00</DatumZavresetka>
+      <Obrisan>false</Obrisan>
+    </AkcijskaProdaja>
     <Id>2</Id>
     <Naziv>Kauc</Naziv>
-    <Cena>540</Cena>
+    <Cena>2212</Cena>
     <Kolicina>2</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>3</Id>
-    <Naziv>Sofa</Naziv>
-    <Cena>530</Cena>
-    <Kolicina>2</Kolicina>
-    <TipNamestajaId>2</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>5</Id>
-    <Naziv>Stolica</Naziv>
-    <Cena>530</Cena>
-    <Kolicina>2</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>1</Id>
-    <Naziv>Kauc2</Naziv>
-    <Cena>550</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>4</Id>
-    <Naziv>Lampa</Naziv>
-    <Cena>524</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>6</Id>
-    <Naziv>Sto</Naziv>
-    <Cena>212</Cena>
-    <Kolicina>0</Kolicina>
     <TipNamestajaId>4</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>7</Id>
-    <Naziv>proba</Naziv>
-    <Cena>124</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>2</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
+    <AkcijaId>2</AkcijaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Id>8</Id>
-    <Naziv>Krevet</Naziv>
-    <Cena>235</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>3</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>9</Id>
-    <Naziv>21</Naziv>
-    <Cena>21</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
+    <AkcijskaProdaja>
+      <Id>2</Id>
+      <Popust>5</Popust>
+      <DatumPocetka>2018-01-01T00:00:00</DatumPocetka>
+      <DatumZavresetka>2018-01-15T00:00:00</DatumZavresetka>
+      <Obrisan>false</Obrisan>
+    </AkcijskaProdaja>
+    <Id>2</Id>
+    <Naziv>Kauc</Naziv>
+    <Cena>2212</Cena>
+    <Kolicina>2</Kolicina>
+    <TipNamestajaId>4</TipNamestajaId>
+    <AkcijaId>2</AkcijaId>
     <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>10</Id>
-    <Naziv>1</Naziv>
-    <Cena>3</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>1</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>11</Id>
-    <Naziv>soff212</Naziv>
-    <Cena>21312</Cena>
-    <Kolicina>0</Kolicina>
-    <TipNamestajaId>2</TipNamestajaId>
-    <AkcijaId>1</AkcijaId>
-    <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

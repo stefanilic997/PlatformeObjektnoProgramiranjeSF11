@@ -74,11 +74,11 @@ namespace POP_SF_11_GUI.Model
 
         public static AkcijskaProdaja GetByIdAkcija(int id)
         {
-            foreach (var AkcijskaProdaja in Projekat.Instance.AkcijskeProdaje)
+            foreach (var akcijskaProdaja in Projekat.Instance.AkcijskeProdaje)
             {
-                if (AkcijskaProdaja.Id == id)
+                if (akcijskaProdaja.Id == id)
                 {
-                    return AkcijskaProdaja;
+                    return akcijskaProdaja;
                 }
 
             }

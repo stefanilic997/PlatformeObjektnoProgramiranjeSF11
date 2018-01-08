@@ -90,13 +90,13 @@ namespace POP_SF_11_GUI.Model
             {
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM Usluge WHERE Obrisan =@Obrisan";
+                cmd.CommandText = "SELECT * FROM DodatneUsluge WHERE Obrisan =@Obrisan";
                 cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
 
                 DataSet ds = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(ds, "Usluge");
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                adapter.Fill(ds, "DodatneUsluge");
+                foreach (DataRow row in ds.Tables["DodatneUsluge"].Rows)
                 {
                     var usluga = new DodatnaUsluga();
                     usluga.Id = int.Parse(row["Id"].ToString());
@@ -117,7 +117,7 @@ namespace POP_SF_11_GUI.Model
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = $"INSERT INTO Usluge (Naziv,Cena,Obrisan) VALUES(@Naziv,@Cena,@Obrisan);";
+                cmd.CommandText = $"INSERT INTO DodatneUsluge (Naziv,Cena,Obrisan) VALUES(@Naziv,@Cena,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Naziv", usluga.Naziv);
@@ -137,7 +137,7 @@ namespace POP_SF_11_GUI.Model
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = "UPDATE Usluge SET Naziv=@Naziv,Cena=@Cena,Obrisan=@Obrisan;";
+                cmd.CommandText = "UPDATE DodatneUsluge SET Naziv=@Naziv,Cena=@Cena,Obrisan=@Obrisan;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Id", usluga.Id);

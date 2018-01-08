@@ -3,19 +3,37 @@
   <DodatnaUsluga>
     <Id>1</Id>
     <Naziv>Prenos</Naziv>
-    <Cena>255</Cena>
+    <Cena>350</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>1</Id>
+    <Naziv>Prenos</Naziv>
+    <Cena>350</Cena>
     <Obrisan>false</Obrisan>
   </DodatnaUsluga>
   <DodatnaUsluga>
     <Id>2</Id>
-    <Naziv>montaza</Naziv>
-    <Cena>524</Cena>
-    <Obrisan>true</Obrisan>
+    <Naziv>Montaza</Naziv>
+    <Cena>500</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>2</Id>
+    <Naziv>Montaza</Naziv>
+    <Cena>500</Cena>
+    <Obrisan>false</Obrisan>
   </DodatnaUsluga>
   <DodatnaUsluga>
     <Id>3</Id>
-    <Naziv>montaza</Naziv>
-    <Cena>380</Cena>
+    <Naziv>Ugradnja</Naziv>
+    <Cena>300</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>3</Id>
+    <Naziv>Ugradnja</Naziv>
+    <Cena>300</Cena>
     <Obrisan>false</Obrisan>
   </DodatnaUsluga>
 </ArrayOfDodatnaUsluga>

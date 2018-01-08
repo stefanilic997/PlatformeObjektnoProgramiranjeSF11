@@ -369,20 +369,11 @@ namespace POP_SF_11_GUI
 
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniTipNamestaja.Naziv}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (var n in Projekat.Instance.TipoviNamestaja)
-                {
-                    if (n.Id == selektovaniTipNamestaja.Id)
-                    {
-                        
-                        n.Obrisan = true;
-                        TipNamestaja.Delete(n);
-                        view.Refresh();
-                        break;
-                    }
-                }
+                TipNamestaja.Delete(selektovaniTipNamestaja);
+                Projekat.Instance.TipoviNamestaja.Remove(selektovaniTipNamestaja);
+                view.Refresh();
             }
-            GenericSerializer.Serialize("tipoviNamestaja.xml", Projekat.Instance.TipoviNamestaja);
-
+           
         }
 
 

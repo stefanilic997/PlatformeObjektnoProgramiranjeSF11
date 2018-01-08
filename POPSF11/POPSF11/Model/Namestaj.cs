@@ -27,7 +27,6 @@ namespace POP_SF_11_GUI.Model
         private TipNamestaja tipNamestaja;
         private AkcijskaProdaja akcijskaProdaja;
 
-        [XmlIgnore]
         public TipNamestaja TipNamestaja
         {
             get {
@@ -159,19 +158,23 @@ namespace POP_SF_11_GUI.Model
             var sviNamestaji = new ObservableCollection<Namestaj>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
+                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
+
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = @Obrisan";
                 cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
 
-                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
-                SqlDataAdapter adapter = new SqlDataAdapter();//podatke smestamo u dataset s njim
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
+                adapter.SelectCommand = cmd;
+
                 adapter.Fill(ds, "Namestaj"); //ovde se izvrsava query nad bazom
                 foreach (DataRow row in ds.Tables["Namestaj"].Rows)
                 {
                     var namestaj = new Namestaj();
                     namestaj.Id = int.Parse(row["Id"].ToString());
                     namestaj.Naziv = row["Naziv"].ToString();
-                    namestaj.Cena = int.Parse(row["Cena"].ToString());
+                    namestaj.Cena = double.Parse(row["Cena"].ToString());
                     namestaj.Kolicina = int.Parse(row["Kolicina"].ToString());
                     namestaj.TipNamestajaId = int.Parse(row["TipNamestajaId"].ToString());
                     namestaj.AkcijaId = int.Parse(row["AkcijaId"].ToString());

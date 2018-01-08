@@ -36,6 +36,7 @@ namespace POP_SF_11_GUI.UI
             this.namestaj = namestaj;
             this.operacija = operacija;
             cbTipNamestaja.ItemsSource = Projekat.Instance.TipoviNamestaja;
+            cbAkcija.ItemsSource = Projekat.Instance.AkcijskeProdaje;
 
             tbNaziv.DataContext = namestaj;
             tbCena.DataContext = namestaj;

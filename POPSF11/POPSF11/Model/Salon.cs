@@ -80,19 +80,24 @@ namespace POP_SF_11_GUI.Model
         public string AdresaSajta
         {
             get {
-                OnPropertyChanged("Telefon");
+                
                 return adresaSajta; }
-            set { adresaSajta = value; }
+            set {
+                OnPropertyChanged("AdresaSajta");
+                adresaSajta = value; }
         }
 
 
         public int PIB
         {
             get {
-                OnPropertyChanged("PIB");
+               
 
                 return pib; }
-            set { pib = value; }
+            set
+            {
+                OnPropertyChanged("PIB");
+                pib = value; }
         }
 
 
@@ -109,17 +114,21 @@ namespace POP_SF_11_GUI.Model
         public string BrojZiroRacuna
         {
             get {
-                OnPropertyChanged("PIB");
+                
                 return brojZiroRacuna; }
-            set { brojZiroRacuna = value; }
+            set {
+                OnPropertyChanged("BrojZiroRacuna");
+                brojZiroRacuna = value; }
         }
 
         public bool Obrisan
         {
             get {
-                OnPropertyChanged("Obrisan");
+                
                 return obrisan; }
-            set { obrisan = value; }
+            set {
+                OnPropertyChanged("Obrisan");
+                obrisan = value; }
         }
         public static Salon GetById(int id)
         {
@@ -147,7 +156,8 @@ namespace POP_SF_11_GUI.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-#region Database
+
+        #region Database
         public static ObservableCollection<Salon> GetAll()
         {
             var sviSaloni = new ObservableCollection<Salon>();
@@ -189,7 +199,7 @@ namespace POP_SF_11_GUI.Model
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = $"INSERT INTO Saloni (Naziv,Adresa,Telefon,Email,AdresaSajta,PIB,MaticniBroj,BrojZiroRacuna,Obrisan VALUES(@Naziv,@Adresa,@Telefo,@Email,@AdresaSajta,@PIB,@MaticniBroj,@BrojZiroRacuna,@Obrisan)";
+                cmd.CommandText = $"INSERT INTO Saloni (Naziv,Adresa,Telefon,Email,AdresaSajta,PIB,MaticniBroj,BrojZiroRacuna,Obrisan) VALUES(@Naziv,@Adresa,@Telefon,@Email,@AdresaSajta,@PIB,@MaticniBroj,@BrojZiroRacuna,@Obrisan)";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Naziv", salon.Naziv);
@@ -215,7 +225,7 @@ namespace POP_SF_11_GUI.Model
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand();
+                SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 cmd.CommandText = "UPDATE Saloni SET Naziv=@Naziv,Adresa=@Adresa,Telefon=@Telefon,Email=@Email,AdresaSajta=@AdresaSajta,PIB=@PIB,MaticniBroj=@MaticniBroj,BrojZiroRacuna=@BrojZiroRacuna,Obrisan=@Obrisan WHERE Id=@Id;" ;
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";

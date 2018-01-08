@@ -84,13 +84,19 @@ namespace POP_SF_11_GUI.Model
             var tipoviNamestaja = new ObservableCollection<TipNamestaja>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
+
+                
+                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
+
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan = @Obrisan";
                 cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
 
-                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
+                
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
+                adapter.SelectCommand = cmd;
                 adapter.Fill(ds, "TipNamestaja"); //ovde se izvrsava query nad bazom
+
                 foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
                 {
                     var tipNamestaja = new TipNamestaja();
@@ -115,6 +121,7 @@ namespace POP_SF_11_GUI.Model
 
                 cmd.CommandText = $"INSERT INTO TipNamestaja (Naziv,Obrisan) VALUES(@Naziv,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                
 
                 cmd.Parameters.AddWithValue("Naziv", tipNamestaja.Naziv);
                 cmd.Parameters.AddWithValue("Obrisan", tipNamestaja.Obrisan);
@@ -159,9 +166,31 @@ namespace POP_SF_11_GUI.Model
 
         public static void Delete(TipNamestaja tipNamestaja)
         {
-            tipNamestaja.Obrisan = true;
-            Update(tipNamestaja);
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+
+
+                if (tipNamestaja.Id != 0)
+                {
+                    String command1 = @"UPDATE Namestaj SET TipNamestajaId = NULL WHERE TipNamestajaId = @TipNamestajaId;";
+                    String command2 = @"UPDATE TipNamestaja SET Obrisan = 1 WHERE Id=@TipNamestajaId;";
+
+                    con.Open();
+
+                    SqlCommand command = con.CreateCommand();
+                    command.CommandText = command1;
+                    SqlParameter parameter = new SqlParameter("@TipNamestajaId", tipNamestaja.Id);
+                    command.Parameters.Add(parameter);
+                    command.ExecuteNonQuery();
+                    command.Parameters.Clear();
+
+                    command.CommandText = command2;
+                    command.Parameters.Add(parameter);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
+        
 
         #endregion
         
