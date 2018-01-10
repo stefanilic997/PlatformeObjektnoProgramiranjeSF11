@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("db_scripts/bazatest.mdf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("db_scripts/bazatest_log.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("db_scripts/script.sql")]
 
 
