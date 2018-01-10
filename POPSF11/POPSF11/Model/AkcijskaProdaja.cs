@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace POP_SF_11_GUI.Model
 {
     [Serializable]
-    public class AkcijskaProdaja: INotifyPropertyChanged
+    public class AkcijskaProdaja : INotifyPropertyChanged
 
     {
         private int id;
@@ -34,9 +34,11 @@ namespace POP_SF_11_GUI.Model
         public int Popust
         {
             get { return popust; }
-            set {
+            set
+            {
                 OnPropertyChanged("Popust");
-                popust = value; }
+                popust = value;
+            }
         }
 
 
@@ -53,9 +55,11 @@ namespace POP_SF_11_GUI.Model
         public DateTime DatumZavresetka
         {
             get { return datumZavresetka; }
-            set {
+            set
+            {
                 OnPropertyChanged("DatumZavresetka");
-                datumZavresetka = value; }
+                datumZavresetka = value;
+            }
         }
 
 
@@ -72,20 +76,6 @@ namespace POP_SF_11_GUI.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static AkcijskaProdaja GetByIdAkcija(int id)
-        {
-            foreach (var akcijskaProdaja in Projekat.Instance.AkcijskeProdaje)
-            {
-                if (akcijskaProdaja.Id == id)
-                {
-                    return akcijskaProdaja;
-                }
-
-            }
-            return null;
-
-        }
-
         public static AkcijskaProdaja GetById(int id)
         {
             foreach (var akcijskaProdaja in Projekat.Instance.AkcijskeProdaje)
@@ -100,6 +90,7 @@ namespace POP_SF_11_GUI.Model
 
         }
 
+
         public override string ToString()
         {
             return ($"Popust:{Popust}% Pocetak:{DatumPocetka.ToShortDateString()} Kraj:{DatumZavresetka.ToShortDateString()}");
@@ -113,15 +104,15 @@ namespace POP_SF_11_GUI.Model
             }
         }
 
-    #region Database
+        #region Database
         public static ObservableCollection<AkcijskaProdaja> GetAll()
         {
             var sveAkcije = new ObservableCollection<AkcijskaProdaja>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Akcije WHERE Obrisan =@Obrisan";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM Akcije WHERE Obrisan =0";
+
 
                 DataSet ds = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -163,7 +154,7 @@ namespace POP_SF_11_GUI.Model
             return akcijskaProdaja;
         }
 
-        public static void Update (AkcijskaProdaja akcijskaProdaja)
+        public static void Update(AkcijskaProdaja akcijskaProdaja)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -183,7 +174,7 @@ namespace POP_SF_11_GUI.Model
 
                 foreach (var ak in Projekat.Instance.AkcijskeProdaje)
                 {
-                    if(akcijskaProdaja.Id == ak.Id)
+                    if (akcijskaProdaja.Id == ak.Id)
                     {
                         akcijskaProdaja.DatumPocetka = ak.DatumPocetka;
                         akcijskaProdaja.DatumZavresetka = ak.DatumZavresetka;
@@ -196,14 +187,71 @@ namespace POP_SF_11_GUI.Model
                 }
             }
         }
+        public static ObservableCollection<AkcijskaProdaja> Sort(String orderBy, string orderHack)
+        {
+            var sveAkcije = new ObservableCollection<AkcijskaProdaja>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                DataSet ds = new DataSet();
 
-        public static void Delete (AkcijskaProdaja akcijskaProdaja)
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                cmd.CommandText = "SELECT * FROM Akcije WHERE Obrisan=0 ORDER BY " + orderBy + "  " + orderHack;
+
+                adapter.Fill(ds, "Akcije");
+                foreach (DataRow row in ds.Tables["Akcije"].Rows)
+                {
+                    var akcija = new AkcijskaProdaja();
+                    akcija.Id = int.Parse(row["Id"].ToString());
+                    akcija.DatumPocetka = DateTime.Parse(row["DatumPocetka"].ToString());
+                    akcija.DatumZavresetka = DateTime.Parse(row["DatumZavresetka"].ToString());
+                    akcija.Popust = int.Parse(row["Popust"].ToString());
+                    akcija.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sveAkcije.Add(akcija);
+
+                }
+            }
+            return sveAkcije;
+        }
+
+        public static ObservableCollection<AkcijskaProdaja> Pretrazi(String searchBy, string searchQuery)
+        {
+            var sveAkcije = new ObservableCollection<AkcijskaProdaja>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                DataSet ds = new DataSet();
+
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                cmd.CommandText = "SELECT * FROM Akcije WHERE Obrisan=0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+                adapter.Fill(ds, "Akcije");
+                foreach (DataRow row in ds.Tables["Akcije"].Rows)
+                {
+                    var akcija = new AkcijskaProdaja();
+                    akcija.Id = int.Parse(row["Id"].ToString());
+                    akcija.DatumPocetka = DateTime.Parse(row["DatumPocetka"].ToString());
+                    akcija.DatumZavresetka = DateTime.Parse(row["DatumZavresetka"].ToString());
+                    akcija.Popust = int.Parse(row["Popust"].ToString());
+                    akcija.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sveAkcije.Add(akcija);
+
+                }
+            }
+            return sveAkcije;
+        }
+
+        public static void Delete(AkcijskaProdaja akcijskaProdaja)
         {
             akcijskaProdaja.Obrisan = true;
             Update(akcijskaProdaja);
         }
 
-    #endregion
+        #endregion
 
     }
 }

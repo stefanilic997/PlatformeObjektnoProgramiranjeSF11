@@ -1,4 +1,5 @@
-﻿using POP_SF_11_GUI.Model;
+﻿
+using POP_SF_11_GUI.Model;
 using POP_SF_11_GUI.Model.util;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace POP_SF_11_GUI.Model
         public ObservableCollection<DodatnaUsluga> DodatneUsluge;
         public ObservableCollection<Racun> Racuni;
         public ObservableCollection<Salon> Saloni;
+        public ObservableCollection<StavkaProdajeDodatnaUsluga> SPDodatneUsluge;
+        public ObservableCollection<StavkaProdajeNamestaj> SPNamestaj;
 
         private Projekat()
         {
@@ -27,7 +30,9 @@ namespace POP_SF_11_GUI.Model
             Korisnici = Korisnik.GetAll();
             AkcijskeProdaje = AkcijskaProdaja.GetAll();
             DodatneUsluge = DodatnaUsluga.GetAll();
-            Racuni = new ObservableCollection<Racun>(GenericSerializer.Deserialize<Racun>("Racuni.xml"));
+            Racuni = Racun.GetAll();
+            SPDodatneUsluge = StavkaProdajeDodatnaUsluga.GetAll();
+            SPNamestaj = StavkaProdajeNamestaj.GetAll();
             Saloni = Salon.GetAll();
         }
     }

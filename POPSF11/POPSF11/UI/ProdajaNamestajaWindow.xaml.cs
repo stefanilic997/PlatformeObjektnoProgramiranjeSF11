@@ -58,12 +58,12 @@ namespace POP_SF_11_GUI.UI
 
                 case Operacija.DODAVANJE:
                     racun.Id = postojeciRacun.Count + 1;
-                    racun.Kolicina = int.Parse(tbKolicina.Text);
+                    //racun.Kolicina = int.Parse(tbKolicina.Text);
                     racun.Kupac = tbKupac.Text;
                     racun.DatumProdaje = DateTime.Now;
                     racun.BrojRacuna = tbBrojRacuna.Text;
-                    racun.Namestaj = ((Namestaj)cbNamestaj.SelectedItem);
-                    racun.DodatneUsluge = ((DodatnaUsluga)cbDodatneUsluge.SelectedItem);
+                  //  racun.Namestaj = ((Namestaj)cbNamestaj.SelectedItem);
+                   // racun.DodatneUsluge = ((DodatnaUsluga)cbDodatneUsluge.SelectedItem);
                     racun.UkupnaCena = double.Parse(tbUkupnaCena.Text);
 
                     postojeciRacun.Add(racun);
@@ -74,12 +74,12 @@ namespace POP_SF_11_GUI.UI
                         if (n.Id == racun.Id)
                         {
 
-                            n.Kolicina = int.Parse(tbKolicina.Text);
+                        //    n.Kolicina = int.Parse(tbKolicina.Text);
                             n.Kupac = tbKupac.Text;
-                            n.Namestaj = ((Namestaj)cbNamestaj.SelectedItem);
+                         //   n.Namestaj = ((Namestaj)cbNamestaj.SelectedItem);
                             n.BrojRacuna = tbBrojRacuna.Text;
-                            n.DodatneUsluge = ((DodatnaUsluga)cbDodatneUsluge.SelectedItem);
-                            racun.DatumProdaje = n.DatumProdaje;
+                         //   n.DodatneUsluge = ((DodatnaUsluga)cbDodatneUsluge.SelectedItem);
+                         //   racun.DatumProdaje = n.DatumProdaje;
                             racun.UkupnaCena = double.Parse(tbUkupnaCena.Text);
 
 

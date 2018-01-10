@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -50,7 +51,8 @@ namespace POP_SF_11_GUI.Model
         public string Adresa
         {
             get { return adresa; }
-            set {
+            set
+            {
                 OnPropertyChanged("Adresa");
                 adresa = value;
             }
@@ -59,7 +61,8 @@ namespace POP_SF_11_GUI.Model
         public string Telefon
         {
             get { return telefon; }
-            set {
+            set
+            {
                 OnPropertyChanged("Telefon");
 
                 telefon = value;
@@ -70,7 +73,8 @@ namespace POP_SF_11_GUI.Model
         public string Email
         {
             get { return email; }
-            set {
+            set
+            {
                 OnPropertyChanged("Email");
                 email = value;
             }
@@ -79,25 +83,32 @@ namespace POP_SF_11_GUI.Model
 
         public string AdresaSajta
         {
-            get {
-                
-                return adresaSajta; }
-            set {
+            get
+            {
+
+                return adresaSajta;
+            }
+            set
+            {
                 OnPropertyChanged("AdresaSajta");
-                adresaSajta = value; }
+                adresaSajta = value;
+            }
         }
 
 
         public int PIB
         {
-            get {
-               
+            get
+            {
 
-                return pib; }
+
+                return pib;
+            }
             set
             {
                 OnPropertyChanged("PIB");
-                pib = value; }
+                pib = value;
+            }
         }
 
 
@@ -105,30 +116,40 @@ namespace POP_SF_11_GUI.Model
         public int MaticniBroj
         {
             get { return maticniBroj; }
-            set {
+            set
+            {
                 OnPropertyChanged("MaticniBroj");
-                maticniBroj = value; }
+                maticniBroj = value;
+            }
         }
 
 
         public string BrojZiroRacuna
         {
-            get {
-                
-                return brojZiroRacuna; }
-            set {
+            get
+            {
+
+                return brojZiroRacuna;
+            }
+            set
+            {
                 OnPropertyChanged("BrojZiroRacuna");
-                brojZiroRacuna = value; }
+                brojZiroRacuna = value;
+            }
         }
 
         public bool Obrisan
         {
-            get {
-                
-                return obrisan; }
-            set {
+            get
+            {
+
+                return obrisan;
+            }
+            set
+            {
                 OnPropertyChanged("Obrisan");
-                obrisan = value; }
+                obrisan = value;
+            }
         }
         public static Salon GetById(int id)
         {
@@ -165,8 +186,8 @@ namespace POP_SF_11_GUI.Model
 
             {
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Saloni WHERE Obrisan =@Obrisan;";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM Saloni WHERE Obrisan =0";
+
 
                 DataSet ds = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -183,7 +204,7 @@ namespace POP_SF_11_GUI.Model
                     salon.PIB = int.Parse(row["PIB"].ToString());
                     salon.MaticniBroj = int.Parse(row["MaticniBroj"].ToString());
                     salon.BrojZiroRacuna = row["BrojZiroRacuna"].ToString();
-                    salon.Obrisan =bool.Parse(row["Obrisan"].ToString());
+                    salon.Obrisan = bool.Parse(row["Obrisan"].ToString());
                     sviSaloni.Add(salon);
 
                 }
@@ -192,7 +213,7 @@ namespace POP_SF_11_GUI.Model
             return sviSaloni;
         }
 
-        public static Salon Create (Salon salon)
+        public static Salon Create(Salon salon)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -227,7 +248,7 @@ namespace POP_SF_11_GUI.Model
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = "UPDATE Saloni SET Naziv=@Naziv,Adresa=@Adresa,Telefon=@Telefon,Email=@Email,AdresaSajta=@AdresaSajta,PIB=@PIB,MaticniBroj=@MaticniBroj,BrojZiroRacuna=@BrojZiroRacuna,Obrisan=@Obrisan WHERE Id=@Id;" ;
+                cmd.CommandText = "UPDATE Saloni SET Naziv=@Naziv,Adresa=@Adresa,Telefon=@Telefon,Email=@Email,AdresaSajta=@AdresaSajta,PIB=@PIB,MaticniBroj=@MaticniBroj,BrojZiroRacuna=@BrojZiroRacuna,Obrisan=@Obrisan WHERE Id=@Id;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Id", salon.Id);
@@ -263,13 +284,81 @@ namespace POP_SF_11_GUI.Model
             }
         }
 
+        public static ObservableCollection<Salon> Sort(string orderBy, string orderHack)
+        {
+            var sviSaloni = new ObservableCollection<Salon>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+
+            {
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Saloni WHERE Obrisan =0 ORDER BY " + orderBy + " " + orderHack;
+
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "Saloni");
+                foreach (DataRow row in ds.Tables["Saloni"].Rows)
+                {
+                    var salon = new Salon();
+                    salon.Id = int.Parse(row["Id"].ToString());
+                    salon.Naziv = row["Naziv"].ToString();
+                    salon.Adresa = row["Adresa"].ToString();
+                    salon.Telefon = row["Telefon"].ToString();
+                    salon.Email = row["Email"].ToString();
+                    salon.AdresaSajta = row["AdresaSajta"].ToString();
+                    salon.PIB = int.Parse(row["PIB"].ToString());
+                    salon.MaticniBroj = int.Parse(row["MaticniBroj"].ToString());
+                    salon.BrojZiroRacuna = row["BrojZiroRacuna"].ToString();
+                    salon.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sviSaloni.Add(salon);
+
+                }
+
+            }
+            return sviSaloni;
+        }
+
+        public static ObservableCollection<Salon> Pretrazi(string searchBy, string searchQuery)
+        {
+            var sviSaloni = new ObservableCollection<Salon>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+
+            {
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Saloni WHERE Obrisan =0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "Saloni");
+                foreach (DataRow row in ds.Tables["Saloni"].Rows)
+                {
+                    var salon = new Salon();
+                    salon.Id = int.Parse(row["Id"].ToString());
+                    salon.Naziv = row["Naziv"].ToString();
+                    salon.Adresa = row["Adresa"].ToString();
+                    salon.Telefon = row["Telefon"].ToString();
+                    salon.Email = row["Email"].ToString();
+                    salon.AdresaSajta = row["AdresaSajta"].ToString();
+                    salon.PIB = int.Parse(row["PIB"].ToString());
+                    salon.MaticniBroj = int.Parse(row["MaticniBroj"].ToString());
+                    salon.BrojZiroRacuna = row["BrojZiroRacuna"].ToString();
+                    salon.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sviSaloni.Add(salon);
+
+                }
+
+            }
+            return sviSaloni;
+        }
+
         public static void Delete(Salon salon)
         {
             salon.Obrisan = true;
             Update(salon);
         }
-#endregion
+        #endregion
     }
 
-    
+
 }

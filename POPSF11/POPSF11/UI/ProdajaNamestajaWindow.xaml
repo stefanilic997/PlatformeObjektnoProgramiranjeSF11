@@ -5,23 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF_11_GUI.UI"
         mc:Ignorable="d"
-        Title="ProdajaNamestajaWindow" Height="331.154" Width="347.308">
+        Title="ProdajaNamestajaWindow" Height="513.456" Width="1085.502">
     <Grid>
-        <Label x:Name="lblNamestaj" Content="Namestaj" HorizontalAlignment="Left" Margin="28,30,0,0" VerticalAlignment="Top" Width="99"/>
-        <Label x:Name="lblKolicina" Content="Kolicina" HorizontalAlignment="Left" Margin="28,61,0,0" VerticalAlignment="Top" Width="99"/>
-        <Label x:Name="lblKupac" Content="Kupac" HorizontalAlignment="Left" Margin="28,119,0,0" VerticalAlignment="Top" Width="99"/>
-        <Label x:Name="lblDodatneUsluge" Content="Dodatne usluge" HorizontalAlignment="Left" Margin="28,150,0,0" VerticalAlignment="Top" Width="99"/>
-        <Label x:Name="lblUkupnaCena" Content="Ukupna cena" HorizontalAlignment="Left" Margin="28,181,0,0" VerticalAlignment="Top" Width="99"/>
-        <ComboBox x:Name="cbNamestaj" HorizontalAlignment="Left" SelectedItem="{Binding Path=Namestaj}" Margin="151,34,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbKolicina" HorizontalAlignment="Left" Height="23" Margin="151,65,0,0" TextWrapping="Wrap" Text="{Binding Path=Kolicina}" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cbDodatneUsluge" SelectedItem="{Binding Path=DodatneUsluge}" HorizontalAlignment="Left" Margin="151,154,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbKupac" HorizontalAlignment="Left" Height="23" Margin="151,123,0,0" TextWrapping="Wrap" Text="{Binding Path=Kupac}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Potvrdi" HorizontalAlignment="Left" Click="SacuvajRacun" Margin="150,240,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Otkazi" HorizontalAlignment="Left" Click="Izlaz" VerticalAlignment="Top" Width="75" Margin="245,240,0,0"/>
-        <Label x:Name="lblBrojRacuna" Content="Broj racuna" HorizontalAlignment="Left" Margin="28,92,0,0" VerticalAlignment="Top" Width="99"/>
-        <TextBox x:Name="tbBrojRacuna" HorizontalAlignment="Left" Text="{Binding Path=BrojRacuna}"  Height="23" Margin="151,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Name="tbUkupnaCena" Height="23" Margin="151,184,0,0" TextWrapping="Wrap" Text="{Binding Path=UkupnaCena}" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <Button Content="Izracunaj" Name="btnIzracunaj" Click="Izracunaj" HorizontalAlignment="Left" Margin="28,240,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="269*"/>
+            <ColumnDefinition Width="270*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lblKupac" Content="Kupac" HorizontalAlignment="Left" Margin="28,33,0,0" VerticalAlignment="Top" Width="99"/>
+        <Label x:Name="lblUkupnaCena" Content="Ukupna cena" HorizontalAlignment="Left" Margin="295,428,0,0" VerticalAlignment="Top" Width="99"/>
+        <TextBox x:Name="tbKupac" HorizontalAlignment="Left" Height="23" Margin="151,37,0,0" TextWrapping="Wrap" Text="{Binding Path=Kupac}" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Potvrdi" HorizontalAlignment="Left" Click="SacuvajRacun" Margin="132,434,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
+        <Button Content="Otkazi" HorizontalAlignment="Left" Click="Izlaz" VerticalAlignment="Top" Width="76" Margin="226,434,0,0" Grid.Column="1"/>
+        <Label x:Name="lblBrojRacuna" Content="Broj racuna" HorizontalAlignment="Left" Margin="28,6,0,0" VerticalAlignment="Top" Width="99"/>
+        <TextBox x:Name="tbBrojRacuna" HorizontalAlignment="Left" Text="{Binding Path=BrojRacuna}"  Height="23" Margin="151,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Name="tbUkupnaCena" Height="24" Margin="399,430,0,0" TextWrapping="Wrap" Text="{Binding Path=UkupnaCena}" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Button Content="Izracunaj" Name="btnIzracunaj" Click="Izracunaj" HorizontalAlignment="Left" Margin="28,434,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid x:Name="dgNamestajSalon" HorizontalAlignment="Left" Height="284" Margin="26,93,0,0" VerticalAlignment="Top" Width="244"/>
+        <DataGrid x:Name="dgNamestajKorpa" HorizontalAlignment="Left" Height="284" Margin="274,93,0,0" VerticalAlignment="Top" Width="244"/>
+        <DataGrid HorizontalAlignment="Left" Height="284" Margin="18,93,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1"/>
+        <DataGrid HorizontalAlignment="Left" Height="284" Margin="266,93,0,0" VerticalAlignment="Top" Width="242" Grid.Column="1"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="26,382,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="274,382,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="18,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="266,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
+        <Label x:Name="lbNamestajSalon" Content="Namestaj u salonu" HorizontalAlignment="Left" Margin="101,64,0,0" VerticalAlignment="Top" Width="113"/>
+        <Label x:Name="lbKorpa1" Content="Namestaj u korpi" HorizontalAlignment="Left" Margin="353,64,0,0" VerticalAlignment="Top" Width="105"/>
+        <Label x:Name="lbUslugeSalon" Content="Usluge salona" HorizontalAlignment="Left" Margin="95,64,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+        <Label x:Name="lbUslugeKorpa" Content="Izabrane usluge" HorizontalAlignment="Left" Margin="354,64,0,0" VerticalAlignment="Top" Width="104" Grid.Column="1"/>
 
     </Grid>
 </Window>

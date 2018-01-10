@@ -1,4 +1,5 @@
-﻿using POP_SF_11_GUI.Model;
+﻿
+using POP_SF_11_GUI.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,21 +28,64 @@ namespace POP_SF_11_GUI.Model
         private TipNamestaja tipNamestaja;
         private AkcijskaProdaja akcijskaProdaja;
 
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                OnPropertyChanged("Id");
+                id = value;
+            }
+        }
+
+        public string Naziv
+        {
+            get { return naziv; }
+            set
+            {
+                OnPropertyChanged("Naziv");
+                naziv = value;
+            }
+        }
+
+        public double Cena
+        {
+            get { return cena; }
+            set
+            {
+                OnPropertyChanged("Cena");
+                cena = value;
+            }
+        }
+
+        public int Kolicina
+        {
+            get { return kolicina; }
+            set
+            {
+                OnPropertyChanged("Kolicina");
+                kolicina = value;
+            }
+        }
+
         public TipNamestaja TipNamestaja
         {
-            get {
+            get
+            {
                 if (tipNamestaja == null)
                 {
                     tipNamestaja = TipNamestaja.GetById(tipNamestajaId);
                 }
                 return tipNamestaja;
-                }
+            }
 
-            set {
+            set
+            {
                 tipNamestaja = value;
                 TipNamestajaId = tipNamestaja.Id;
                 OnPropertyChanged("TipNamestaja");
-                }
+            }
         }
 
         public AkcijskaProdaja AkcijskaProdaja
@@ -63,39 +107,6 @@ namespace POP_SF_11_GUI.Model
             }
         }
 
-
-        public int Id
-        {
-            get { return id; }
-            set {
-                OnPropertyChanged("Id");
-                id = value; }
-        }
-
-        public string Naziv
-        {
-            get { return naziv; }
-            set {
-                OnPropertyChanged("Naziv");
-                naziv = value; }
-        }
-
-        public double Cena
-        {
-            get { return cena; }
-            set {
-                OnPropertyChanged("Cena");
-                cena = value; }
-        }
-
-        public int Kolicina
-        {
-            get { return kolicina; }
-            set {
-                OnPropertyChanged("Kolicina");
-                kolicina = value; }
-        }
-
         public int TipNamestajaId
         {
             get { return tipNamestajaId; }
@@ -103,14 +114,16 @@ namespace POP_SF_11_GUI.Model
             {
                 OnPropertyChanged("TipNamestajaId");
 
-                tipNamestajaId = value; }
+                tipNamestajaId = value;
+            }
         }
-        
+
 
         public int AkcijaId
         {
             get { return akcijaId; }
-            set {
+            set
+            {
                 OnPropertyChanged("AkcijaId");
 
                 akcijaId = value;
@@ -121,11 +134,13 @@ namespace POP_SF_11_GUI.Model
         public bool Obrisan
         {
             get { return obrisan; }
-            set {
+            set
+            {
                 OnPropertyChanged("Obrisan");
-                obrisan = value; }
+                obrisan = value;
+            }
         }
-        
+
         public static Namestaj GetById(int id)
         {
             foreach (var Namestaj in Projekat.Instance.sviNamestaji)
@@ -161,12 +176,12 @@ namespace POP_SF_11_GUI.Model
                 DataSet ds = new DataSet();//smestanje podataka koje dobijemo
 
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = @Obrisan";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = 0";
+
 
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
-                adapter.SelectCommand = cmd;
+
 
                 adapter.Fill(ds, "Namestaj"); //ovde se izvrsava query nad bazom
                 foreach (DataRow row in ds.Tables["Namestaj"].Rows)
@@ -186,6 +201,7 @@ namespace POP_SF_11_GUI.Model
             return sviNamestaji;
 
         }
+
         public static Namestaj Create(Namestaj namestaj)
         {
 
@@ -248,6 +264,104 @@ namespace POP_SF_11_GUI.Model
 
                 }
             }
+
+        }
+        public static ObservableCollection<Namestaj> Sort(string orderBy, string orderHack)
+        {
+            var sviNamestaji = new ObservableCollection<Namestaj>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                //VEROVATNO NE RADI PRAVILNO SA OVIM
+
+                if (orderBy == "AkcijskaProdaja")
+                {
+                    orderBy = "AkcijaId";
+                }
+                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
+
+                SqlCommand cmd = con.CreateCommand();
+                if (orderBy == "TipNamestaja")
+                {
+
+                    cmd.CommandText = "SELECT n.Id,n.Naziv,n.Cena,n.Kolicina,n.TipNamestajaId,n.AkcijaId,n.Obrisan " +
+                                             " from namestaj n inner join TipNamestaja tn on n.TipNamestajaId = tn.Id" +
+                                                    " where n.obrisan = 0 order by tn.Naziv " + orderHack;
+                }
+                else
+                {
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = 0 ORDER BY " + orderBy + " " + orderHack;
+
+                }
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
+
+
+                adapter.Fill(ds, "Namestaj"); //ovde se izvrsava query nad bazom
+                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                {
+                    var namestaj = new Namestaj();
+                    namestaj.Id = int.Parse(row["Id"].ToString());
+                    namestaj.Naziv = row["Naziv"].ToString();
+                    namestaj.Cena = double.Parse(row["Cena"].ToString());
+                    namestaj.Kolicina = int.Parse(row["Kolicina"].ToString());
+                    namestaj.TipNamestajaId = int.Parse(row["TipNamestajaId"].ToString());
+                    namestaj.AkcijaId = int.Parse(row["AkcijaId"].ToString());
+                    namestaj.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sviNamestaji.Add(namestaj);
+                }
+
+            }
+
+            return sviNamestaji;
+
+        }
+        public static ObservableCollection<Namestaj> Pretrazi(string searchBy, string searchQuery)
+        {
+            var sviNamestaji = new ObservableCollection<Namestaj>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                //VEROVATNO NE RADI PRAVILNO SA OVIM
+
+                if (searchBy == "AkcijskaProdaja")
+                {
+                    searchBy = "AkcijaId";
+                }
+                DataSet ds = new DataSet();//smestanje podataka koje dobijemo
+
+                SqlCommand cmd = con.CreateCommand();
+                if (searchBy == "TipNamestaja")
+                {
+
+                    cmd.CommandText = "SELECT n.Id,n.Naziv,n.Cena,n.Kolicina,n.TipNamestajaId,n.AkcijaId,n.Obrisan " +
+                                             " from namestaj n inner join TipNamestaja tn on n.TipNamestajaId = tn.Id" +
+                                                    " where n.obrisan = 0 AND tn.Naziv LIKE" + " '%" + searchQuery + "%'";
+                }
+                else
+                {
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan = 0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+                }
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
+
+
+                adapter.Fill(ds, "Namestaj"); //ovde se izvrsava query nad bazom
+                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                {
+                    var namestaj = new Namestaj();
+                    namestaj.Id = int.Parse(row["Id"].ToString());
+                    namestaj.Naziv = row["Naziv"].ToString();
+                    namestaj.Cena = double.Parse(row["Cena"].ToString());
+                    namestaj.Kolicina = int.Parse(row["Kolicina"].ToString());
+                    namestaj.TipNamestajaId = int.Parse(row["TipNamestajaId"].ToString());
+                    namestaj.AkcijaId = int.Parse(row["AkcijaId"].ToString());
+                    namestaj.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    sviNamestaji.Add(namestaj);
+                }
+
+            }
+
+            return sviNamestaji;
 
         }
 

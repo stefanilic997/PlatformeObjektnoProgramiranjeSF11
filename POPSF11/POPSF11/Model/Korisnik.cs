@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace POP_SF_11_GUI.Model
     }
     public class Korisnik : INotifyPropertyChanged
     {
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int id;
@@ -35,60 +36,74 @@ namespace POP_SF_11_GUI.Model
         public int Id
         {
             get { return id; }
-            set {
+            set
+            {
                 OnPropertyChanged("Id");
-                id = value; }
+                id = value;
+            }
         }
 
         public string Ime
         {
             get { return ime; }
-            set {
+            set
+            {
                 OnPropertyChanged("Ime");
-                ime = value; }
+                ime = value;
+            }
         }
 
         public string Prezime
         {
             get { return prezime; }
-            set {
+            set
+            {
                 OnPropertyChanged("Prezime");
-                prezime = value; }
+                prezime = value;
+            }
         }
-        
+
 
         public string KorisnickoIme
         {
             get { return korisnickoIme; }
-            set {
+            set
+            {
                 OnPropertyChanged("KorisnickoIme");
-                korisnickoIme = value; }
+                korisnickoIme = value;
+            }
         }
 
         public string Lozinka
         {
             get { return lozinka; }
-            set {
+            set
+            {
                 OnPropertyChanged("Lozinka");
-                lozinka = value; }
+                lozinka = value;
+            }
         }
 
         public TipKorisnika TipKorisnika
         {
             get { return tipKorisnika; }
-            set {
+            set
+            {
                 OnPropertyChanged("TipKorisnika");
-                tipKorisnika = value; }
+                tipKorisnika = value;
+            }
         }
 
 
         public bool Obrisan
         {
             get { return obrisan; }
-            set {
+            set
+            {
                 OnPropertyChanged("Obrisan");
 
-                obrisan = value; }
+                obrisan = value;
+            }
         }
 
 
@@ -107,12 +122,12 @@ namespace POP_SF_11_GUI.Model
         #region Database
         public static ObservableCollection<Korisnik> GetAll()
         {
-            var sviKorisnici =new ObservableCollection<Korisnik>();
+            var sviKorisnici = new ObservableCollection<Korisnik>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan=@Obrisan";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan=0";
+
                 DataSet ds = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(ds, "Korisnici");
@@ -124,8 +139,8 @@ namespace POP_SF_11_GUI.Model
                     korisnik.Prezime = row["Prezime"].ToString();
                     korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
                     korisnik.Lozinka = row["Lozinka"].ToString();
-                    //nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
-                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika),row["TipKorisnika"].ToString());
+                    //RESENO//nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
+                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), row["TipKorisnika"].ToString());
                     korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
                     sviKorisnici.Add(korisnik);
@@ -156,13 +171,13 @@ namespace POP_SF_11_GUI.Model
                 //System.Data.SqlClient.SqlException:
                 //'The INSERT statement conflicted with the CHECK constraint "CK__Korisnici__TipKo__25869641". 
                 //The conflict occurred in database "POP", table "dbo.Korisnici", column 'TipKorisnika'.
-               // The statement has been terminated.'
+                // The statement has been terminated.'
                 korisnik.Id = newId;
             }
             Projekat.Instance.Korisnici.Add(korisnik);
             return korisnik;
         }
-        public static void Update (Korisnik korisnik)
+        public static void Update(Korisnik korisnik)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -184,7 +199,7 @@ namespace POP_SF_11_GUI.Model
 
                 foreach (var k in Projekat.Instance.Korisnici)
                 {
-                    if(korisnik.Id==k.Id)
+                    if (korisnik.Id == k.Id)
                     {
                         korisnik.Ime = k.Ime;
                         korisnik.Prezime = k.Prezime;
@@ -198,6 +213,71 @@ namespace POP_SF_11_GUI.Model
                 }
             }
         }
+        public static ObservableCollection<Korisnik> Sort(string orderBy, string orderHack)
+        {
+            var sviKorisnici = new ObservableCollection<Korisnik>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+
+
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan=0 ORDER BY " + orderBy + " " + orderHack;
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "Korisnici");
+                foreach (DataRow row in ds.Tables["Korisnici"].Rows)
+                {
+                    var korisnik = new Korisnik();
+                    korisnik.Id = int.Parse(row["Id"].ToString());
+                    korisnik.Ime = row["Ime"].ToString();
+                    korisnik.Prezime = row["Prezime"].ToString();
+                    korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    korisnik.Lozinka = row["Lozinka"].ToString();
+                    //RESENO//nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
+                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), row["TipKorisnika"].ToString());
+                    korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    sviKorisnici.Add(korisnik);
+
+                }
+
+            }
+            return sviKorisnici;
+        }
+
+        public static ObservableCollection<Korisnik> Pretrazi(string searchBy, string searchQuery)
+        {
+            var sviKorisnici = new ObservableCollection<Korisnik>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+
+
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Korisnici WHERE Obrisan=0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "Korisnici");
+                foreach (DataRow row in ds.Tables["Korisnici"].Rows)
+                {
+                    var korisnik = new Korisnik();
+                    korisnik.Id = int.Parse(row["Id"].ToString());
+                    korisnik.Ime = row["Ime"].ToString();
+                    korisnik.Prezime = row["Prezime"].ToString();
+                    korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    korisnik.Lozinka = row["Lozinka"].ToString();
+                    //RESENO//nije reseno,u bazi koristi enum kao int,  ima na stackoverflowu
+                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), row["TipKorisnika"].ToString());
+                    korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    sviKorisnici.Add(korisnik);
+
+                }
+
+            }
+            return sviKorisnici;
+        }
 
         public static void Delete(Korisnik korisnik)
         {
@@ -205,7 +285,7 @@ namespace POP_SF_11_GUI.Model
             Update(korisnik);
 
         }
-    #endregion
+        #endregion
     }
 
 }

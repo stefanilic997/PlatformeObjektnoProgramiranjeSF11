@@ -1,4 +1,5 @@
-﻿using POP_SF_11_GUI.Model;
+﻿
+using POP_SF_11_GUI.Model;
 using POP_SF_11_GUI.Model.util;
 using POP_SF_11_GUI.UI;
 using System;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections;
 
 namespace POP_SF_11_GUI
 {
@@ -41,20 +44,19 @@ namespace POP_SF_11_GUI
         }
         public MainWindow()
         {
+
             InitializeComponent();
-            
-            
+
+            cbSortiranje.Items.Clear();
+            cbOrderHack.Items.Add("ASC");
+            cbOrderHack.Items.Add("DESC");
+
+            podaci = Podaci.savNamestaj;
+            dgNamestaj.ItemsSource = Model.Namestaj.GetAll();
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
         }
 
-        
-
-        
-
-        private bool NamestajFilter(object obj)
-        {
-            return ((Namestaj)obj).Obrisan == false;
-        }
 
         private void Izlaz(object sender, RoutedEventArgs e)
         {
@@ -89,7 +91,7 @@ namespace POP_SF_11_GUI
             }
         }
 
-        
+
 
         private void Izmeni(object sender, RoutedEventArgs e)
         {
@@ -120,7 +122,7 @@ namespace POP_SF_11_GUI
             }
         }
 
-       
+
 
         private void Obrisi(object sender, RoutedEventArgs e)
         {
@@ -150,6 +152,182 @@ namespace POP_SF_11_GUI
                     break;
             }
         }
+
+        private void Pretrazi(object sender, RoutedEventArgs e)
+        {
+            switch (podaci)
+            {
+                case Podaci.savNamestaj:
+                    PretraziNamestaj();
+                    break;
+                case Podaci.TipNamestaja:
+                    PretraziTipNamestaja();
+                    break;
+                case Podaci.AkcijskeProdaje:
+                    PretraziAkciju();
+                    break;
+                case Podaci.Korisnici:
+                    PretraziKorisnika();
+                    break;
+                case Podaci.DodatneUsluge:
+                    PretraziDodatnuUslugu();
+                    break;
+                case Podaci.RacunProdaje:
+                    PretraziRacunProdaje();
+                    break;
+                case Podaci.Saloni:
+                    PretraziSalon();
+                    break;
+            }
+        }
+
+        private void Sortiraj(object sender, RoutedEventArgs e)
+        {
+
+            switch (podaci)
+            {
+                case Podaci.savNamestaj:
+                    SortirajNamestaj();
+                    break;
+                case Podaci.TipNamestaja:
+                    SortirajTipNamestaja();
+                    break;
+                case Podaci.AkcijskeProdaje:
+                    SortirajAkciju();
+                    break;
+                case Podaci.Korisnici:
+                    SortirajKorisnika();
+                    break;
+                case Podaci.DodatneUsluge:
+                    SortirajDodatnuUslugu();
+                    break;
+                case Podaci.RacunProdaje:
+                    SortirajRacunProdaje();
+                    break;
+                case Podaci.Saloni:
+                    SortirajSalon();
+                    break;
+            }
+
+        }
+
+        private void SortirajSalon()
+        {
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(Salon.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = Salon.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+
+
+        }
+
+        private void SortirajRacunProdaje()
+        {
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(Racun.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = Racun.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void SortirajDodatnuUslugu()
+        {
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(DodatnaUsluga.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = DodatnaUsluga.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void SortirajKorisnika()
+        {
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(Korisnik.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = Korisnik.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void SortirajAkciju()
+        {
+
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = AkcijskaProdaja.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void SortirajTipNamestaja()
+        {
+
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(TipNamestaja.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = TipNamestaja.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+
+        }
+
+        private void SortirajNamestaj()
+        {
+            string orderHack = cbOrderHack.SelectedValue.ToString();
+            view = CollectionViewSource.GetDefaultView(Model.Namestaj.Sort(cbSortiranje.SelectedItem.ToString(), orderHack));
+            dgNamestaj.ItemsSource = Model.Namestaj.Sort((cbSortiranje.SelectedItem.ToString()), orderHack);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziSalon()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(Salon.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = Salon.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziRacunProdaje()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(Racun.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = Racun.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziDodatnuUslugu()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(DodatnaUsluga.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = DodatnaUsluga.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziKorisnika()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(Korisnik.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = Korisnik.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziAkciju()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = AkcijskaProdaja.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziTipNamestaja()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(TipNamestaja.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = TipNamestaja.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
+        private void PretraziNamestaj()
+        {
+            string searchQuery = tbPretrazi.Text;
+            view = CollectionViewSource.GetDefaultView(Model.Namestaj.Pretrazi(cbSortiranje.SelectedItem.ToString(), searchQuery));
+            dgNamestaj.ItemsSource = Model.Namestaj.Pretrazi((cbSortiranje.SelectedItem.ToString()), searchQuery);
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
+        }
+
         private void DodajSalon()
         {
 
@@ -194,7 +372,7 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
+            //GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
         }
 
         private void DodajDodatnuUslugu()
@@ -224,7 +402,7 @@ namespace POP_SF_11_GUI
                 {
                     if (n.Id == selektovanaUsluga.Id)
                     {
-                        
+
                         n.Obrisan = true;
                         DodatnaUsluga.Delete(n);
                         view.Refresh();
@@ -232,14 +410,13 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
+            //  GenericSerializer.Serialize("DodatneUsluge.xml", Projekat.Instance.DodatneUsluge);
         }
 
         private void DodajRacunProdaje()
         {
             var noviRacun = new Racun()
             {
-                Kolicina = 0,
                 Kupac = "",
                 BrojRacuna = ""
 
@@ -264,14 +441,14 @@ namespace POP_SF_11_GUI
                 {
                     if (n.Id == selektovaniRacun.Id)
                     {
-                        
+
                         n.Obrisan = true;
                         view.Refresh();
                         break;
                     }
                 }
             }
-            GenericSerializer.Serialize("Racuni.xml", Projekat.Instance.Racuni);
+            // GenericSerializer.Serialize("Racuni.xml", Projekat.Instance.Racuni);
         }
 
         private void DodajKorisnika()
@@ -305,7 +482,7 @@ namespace POP_SF_11_GUI
                 {
                     if (n.Id == selektovaniKorisnik.Id)
                     {
-                        
+
                         n.Obrisan = true;
                         Korisnik.Delete(n);
                         view.Refresh();
@@ -313,12 +490,12 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("Korisnici.xml", Projekat.Instance.Korisnici);
+            //GenericSerializer.Serialize("Korisnici.xml", Projekat.Instance.Korisnici);
         }
 
-        
 
-        
+
+
 
         private void DodajNamestaj()
         {
@@ -349,7 +526,7 @@ namespace POP_SF_11_GUI
                 {
                     if (n.Id == selektovaniNamestaj.Id)
                     {
-                        
+
                         n.Obrisan = true;
                         Model.Namestaj.Delete(n);
                         view.Refresh();
@@ -357,7 +534,7 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("namestaj.xml", Projekat.Instance.sviNamestaji);
+            // GenericSerializer.Serialize("namestaj.xml", Projekat.Instance.sviNamestaji);
 
         }
 
@@ -373,7 +550,7 @@ namespace POP_SF_11_GUI
                 Projekat.Instance.TipoviNamestaja.Remove(selektovaniTipNamestaja);
                 view.Refresh();
             }
-           
+
         }
 
 
@@ -406,7 +583,7 @@ namespace POP_SF_11_GUI
                 {
                     if (n.Id == selektovanaAkcija.Id)
                     {
-                        
+
                         n.Obrisan = true;
                         AkcijskaProdaja.Delete(n);
                         view.Refresh();
@@ -414,7 +591,7 @@ namespace POP_SF_11_GUI
                     }
                 }
             }
-            GenericSerializer.Serialize("Akcije.xml", Projekat.Instance.AkcijskeProdaje);
+            //  GenericSerializer.Serialize("Akcije.xml", Projekat.Instance.AkcijskeProdaje);
 
         }
 
@@ -439,47 +616,59 @@ namespace POP_SF_11_GUI
 
         private void dgNamestaj_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id"
+                || (string)e.Column.Header == "AkcijaId" || (string)e.Column.Header == "TipNamestajaId")
             {
                 e.Cancel = true;
+
             }
+            else
+            {
+                foreach (var i in dgNamestaj.Columns.Count.ToString())
+                {
+
+                    cbSortiranje.Items.Add(e.Column.Header);
+                }
+            }
+            cbSortiranje.SelectedIndex = 0;
         }
 
         private void TipoviNamestajaPrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
             view = CollectionViewSource.GetDefaultView(TipNamestaja.GetAll());
-            view.Filter = TipNamestajaFilter;
+
             podaci = Podaci.TipNamestaja;
             dgNamestaj.ItemsSource = TipNamestaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
-            bool TipNamestajaFilter(object obj)
-            {
-                return ((TipNamestaja)obj).Obrisan == false;
-            }
+
 
         }
 
 
         private void AkcijskeProdajePrelaz(object sender, RoutedEventArgs e)
         {
-            
+            cbSortiranje.Items.Clear();
+            view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.GetAll());
+
             podaci = Podaci.AkcijskeProdaje;
+
             dgNamestaj.ItemsSource = AkcijskaProdaja.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            view = CollectionViewSource.GetDefaultView(AkcijskaProdaja.GetAll());
-            view.Filter = AkcijeFilter;
-            bool AkcijeFilter(object obj)
-            {
-                return ((AkcijskaProdaja)obj).Obrisan == false;
-            }
+
+
+
 
         }
 
         private void NamestajPrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
+
             podaci = Podaci.savNamestaj;
-            dgNamestaj.ItemsSource = Model.Namestaj.GetAll() ;
+            dgNamestaj.ItemsSource = Model.Namestaj.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
 
@@ -487,54 +676,86 @@ namespace POP_SF_11_GUI
 
         private void DodatneUslugePrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
+
             podaci = Podaci.DodatneUsluge;
-            dgNamestaj.ItemsSource =DodatnaUsluga.GetAll();
+            dgNamestaj.ItemsSource = DodatnaUsluga.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(DodatnaUsluga.GetAll());
-            view.Filter = uslugeFilter;
-            bool uslugeFilter(object obj)
-            {
-                return ((DodatnaUsluga)obj).Obrisan == false;
-            }
+
+
         }
         private void KorisniciPrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
+
             podaci = Podaci.Korisnici;
             dgNamestaj.ItemsSource = Korisnik.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
 
             view = CollectionViewSource.GetDefaultView(Korisnik.GetAll());
-            view.Filter = KorisniciFilter;
-            bool KorisniciFilter(object obj)
-            {
-                return ((Korisnik)obj).Obrisan == false;
-            }
+
+
         }
         private void RacuniPrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
             podaci = Podaci.RacunProdaje;
             //ZAVRSI RACUN SQL
             dgNamestaj.ItemsSource = Projekat.Instance.Racuni;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
-            view.Filter = RacuniFilter;
-            bool RacuniFilter(object obj)
-            {
-                return ((Racun)obj).Obrisan == false;
-            }
+
+
         }
 
         private void SalonPrelaz(object sender, RoutedEventArgs e)
         {
+            cbSortiranje.Items.Clear();
+
             podaci = Podaci.Saloni;
             dgNamestaj.ItemsSource = Salon.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             view = CollectionViewSource.GetDefaultView(Salon.GetAll());
-            view.Filter = saloniFilter;
-            bool saloniFilter(object obj)
+
+
+        }
+
+        /*
+        private void dgNamestaj_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            // iteratively traverse the visual tree
+            while ((dep != null) &&
+                    !(dep is DataGridCell) &&
+                    !(dep is DataGridColumnHeader))
             {
-                return ((Salon)obj).Obrisan == false;
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+
+            if (dep is DataGridColumnHeader)
+            {
+                DataGridColumnHeader columnHeader = dep as DataGridColumnHeader;
+                // do something
+               MessageBox.Show(columnHeader.Column.Header.ToString());
+                MessageBox.Show(columnHeader.Column.DisplayIndex.ToString());
+                //NE MOZE OVAKO NESTO RADI ALI JE VEROVATNO DEFAULTNO SORTIRANJE
+                //view = CollectionViewSource.GetDefaultView(TipNamestaja.Sort(columnHeader.Column.Header.ToString()));
+                //view.Refresh();
+
+            }
+
+            if (dep is DataGridCell)
+            {
+                DataGridCell cell = dep as DataGridCell;
+                // do something
             }
         }
+        */
+
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace POP_SF_11_GUI.Model
 {
-    public class StavkaProdajeDodatnaUsluga: INotifyPropertyChanged
+    public class StavkaProdajeDodatnaUsluga : INotifyPropertyChanged
     {
         private int id;
         private int racunId;
@@ -85,7 +86,7 @@ namespace POP_SF_11_GUI.Model
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "SELECT * FROM  StavkeProdajeDodatneUsluge ";
 
-                
+
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
                 adapter.Fill(ds, "StavkeProdajeDodatneUsluge");

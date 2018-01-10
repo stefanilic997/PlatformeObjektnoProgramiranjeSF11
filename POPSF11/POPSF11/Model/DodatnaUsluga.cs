@@ -22,9 +22,10 @@ namespace POP_SF_11_GUI.Model
 
         public int Id
         {
-            get {
+            get
+            {
                 return id;
-                }
+            }
             set
             {
 
@@ -36,25 +37,31 @@ namespace POP_SF_11_GUI.Model
         public string Naziv
         {
             get { return naziv; }
-            set {
+            set
+            {
                 OnPropertyChanged("Naziv");
-                naziv = value; }
+                naziv = value;
+            }
         }
 
         public double Cena
         {
             get { return cena; }
-            set {
+            set
+            {
                 OnPropertyChanged("Cena");
-                cena = value; }
+                cena = value;
+            }
         }
 
         public bool Obrisan
         {
             get { return obrisan; }
-            set {
+            set
+            {
                 OnPropertyChanged("Obrisan");
-                obrisan = value; }
+                obrisan = value;
+            }
         }
 
         public static DodatnaUsluga GetById(int id)
@@ -90,8 +97,8 @@ namespace POP_SF_11_GUI.Model
             {
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "SELECT * FROM DodatneUsluge WHERE Obrisan =@Obrisan";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM DodatneUsluge WHERE Obrisan =0";
+
 
                 DataSet ds = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -130,14 +137,14 @@ namespace POP_SF_11_GUI.Model
             Projekat.Instance.DodatneUsluge.Add(usluga);
             return usluga;
         }
-        public static void Update (DodatnaUsluga usluga)
+        public static void Update(DodatnaUsluga usluga)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = "UPDATE DodatneUsluge SET Naziv=@Naziv,Cena=@Cena,Obrisan=@Obrisan;";
+                cmd.CommandText = "UPDATE DodatneUsluge SET Naziv=@Naziv,Cena=@Cena,Obrisan=@Obrisan WHERE Id=@Id;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Id", usluga.Id);
@@ -149,7 +156,7 @@ namespace POP_SF_11_GUI.Model
 
                 foreach (var du in Projekat.Instance.DodatneUsluge)
                 {
-                    if(usluga.Id == du.Id)
+                    if (usluga.Id == du.Id)
                     {
                         usluga.Naziv = du.Naziv;
                         usluga.Cena = du.Cena;
@@ -159,9 +166,64 @@ namespace POP_SF_11_GUI.Model
                     }
                 }
             }
-           
+
 
         }
+
+        public static ObservableCollection<DodatnaUsluga> Sort(string orderBy, string orderHack)
+        {
+            var sveUsluge = new ObservableCollection<DodatnaUsluga>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+
+                cmd.CommandText = "SELECT * FROM DodatneUsluge WHERE Obrisan =0 ORDER BY " + orderBy + " " + orderHack;
+
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "DodatneUsluge");
+                foreach (DataRow row in ds.Tables["DodatneUsluge"].Rows)
+                {
+                    var usluga = new DodatnaUsluga();
+                    usluga.Id = int.Parse(row["Id"].ToString());
+                    usluga.Naziv = row["Naziv"].ToString();
+                    usluga.Cena = int.Parse(row["Cena"].ToString());
+                    usluga.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    sveUsluge.Add(usluga);
+                }
+            }
+            return sveUsluge;
+        }
+
+        public static ObservableCollection<DodatnaUsluga> Pretrazi(string searchBy, string searchQuery)
+        {
+            var sveUsluge = new ObservableCollection<DodatnaUsluga>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+
+                cmd.CommandText = "SELECT * FROM DodatneUsluge WHERE Obrisan =0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds, "DodatneUsluge");
+                foreach (DataRow row in ds.Tables["DodatneUsluge"].Rows)
+                {
+                    var usluga = new DodatnaUsluga();
+                    usluga.Id = int.Parse(row["Id"].ToString());
+                    usluga.Naziv = row["Naziv"].ToString();
+                    usluga.Cena = int.Parse(row["Cena"].ToString());
+                    usluga.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    sveUsluge.Add(usluga);
+                }
+            }
+            return sveUsluge;
+        }
+
         public static void Delete(DodatnaUsluga usluga)
         {
             usluga.Obrisan = true;

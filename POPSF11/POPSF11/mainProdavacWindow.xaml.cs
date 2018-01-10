@@ -48,7 +48,7 @@ namespace POP_SF_11_GUI
         {
             var noviRacun = new Racun()
             {
-                Kolicina = 0,
+                
                 Kupac = "",
                 BrojRacuna = ""
 

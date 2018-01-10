@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace POP_SF_11_GUI.Model
             {
                 OnPropertyChanged("Id");
                 id = value;
-                
+
             }
 
         }
@@ -34,9 +35,11 @@ namespace POP_SF_11_GUI.Model
         public int Kolicina
         {
             get { return kolicina; }
-            set {
+            set
+            {
                 OnPropertyChanged("Kolicina");
-                kolicina = value;  }
+                kolicina = value;
+            }
         }
 
         public int RacunId
@@ -46,7 +49,7 @@ namespace POP_SF_11_GUI.Model
             {
                 OnPropertyChanged("RacunId");
                 racunId = value;
-                
+
             }
 
         }
@@ -58,7 +61,7 @@ namespace POP_SF_11_GUI.Model
             {
                 OnPropertyChanged("NamestajId");
                 namestajId = value;
-               
+
             }
 
         }
@@ -99,7 +102,7 @@ namespace POP_SF_11_GUI.Model
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "SELECT * FROM  StavkeProdajeNamestaja";
 
-                
+
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
                 adapter.Fill(ds, "StavkeProdajeNamestaja");

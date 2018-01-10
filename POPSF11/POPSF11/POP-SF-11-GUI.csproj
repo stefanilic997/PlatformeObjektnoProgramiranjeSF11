@@ -73,6 +73,8 @@
     <Compile Include="mainProdavacWindow.xaml.cs">
       <DependentUpon>mainProdavacWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\StavkaProdajeDodatnaUsluga.cs" />
+    <Compile Include="Model\StavkaProdajeNamestaj.cs" />
     <Compile Include="UI\AkcijskaProdajaUIWindow.xaml.cs">
       <DependentUpon>AkcijskaProdajaUIWindow.xaml</DependentUpon>
     </Compile>

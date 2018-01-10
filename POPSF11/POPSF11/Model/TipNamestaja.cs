@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace POP_SF_11_GUI.Model
 {
     [Serializable]
-    public class TipNamestaja: INotifyPropertyChanged
+    public class TipNamestaja : INotifyPropertyChanged
     {
         private int id;
         private string naziv;
@@ -22,10 +23,11 @@ namespace POP_SF_11_GUI.Model
         public int Id
         {
             get { return id; }
-            set {
+            set
+            {
                 OnPropertyChanged("Id");
                 id = value;
-                }
+            }
 
         }
 
@@ -85,16 +87,16 @@ namespace POP_SF_11_GUI.Model
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
 
-                
+
                 DataSet ds = new DataSet();//smestanje podataka koje dobijemo
 
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan = @Obrisan";
-                cmd.Parameters.Add("@Obrisan", System.Data.SqlDbType.Bit).Value = 0;
+                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan = 0";
 
-                
+
+
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);//podatke smestamo u dataset s njim
-                adapter.SelectCommand = cmd;
+
                 adapter.Fill(ds, "TipNamestaja"); //ovde se izvrsava query nad bazom
 
                 foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
@@ -112,7 +114,7 @@ namespace POP_SF_11_GUI.Model
         }
         public static TipNamestaja Create(TipNamestaja tipNamestaja)
         {
-            
+
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
@@ -121,7 +123,7 @@ namespace POP_SF_11_GUI.Model
 
                 cmd.CommandText = $"INSERT INTO TipNamestaja (Naziv,Obrisan) VALUES(@Naziv,@Obrisan);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                
+
 
                 cmd.Parameters.AddWithValue("Naziv", tipNamestaja.Naziv);
                 cmd.Parameters.AddWithValue("Obrisan", tipNamestaja.Obrisan);
@@ -133,7 +135,7 @@ namespace POP_SF_11_GUI.Model
             return tipNamestaja;
 
         }
-        public static void Update (TipNamestaja tipNamestaja)
+        public static void Update(TipNamestaja tipNamestaja)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -152,7 +154,7 @@ namespace POP_SF_11_GUI.Model
 
                 foreach (var tn in Projekat.Instance.TipoviNamestaja)
                 {
-                    if(tipNamestaja.Id == tn.Id)
+                    if (tipNamestaja.Id == tn.Id)
                     {
                         tipNamestaja.Naziv = tn.Naziv;
                         tipNamestaja.Obrisan = tn.Obrisan;
@@ -161,8 +163,64 @@ namespace POP_SF_11_GUI.Model
 
                 }
             }
-            
+
         }
+        public static ObservableCollection<TipNamestaja> Sort(String orderBy, string orderHack)
+        {
+            var tipoviNamestaja = new ObservableCollection<TipNamestaja>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                DataSet ds = new DataSet();
+
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan=0 ORDER BY " + orderBy + "  " + orderHack;
+
+                adapter.Fill(ds, "TipNamestaja"); //ovde se izvrsava query nad bazom
+
+                foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
+                {
+                    var tipNamestaja = new TipNamestaja();
+                    tipNamestaja.Id = int.Parse(row["Id"].ToString());
+                    tipNamestaja.Naziv = row["Naziv"].ToString();
+                    tipNamestaja.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    tipoviNamestaja.Add(tipNamestaja);
+                }
+
+            }
+            return tipoviNamestaja;
+        }
+
+        public static ObservableCollection<TipNamestaja> Pretrazi(string searchBy, string searchQuery)
+        {
+            var tipoviNamestaja = new ObservableCollection<TipNamestaja>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                DataSet ds = new DataSet();
+
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan=0 AND " + searchBy + " LIKE" + " '%" + searchQuery + "%'";
+
+                adapter.Fill(ds, "TipNamestaja"); //ovde se izvrsava query nad bazom
+
+                foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
+                {
+                    var tipNamestaja = new TipNamestaja();
+                    tipNamestaja.Id = int.Parse(row["Id"].ToString());
+                    tipNamestaja.Naziv = row["Naziv"].ToString();
+                    tipNamestaja.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    tipoviNamestaja.Add(tipNamestaja);
+                }
+
+            }
+            return tipoviNamestaja;
+        }
+
 
         public static void Delete(TipNamestaja tipNamestaja)
         {
@@ -190,10 +248,11 @@ namespace POP_SF_11_GUI.Model
                 }
             }
         }
-        
+
+
 
         #endregion
-        
+
     }
-    
+
 }
