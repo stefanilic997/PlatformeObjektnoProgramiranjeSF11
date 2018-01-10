@@ -169,6 +169,29 @@ namespace POP_SF_11_GUI.Model
 
 
         }
+        public static void Delete(StavkaProdajeNamestaj spNamestaj)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+
+                cmd.CommandText = "DELETE StavkeProdajeNamestaja WHERE Id=@Id";
+                cmd.Parameters.AddWithValue("Id", spNamestaj.Id);
+                cmd.ExecuteNonQuery();
+                foreach (var spdu in Projekat.Instance.SPNamestaj)
+                {
+                    if (spdu.Id == spNamestaj.Id)
+                    {
+                        Projekat.Instance.SPNamestaj.Remove(spdu);
+                        break;
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

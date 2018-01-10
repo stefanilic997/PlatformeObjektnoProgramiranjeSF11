@@ -16,7 +16,7 @@ namespace POP_SF_11_GUI.Model
     public class Racun : INotifyPropertyChanged
     {
 
-        public const double PDV = 0.02;
+        public  double PDV = 0.02;
         private int id;
         private DateTime datumProdaje;
         private string brojRacuna;
