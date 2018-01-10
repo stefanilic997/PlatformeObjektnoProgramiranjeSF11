@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +14,11 @@ namespace POP_SF_11_GUI.Model
         public const double PDV = 0.02;
         private int id;
         private int kolicina;
-        private List<StavkaProdajeNamestaj> listaNamestaja;
+        private Namestaj namestaj;
         private DateTime datumProdaje;
         private string brojRacuna;
         private string kupac;
-        private List<StavkaProdajeDodatnaUsluga> listaDodatnihUsluga;
+        private DodatnaUsluga dodatneUsluge;
         private double ukupnaCena;
         private bool obrisan;
 
@@ -44,6 +40,15 @@ namespace POP_SF_11_GUI.Model
             set {
                 OnPropertyChanged("Kolicina");
                 kolicina = value; }
+        }
+        public Namestaj Namestaj
+        {
+            get { return namestaj; }
+            set
+            {
+                OnPropertyChanged("Namestaj");
+                namestaj = value;
+            }
         }
 
         public DateTime DatumProdaje
@@ -71,18 +76,19 @@ namespace POP_SF_11_GUI.Model
             }
         }
 
-        
-        public List<StavkaProdajeDodatnaUsluga> DodatnaUsluga { get; set; }
-
-        
-        public List<StavkaProdajeNamestaj> ListaNamestaja { get; set; }
-
+        public DodatnaUsluga DodatneUsluge
+        {
+            get { return dodatneUsluge; }
+            set { dodatneUsluge = value;
+                OnPropertyChanged("DodatneUsluge");
+            }
+        }
 
 
         public double UkupnaCena
         {
             get { return ukupnaCena; }
-            set { ukupnaCena = value;
+            set { ukupnaCena = (Namestaj.Cena * kolicina + DodatneUsluge.Cena)+ (Namestaj.Cena * kolicina + DodatneUsluge.Cena)*PDV;
                 OnPropertyChanged("UkupnaCena");
             }
         }
@@ -115,88 +121,6 @@ namespace POP_SF_11_GUI.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        #region Database
-        public static ObservableCollection<Racun> GetAll()
-        {
-            var racun = new ObservableCollection<Racun>();
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
-                SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Racuni WHERE Obrisan = 0";
-
-                DataSet ds = new DataSet();
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                adapter.Fill(ds, "Racuni"); 
-                foreach (DataRow row in ds.Tables["Racuni"].Rows)
-                {
-                    var r = new Racun();
-                    r.Id = int.Parse(row["Id"].ToString());
-                    r.datumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    r.Kupac = row["Kupac"].ToString();
-                    r.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
-
-                    racun.Add(r);
-
-                }
-                return racun;
-            }
-        }
-        public static Racun Create(Racun racun)
-        {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = $"INSERT INTO Racuni (DatumProdaje,Kupac,UkupnaCena) VALUES(@Dp,@Kupac,@UkupnaCena);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("DatumProdaje", racun.DatumProdaje);
-                cmd.Parameters.AddWithValue("Kupac", racun.Kupac);
-                cmd.Parameters.AddWithValue("UkupnaCena", racun.UkupnaCena);
-                int newId = int.Parse(cmd.ExecuteScalar().ToString()); 
-                racun.Id = newId;
-
-
-            }
-            Projekat.Instance.Racuni.Add(racun);
-            return racun;
-        }
-        public static void Update(Racun racun)
-        {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "UPDATE Racuni SET DatumProdaje=@DatumProdaje,Kupac=@Kupac,UkupnaCena=@UkupnaCena";
-                cmd.Parameters.AddWithValue("Id", racun.Id);
-                cmd.Parameters.AddWithValue("Dp", racun.DatumProdaje);
-                cmd.Parameters.AddWithValue("Kupac", racun.Kupac);
-                cmd.Parameters.AddWithValue("UkupnaCena", racun.UkupnaCena);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var izmenjeniRacun in Projekat.Instance.Racuni)
-                {
-                    if (izmenjeniRacun.Id == racun.Id)
-                    {
-                        izmenjeniRacun.DatumProdaje = racun.DatumProdaje;
-                        izmenjeniRacun.Kupac = racun.Kupac;
-                        izmenjeniRacun.UkupnaCena = racun.UkupnaCena;
-                        break;
-                    }
-                }
-            }
-
-
-        }
-        public static void Delete(Racun racun)
-        {
-            racun.Obrisan = true;
-            Update(racun);
-        }
-
-        #endregion
     }
 
 }

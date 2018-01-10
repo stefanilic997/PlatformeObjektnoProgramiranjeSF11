@@ -27,7 +27,43 @@ namespace POP_SF_11_GUI.Model
         private TipNamestaja tipNamestaja;
         private AkcijskaProdaja akcijskaProdaja;
 
-       
+        public TipNamestaja TipNamestaja
+        {
+            get {
+                if (tipNamestaja == null)
+                {
+                    tipNamestaja = TipNamestaja.GetById(tipNamestajaId);
+                }
+                return tipNamestaja;
+                }
+
+            set {
+                tipNamestaja = value;
+                TipNamestajaId = tipNamestaja.Id;
+                OnPropertyChanged("TipNamestaja");
+                }
+        }
+
+        public AkcijskaProdaja AkcijskaProdaja
+        {
+            get
+            {
+                if (akcijskaProdaja == null)
+                {
+                    akcijskaProdaja = AkcijskaProdaja.GetById(akcijaId);
+                }
+                return akcijskaProdaja;
+            }
+
+            set
+            {
+                akcijskaProdaja = value;
+                AkcijaId = akcijskaProdaja.Id;
+                OnPropertyChanged("AkcijskaProdaja");
+            }
+        }
+
+
         public int Id
         {
             get { return id; }
@@ -80,43 +116,7 @@ namespace POP_SF_11_GUI.Model
                 akcijaId = value;
             }
         }
-        public TipNamestaja TipNamestaja
-        {
-            get
-            {
-                if (tipNamestaja == null)
-                {
-                    tipNamestaja = TipNamestaja.GetById(tipNamestajaId);
-                }
-                return tipNamestaja;
-            }
 
-            set
-            {
-                tipNamestaja = value;
-                TipNamestajaId = tipNamestaja.Id;
-                OnPropertyChanged("TipNamestaja");
-            }
-        }
-
-        public AkcijskaProdaja AkcijskaProdaja
-        {
-            get
-            {
-                if (akcijskaProdaja == null)
-                {
-                    akcijskaProdaja = AkcijskaProdaja.GetById(akcijaId);
-                }
-                return akcijskaProdaja;
-            }
-
-            set
-            {
-                akcijskaProdaja = value;
-                AkcijaId = akcijskaProdaja.Id;
-                OnPropertyChanged("AkcijskaProdaja");
-            }
-        }
 
         public bool Obrisan
         {
