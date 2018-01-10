@@ -20,18 +20,20 @@
         <TextBox x:Name="tbBrojRacuna" HorizontalAlignment="Left" Text="{Binding Path=BrojRacuna}"  Height="23" Margin="151,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Name="tbUkupnaCena" Height="24" Margin="399,430,0,0" TextWrapping="Wrap" Text="{Binding Path=UkupnaCena}" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <Button Content="Izracunaj" Name="btnIzracunaj" Click="btnIzracunaj_Click" HorizontalAlignment="Left" Margin="28,434,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
-        <DataGrid x:Name="dgNamestajSalon" CanUserAddRows="False" AutoGeneratingColumn="dgNamestajSalon_AutoGeneratingColumn" HorizontalAlignment="Left" Height="284" Margin="26,93,0,0" VerticalAlignment="Top" Width="244"/>
-        <DataGrid x:Name="dgNamestajKorpa" CanUserAddRows="False" AutoGeneratingColumn="dgNamestajKorpa_AutoGeneratingColumn" HorizontalAlignment="Left" Height="284" Margin="274,93,0,0" VerticalAlignment="Top" Width="244"/>
+        <DataGrid x:Name="dgNamestajSalon" CanUserAddRows="False" AutoGeneratingColumn="dgNamestajSalon_AutoGeneratingColumn" HorizontalAlignment="Left" Height="284" Margin="26,93,0,0" VerticalAlignment="Top" Width="322"/>
+        <DataGrid x:Name="dgNamestajKorpa" CanUserAddRows="False" AutoGeneratingColumn="dgNamestajKorpa_AutoGeneratingColumn" HorizontalAlignment="Left" Height="284" Margin="353,93,0,0" VerticalAlignment="Top" Width="165"/>
         <DataGrid x:Name="dgUslugeSalon" HorizontalAlignment="Left" CanUserAddRows="False" AutoGeneratingColumn="dgUslugeSalon_AutoGeneratingColumn" Height="284" Margin="16,93,0,0" VerticalAlignment="Top" Width="163" Grid.Column="1"/>
         <DataGrid x:Name="dgIzabraneUsluge" HorizontalAlignment="Left" CanUserAddRows="False" AutoGeneratingColumn="dgIzabraneUsluge_AutoGeneratingColumn" Height="284" Margin="184,93,0,0" VerticalAlignment="Top" Width="154" Grid.Column="1"/>
-        <Button x:Name="btnDodajNamestaj" Content="Dodaj" Click="btnDodajNamestaj_Click" HorizontalAlignment="Left" Margin="26,382,0,0" VerticalAlignment="Top" Width="76" Height="20"/>
-        <Button x:Name="btnIzbaciNamestaj" Content="Izbaci" Click="btnIzbaciNamestaj_Click" HorizontalAlignment="Left" Margin="274,382,0,0" VerticalAlignment="Top" Width="76" Height="20"/>
-        <Button x:Name="btnDodajUslugu" Content="Dodaj" Click="btnDodajUslugu_Click" HorizontalAlignment="Left" Margin="16,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="20"/>
-        <Button x:Name="btnIzbaciUslugu" Content="Izbaci" Click="btnIzbaciUslugu_Click" HorizontalAlignment="Left" Margin="184,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="20"/>
-        <Label x:Name="lbNamestajSalon" Content="Namestaj u salonu" HorizontalAlignment="Left" Margin="101,64,0,0" VerticalAlignment="Top" Width="113" Height="26"/>
+        <Button x:Name="btnDodajNamestaj" Content="Dodaj" Click="btnDodajNamestaj_Click" HorizontalAlignment="Left" Margin="26,382,0,0" VerticalAlignment="Top" Width="76" Height="29"/>
+        <Button x:Name="btnIzbaciNamestaj" Content="Izbaci" Click="btnIzbaciNamestaj_Click" HorizontalAlignment="Left" Margin="353,382,0,0" VerticalAlignment="Top" Width="76" Height="29"/>
+        <Button x:Name="btnDodajUslugu" Content="Dodaj" Click="btnDodajUslugu_Click" HorizontalAlignment="Left" Margin="16,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="29"/>
+        <Button x:Name="btnIzbaciUslugu" Content="Izbaci" Click="btnIzbaciUslugu_Click" HorizontalAlignment="Left" Margin="184,382,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="29"/>
+        <Label x:Name="lbNamestajSalon" Content="Namestaj u salonu" HorizontalAlignment="Left" Margin="136,62,0,0" VerticalAlignment="Top" Width="113" Height="26"/>
         <Label x:Name="lbKorpa1" Content="Namestaj u korpi" HorizontalAlignment="Left" Margin="353,64,0,0" VerticalAlignment="Top" Width="105" Height="26"/>
         <Label x:Name="lbUslugeSalon" Content="Usluge salona" HorizontalAlignment="Left" Margin="16,62,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1" Height="26"/>
         <Label x:Name="lbUslugeKorpa" Content="Izabrane usluge" HorizontalAlignment="Left" Margin="184,62,0,0" VerticalAlignment="Top" Width="104" Grid.Column="1" Height="26"/>
+        <TextBox x:Name="tbKolicina" HorizontalAlignment="Left" Height="29" Margin="123,382,0,0" TextWrapping="Wrap" Text="Kolicina" VerticalAlignment="Top" Width="61"/>
+        <Button x:Name="btnRefresh" Content="Svemoguce dugme" HorizontalAlignment="Left" Margin="353,10,0,0" VerticalAlignment="Top" Width="161" Click="btnRefresh_Click"/>
 
     </Grid>
 </Window>

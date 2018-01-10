@@ -15,6 +15,8 @@ namespace POP_SF_11_GUI.Model
     public class StavkaProdajeDodatnaUsluga : INotifyPropertyChanged
     {
         private int id;
+        private string naziv;
+
         private int racunId;
         private int dodatnaUslugaId;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,6 +32,18 @@ namespace POP_SF_11_GUI.Model
             }
 
         }
+
+
+        public string Naziv
+        {
+            get { return naziv; }
+            set
+            {
+                OnPropertyChanged("Naziv");
+                naziv = value;
+            }
+        }
+
 
         public int RacunId
         {
@@ -94,6 +108,38 @@ namespace POP_SF_11_GUI.Model
                 {
                     var s = new StavkaProdajeDodatnaUsluga();
                     s.Id = int.Parse(row["Id"].ToString());
+                    s.Naziv = row["Naziv"].ToString();
+                    s.RacunId = int.Parse(row["RacunId"].ToString());
+                    s.DodatnaUslugaId = int.Parse(row["DodatnaUslugaId"].ToString());
+
+
+                    stavkeProdajeDodatneUsluge.Add(s);
+
+                }
+                return stavkeProdajeDodatneUsluge;
+            }
+        }
+
+        public static ObservableCollection<StavkaProdajeDodatnaUsluga> GetAllbyRacunId(int Racun)
+        {
+            var stavkeProdajeDodatneUsluge = new ObservableCollection<StavkaProdajeDodatnaUsluga>();
+
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                DataSet ds = new DataSet();
+
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM  StavkeProdajeDodatneUsluge WHERE RacunId= " + Racun;
+
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                adapter.Fill(ds, "StavkeProdajeDodatneUsluge");
+                foreach (DataRow row in ds.Tables["StavkeProdajeDodatneUsluge"].Rows)
+                {
+                    var s = new StavkaProdajeDodatnaUsluga();
+                    s.Id = int.Parse(row["Id"].ToString());
+                    s.Naziv = row["Naziv"].ToString();
                     s.RacunId = int.Parse(row["RacunId"].ToString());
                     s.DodatnaUslugaId = int.Parse(row["DodatnaUslugaId"].ToString());
 
@@ -113,8 +159,9 @@ namespace POP_SF_11_GUI.Model
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
-                cmd.CommandText = $"INSERT INTO  StavkeProdajeDodatneUsluge (RacunId,DodatnaUslugaId) VALUES(@RacunId,@DodatnaUslugaId);";
+                cmd.CommandText = $"INSERT INTO  StavkeProdajeDodatneUsluge (Naziv,RacunId,DodatnaUslugaId) VALUES(@Naziv,@RacunId,@DodatnaUslugaId);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                cmd.Parameters.AddWithValue("Naziv", s.Naziv);
                 cmd.Parameters.AddWithValue("RacunId", s.RacunId);
                 cmd.Parameters.AddWithValue("DodatnaUslugaId", s.DodatnaUslugaId);
 
@@ -132,7 +179,8 @@ namespace POP_SF_11_GUI.Model
             {
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "UPDATE  StavkeProdajeDodatneUsluge SET RacunId=@RacunId,DodatnaUslugaId=@DodatnaUslugaId WHERE Id=@Id";
+                cmd.CommandText = "UPDATE  StavkeProdajeDodatneUsluge SET Naziv=@Naziv,RacunId=@RacunId,DodatnaUslugaId=@DodatnaUslugaId WHERE Id=@Id";
+                cmd.Parameters.AddWithValue("Naziv", s.Naziv);
                 cmd.Parameters.AddWithValue("Id", s.Id);
                 cmd.Parameters.AddWithValue("DodatnaUslugaId", s.DodatnaUslugaId);
                 cmd.Parameters.AddWithValue("RacunId", s.RacunId);
@@ -143,6 +191,7 @@ namespace POP_SF_11_GUI.Model
                 {
                     if (stavkaProdajeDodatnaUsluga.Id == s.Id)
                     {
+                        stavkaProdajeDodatnaUsluga.Naziv = s.Naziv;
                         stavkaProdajeDodatnaUsluga.RacunId = s.RacunId;
                         stavkaProdajeDodatnaUsluga.DodatnaUslugaId = s.DodatnaUslugaId;
 
@@ -164,7 +213,7 @@ namespace POP_SF_11_GUI.Model
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
 
-                cmd.CommandText = "Delete StavkeProdajeOddatneUsluge where Id=@Id";
+                cmd.CommandText = "Delete StavkeProdajeDodatneUsluge WHERE Id=@Id";
                 cmd.Parameters.AddWithValue("Id", spDodatnaUsluga.Id);
                 cmd.ExecuteNonQuery();
                 foreach (var spdu in Projekat.Instance.SPDodatneUsluge)

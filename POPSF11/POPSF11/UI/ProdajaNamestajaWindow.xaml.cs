@@ -50,7 +50,7 @@ namespace POP_SF_11_GUI.UI
                 if (racun.Id == spDodatnaUsluga.RacunId)
                     korpaDodatneUsluge.Add(spDodatnaUsluga);
             }
-
+            
             tbKupac.DataContext = racun;
             tbBrojRacuna.DataContext = racun;
             tbUkupnaCena.DataContext = racun;
@@ -60,6 +60,7 @@ namespace POP_SF_11_GUI.UI
                 case Operacija.DODAVANJE:
 
                     viewNamestaj = CollectionViewSource.GetDefaultView(korpaNamestaj);
+                    viewDodatneUsluge = CollectionViewSource.GetDefaultView(korpaDodatneUsluge);
                     // viewNamestaj.Filter = namestajFilter;
                     dgNamestajKorpa.ItemsSource = viewNamestaj;
                     dgNamestajKorpa.IsSynchronizedWithCurrentItem = true;
@@ -81,6 +82,8 @@ namespace POP_SF_11_GUI.UI
                 case Operacija.IZMENA:
 
                     viewNamestaj = CollectionViewSource.GetDefaultView(korpaNamestaj);
+                    viewDodatneUsluge = CollectionViewSource.GetDefaultView(korpaDodatneUsluge);
+
                     // viewNamestaj.Filter = namestajFilter;
                     dgNamestajKorpa.ItemsSource = viewNamestaj;
                     dgNamestajKorpa.IsSynchronizedWithCurrentItem = true;
@@ -106,14 +109,14 @@ namespace POP_SF_11_GUI.UI
 
         private void Izlaz(object sender, RoutedEventArgs e)
         {
-            foreach (var spNamestaj in Projekat.Instance.SPNamestaj)
+            foreach (var spNamestaj in korpaNamestaj)
             {
                 if(spNamestaj.RacunId == racun.Id)
                 {
                     StavkaProdajeNamestaj.Delete(spNamestaj);
                 }
             }
-            foreach (var spDodatnaUsluga in Projekat.Instance.SPDodatneUsluge)
+            foreach (var spDodatnaUsluga in korpaDodatneUsluge)
             {
                 if (spDodatnaUsluga.RacunId == racun.Id)
                 {
@@ -124,7 +127,7 @@ namespace POP_SF_11_GUI.UI
         }
         private void SacuvajRacun(object sender, RoutedEventArgs e)
         {
-            var postojeciRacun = Projekat.Instance.Racuni;
+            var postojeciRacun = Racun.GetAll();
             switch (operacija)
             {
 
@@ -135,9 +138,10 @@ namespace POP_SF_11_GUI.UI
                     racun.BrojRacuna = tbBrojRacuna.Text;
 
                     IzracunajCenu();
-                    racun.UkupnaCena = IzracunajCenu() * (1+racun.PDV);
-                    Racun.Create(racun);
+                    racun.UkupnaCena = double.Parse(tbUkupnaCena.Text);
                     postojeciRacun.Add(racun);
+                    Racun.Create(racun);
+                    
 
                     break;
                 case Operacija.IZMENA:
@@ -150,10 +154,11 @@ namespace POP_SF_11_GUI.UI
                             
 
                             IzracunajCenu();
-                            n.UkupnaCena = IzracunajCenu() * (1 + racun.PDV); 
-
+                            n.UkupnaCena = double.Parse(tbUkupnaCena.Text);
+                            Racun.Update(n);
                         }
                     }
+                    
                     break;
                     
             }
@@ -163,39 +168,34 @@ namespace POP_SF_11_GUI.UI
 
         private double IzracunajCenu()
         {
-            foreach (var stavkaNamestaj in Projekat.Instance.SPNamestaj)
+            racun.UkupnaCena = 0;
+            foreach (var stavkaNamestaj in korpaNamestaj)
             {
-                if (racun.Id == stavkaNamestaj.RacunId)
+                Namestaj namestajRef = Namestaj.GetById(stavkaNamestaj.NamestajId);
+                double cenaNamestaja = namestajRef.Cena * stavkaNamestaj.Kolicina;
+                if (namestajRef.AkcijskaProdaja == null)
                 {
-                    Namestaj noviNamestaj = Namestaj.GetById(stavkaNamestaj.NamestajId);
-                    for (int i = 1; i < stavkaNamestaj.Kolicina; i++)
-                    {
-                        if (noviNamestaj.AkcijskaProdaja == null)
-                        {
-                            racun.UkupnaCena += noviNamestaj.Cena;
-                        }
-                        else
-                        {
-                            racun.UkupnaCena += noviNamestaj.Cena - (noviNamestaj.Cena * (1 + noviNamestaj.AkcijskaProdaja.Popust));
+                    continue;
+                }
+                else
+                {
+                    racun.UkupnaCena += namestajRef.Cena * (1 + namestajRef.AkcijskaProdaja.Popust / 100);
+                }
 
-                        }
-                    }
-                }
+                racun.UkupnaCena += cenaNamestaja;
             }
-            foreach (var stavkaDodatnaUsluga in Projekat.Instance.SPDodatneUsluge)
+            foreach (var stavkaDodatnaUsluga in korpaDodatneUsluge)
             {
-                if (racun.Id == stavkaDodatnaUsluga.RacunId)
-                {
-                    DodatnaUsluga novaDU = DodatnaUsluga.GetById(stavkaDodatnaUsluga.DodatnaUslugaId);
-                    racun.UkupnaCena += novaDU.Cena;
-                }
+                DodatnaUsluga DUref = DodatnaUsluga.GetById(stavkaDodatnaUsluga.DodatnaUslugaId);
+                racun.UkupnaCena += DUref.Cena;
             }
+            racun.UkupnaCena = racun.UkupnaCena * (1 + racun.PDV);
             return racun.UkupnaCena;
         }
 
         private void dgNamestajSalon_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id" || (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "AkcijskaProdaja" || (string)e.Column.Header == "AkcijaId")
             {
                 e.Cancel = true;
 
@@ -229,16 +229,27 @@ namespace POP_SF_11_GUI.UI
 
         private void btnDodajNamestaj_Click(object sender, RoutedEventArgs e)
         {
-            var namestaj = new Namestaj();
-           // NamestajStavkaProdajeWindow nspw = new NamestajStavkaProdajeWindow(NamestajStavkaProdajeWindow.Operacija.DODAVANJE,namestaj);
+            var izabraniNamestaj = (Namestaj)dgNamestajSalon.SelectedItem;
+            var stavkaNamestaj = new StavkaProdajeNamestaj()
+            {
+                Id = Projekat.Instance.SPNamestaj.Count() + 1,
+                Naziv = izabraniNamestaj.Naziv,
+                RacunId = racun.Id,
+                NamestajId = izabraniNamestaj.Id,
+                Kolicina = int.Parse(tbKolicina.Text)
+            };
+            StavkaProdajeNamestaj.Create(stavkaNamestaj);
+            korpaNamestaj.Add(stavkaNamestaj);
+            dgNamestajKorpaRefresh();
+            
         }
 
         private void btnIzbaciNamestaj_Click(object sender, RoutedEventArgs e)
         {
             var SPNamestaj = (StavkaProdajeNamestaj)dgNamestajKorpa.SelectedItem;
-            if (MessageBox.Show($"Da li ste sigurni da zelite da izbacite izabrani namestaj iz korpe: {Namestaj.GetById(SPNamestaj.NamestajId).Naziv}?", "Poruka o brisanju ", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Da li ste sigurni da zelite da izbacite izabrani namestaj iz korpe: {SPNamestaj.Naziv}?", "Poruka o brisanju ", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                foreach (var n in Projekat.Instance.SPNamestaj)
+                foreach (var n in korpaNamestaj)
                 {
                     if (n.Id == SPNamestaj.Id)
                     {
@@ -250,8 +261,18 @@ namespace POP_SF_11_GUI.UI
 
         private void btnDodajUslugu_Click(object sender, RoutedEventArgs e)
         {
-            var dodatnaUsluga = new DodatnaUsluga();
-            //DodatnaUslugaStavkaProdajeWindow duspw = new DodatnaUslugaStavkaProdajeWindow(DodatnaUslugaStavkaProdajeWindow.Operacija.Dodavanje, dodatnaUsluga);
+            var izabranaUsluga = (DodatnaUsluga)dgUslugeSalon.SelectedItem;
+            var stavkaDodatnaUsluga = new StavkaProdajeDodatnaUsluga
+            {
+                Id = Projekat.Instance.SPDodatneUsluge.Count() + 1,
+                Naziv = izabranaUsluga.Naziv,
+                DodatnaUslugaId = izabranaUsluga.Id,
+                RacunId = racun.Id
+            };
+            StavkaProdajeDodatnaUsluga.Create(stavkaDodatnaUsluga);
+            korpaDodatneUsluge.Add(stavkaDodatnaUsluga);
+            dgIzabraneUslugeRefresh();
+            
         }
 
         private void btnIzbaciUslugu_Click(object sender, RoutedEventArgs e)
@@ -259,7 +280,7 @@ namespace POP_SF_11_GUI.UI
             var SPDUsluga = (StavkaProdajeDodatnaUsluga)dgIzabraneUsluge.SelectedItem;
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbacite ovu uslugu: {DodatnaUsluga.GetById(SPDUsluga.DodatnaUslugaId).Naziv}?", "Poruka o brisanju ", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                foreach (var du in Projekat.Instance.SPDodatneUsluge)
+                foreach (var du in korpaDodatneUsluge)
                 {
                     if (du.Id == SPDUsluga.Id)
                     {
@@ -271,8 +292,25 @@ namespace POP_SF_11_GUI.UI
 
         private void btnIzracunaj_Click(object sender, RoutedEventArgs e)
         {
+            IzracunajCenu();
+        }
+        private void dgNamestajKorpaRefresh()
+        {
+            viewNamestaj = CollectionViewSource.GetDefaultView(StavkaProdajeNamestaj.GetAllbyRacunId(racun.Id));
+            dgNamestajKorpa.IsSynchronizedWithCurrentItem = true;
+            dgNamestajKorpa.ItemsSource = StavkaProdajeNamestaj.GetAllbyRacunId(racun.Id);
+        }
+        private void dgIzabraneUslugeRefresh()
+        {
+            viewDodatneUsluge = CollectionViewSource.GetDefaultView(StavkaProdajeDodatnaUsluga.GetAllbyRacunId(racun.Id));
+            dgIzabraneUsluge.ItemsSource = StavkaProdajeDodatnaUsluga.GetAllbyRacunId(racun.Id);
+            dgIzabraneUsluge.IsSynchronizedWithCurrentItem = true;
+        }
 
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            dgNamestajKorpaRefresh();
+            dgIzabraneUslugeRefresh();
         }
     }
 }
-

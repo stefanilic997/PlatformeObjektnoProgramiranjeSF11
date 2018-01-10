@@ -15,6 +15,8 @@ namespace POP_SF_11_GUI.Model
     public class StavkaProdajeNamestaj : INotifyPropertyChanged
     {
         private int id;
+        private string naziv;
+
         private int kolicina;
         private int racunId;
         private int namestajId;
@@ -30,6 +32,16 @@ namespace POP_SF_11_GUI.Model
 
             }
 
+        }
+
+        public string Naziv
+        {
+            get { return naziv; }
+            set
+            {
+                OnPropertyChanged("Naziv");
+                naziv = value;
+            }
         }
 
         public int Kolicina
@@ -110,6 +122,7 @@ namespace POP_SF_11_GUI.Model
                 {
                     var s = new StavkaProdajeNamestaj();
                     s.Id = int.Parse(row["Id"].ToString());
+                    s.Naziv = row["Naziv"].ToString();
                     s.RacunId = int.Parse(row["RacunId"].ToString());
                     s.NamestajId = int.Parse(row["NamestajId"].ToString());
                     s.Kolicina = int.Parse(row["Kolicina"].ToString());
@@ -120,6 +133,38 @@ namespace POP_SF_11_GUI.Model
                 return StavkeProdajeNamestaja;
             }
         }
+
+        public static ObservableCollection<StavkaProdajeNamestaj> GetAllbyRacunId(int Racun)
+        {
+            var StavkeProdajeNamestaja = new ObservableCollection<StavkaProdajeNamestaj>();
+
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                DataSet ds = new DataSet();
+
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM  StavkeProdajeNamestaja WHERE RacunId= " + Racun;
+
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                adapter.Fill(ds, "StavkeProdajeNamestaja");
+                foreach (DataRow row in ds.Tables["StavkeProdajeNamestaja"].Rows)
+                {
+                    var s = new StavkaProdajeNamestaj();
+                    s.Id = int.Parse(row["Id"].ToString());
+                    s.Naziv = row["Naziv"].ToString();
+                    s.RacunId = int.Parse(row["RacunId"].ToString());
+                    s.NamestajId = int.Parse(row["NamestajId"].ToString());
+                    s.Kolicina = int.Parse(row["Kolicina"].ToString());
+
+                    StavkeProdajeNamestaja.Add(s);
+
+                }
+                return StavkeProdajeNamestaja;
+            }
+        }
+
         public static StavkaProdajeNamestaj Create(StavkaProdajeNamestaj s)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -127,9 +172,10 @@ namespace POP_SF_11_GUI.Model
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                cmd.CommandText = $"INSERT INTO  StavkeProdajeNamestaja (RacunId,NamestajId,Kolicina) VALUES(@RacunId,@NamestajId,@Kolicina);";
+                cmd.CommandText = $"INSERT INTO  StavkeProdajeNamestaja (Naziv,RacunId,NamestajId,Kolicina) VALUES(@Naziv,@RacunId,@NamestajId,@Kolicina);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
 
+                cmd.Parameters.AddWithValue("Naziv", s.Naziv);
                 cmd.Parameters.AddWithValue("RacunId", s.RacunId);
                 cmd.Parameters.AddWithValue("NamestajId", s.NamestajId);
                 cmd.Parameters.AddWithValue("Kolicina", s.Kolicina);
@@ -148,8 +194,9 @@ namespace POP_SF_11_GUI.Model
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
-                cmd.CommandText = "UPDATE StavkeProdajeNamestaja SET RacunId=@RacunId,NamestajId=@NamestajId,Kolicina=@Kolicina WHERE Id=@Id";
+                cmd.CommandText = "UPDATE StavkeProdajeNamestaja SET Naziv=@Naziv,RacunId=@RacunId,NamestajId=@NamestajId,Kolicina=@Kolicina WHERE Id=@Id";
                 cmd.Parameters.AddWithValue("Id", s.Id);
+                cmd.Parameters.AddWithValue("Naziv", s.Naziv);
                 cmd.Parameters.AddWithValue("NamestajId", s.NamestajId);
                 cmd.Parameters.AddWithValue("RacunId", s.RacunId);
                 cmd.Parameters.AddWithValue("Kolicina", s.Kolicina);
@@ -159,6 +206,7 @@ namespace POP_SF_11_GUI.Model
                 {
                     if (spn.Id == s.Id)
                     {
+                        spn.Naziv = s.Naziv;
                         spn.RacunId = s.RacunId;
                         spn.NamestajId = s.NamestajId;
                         spn.Kolicina = s.Kolicina;

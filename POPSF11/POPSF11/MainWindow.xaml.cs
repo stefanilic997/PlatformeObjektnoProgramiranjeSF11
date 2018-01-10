@@ -417,6 +417,7 @@ namespace POP_SF_11_GUI
         {
             var noviRacun = new Racun()
             {
+                Id = Projekat.Instance.Racuni.Count + 1,
                 Kupac = "",
                 BrojRacuna = ""
 
