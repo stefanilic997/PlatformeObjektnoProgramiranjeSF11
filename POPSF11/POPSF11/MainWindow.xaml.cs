@@ -438,12 +438,13 @@ namespace POP_SF_11_GUI
 
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniRacun.BrojRacuna}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (var n in Projekat.Instance.Korisnici)
+                foreach (var n in Projekat.Instance.Racuni)
                 {
                     if (n.Id == selektovaniRacun.Id)
                     {
 
                         n.Obrisan = true;
+                        Racun.Delete(n);
                         view.Refresh();
                         break;
                     }
@@ -703,9 +704,9 @@ namespace POP_SF_11_GUI
             cbSortiranje.Items.Clear();
             podaci = Podaci.RacunProdaje;
             //ZAVRSI RACUN SQL
-            dgNamestaj.ItemsSource = Projekat.Instance.Racuni;
+            dgNamestaj.ItemsSource = Racun.GetAll();
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
+            view = CollectionViewSource.GetDefaultView(Racun.GetAll());
 
 
         }

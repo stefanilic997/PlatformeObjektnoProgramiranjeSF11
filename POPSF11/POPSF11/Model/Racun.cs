@@ -177,7 +177,9 @@ namespace POP_SF_11_GUI.Model
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
-                cmd.CommandText = "UPDATE Racuni SET DatumProdaje=@DatumProdaje,Kupac=@Kupac,BrojRacuna=@BrojRacuna,UkupnaCena=@UkupnaCena,Obrisan=@Obrisan";
+                cmd.CommandText = "UPDATE Racuni SET DatumProdaje=@DatumProdaje,Kupac=@Kupac,BrojRacuna=@BrojRacuna,UkupnaCena=@UkupnaCena,Obrisan=@Obrisan WHERE Id=@Id ";
+                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+
                 cmd.Parameters.AddWithValue("Id", racun.Id);
                 cmd.Parameters.AddWithValue("DatumProdaje", racun.DatumProdaje);
                 cmd.Parameters.AddWithValue("Kupac", racun.Kupac);
@@ -213,10 +215,12 @@ namespace POP_SF_11_GUI.Model
                 DataSet ds = new DataSet();
 
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Racuni WHERE Obrisan = 0";
-
-
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                cmd.CommandText = "SELECT * FROM Racuni WHERE Obrisan = 0 ORDER BY " + orderBy + " " + orderHack ;
+
+
+                
 
                 adapter.Fill(ds, "Racuni");
                 foreach (DataRow row in ds.Tables["Racuni"].Rows)
@@ -233,8 +237,9 @@ namespace POP_SF_11_GUI.Model
                     racuni.Add(r);
 
                 }
-                return racuni;
+                
             }
+            return racuni;
         }
 
         public static ObservableCollection<Racun> Pretrazi(string searchBy, string searchQuery)

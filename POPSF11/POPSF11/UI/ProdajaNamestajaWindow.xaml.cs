@@ -151,7 +151,7 @@ namespace POP_SF_11_GUI.UI
                         {
                             n.Kupac = tbKupac.Text;
                             n.BrojRacuna = tbBrojRacuna.Text;
-                            
+                            n.DatumProdaje = DateTime.Now;
 
                             IzracunajCenu();
                             n.UkupnaCena = double.Parse(tbUkupnaCena.Text);

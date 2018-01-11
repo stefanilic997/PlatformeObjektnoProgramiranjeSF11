@@ -52,3 +52,4 @@ C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\mainProdavacWindow.baml
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\SalonWindow.g.cs
 C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\UI\SalonWindow.baml
+C:\Users\IlaGila\Desktop\POP2017-18\POP-SF-11\PlatformeObjektnoProgramiranjeSF11\POPSF11\POPSF11\obj\Debug\POP-SF-11-GUI_Content.g.cs

@@ -36,7 +36,6 @@ namespace POP_SF_11_GUI.UI
 
             this.akcijskaProdaja = akcijskaProdaja;
             this.operacija = operacija;
-
             tbPopust.DataContext = akcijskaProdaja;
             datumPocetka.SelectedDate = akcijskaProdaja.DatumPocetka;
             datumZavrsetka.SelectedDate = akcijskaProdaja.DatumZavresetka;
@@ -49,35 +48,68 @@ namespace POP_SF_11_GUI.UI
         }
         private void SacuvajAkcijskuProdaju(object sender, RoutedEventArgs e)
         {
+            DateTime datumP = datumPocetka.SelectedDate.Value.Date;
+            DateTime datumZ = datumZavrsetka.SelectedDate.Value.Date;
             var postojeceAkcije = Projekat.Instance.AkcijskeProdaje;
-            switch (operacija)
+            int compare = DateTime.Compare(datumP, datumZ);
+            if (akcijskaProdaja.Popust > 0 || akcijskaProdaja.Popust < 96)
             {
 
-                case Operacija.DODAVANJE:
-                    akcijskaProdaja.Id = postojeceAkcije.Count + 1;
-                    akcijskaProdaja.Popust = int.Parse(tbPopust.Text);
-                    akcijskaProdaja.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
-                    akcijskaProdaja.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
-                    postojeceAkcije.Add(akcijskaProdaja);
-                    AkcijskaProdaja.Create(akcijskaProdaja);
-                    break;
-                case Operacija.IZMENA:
-                    foreach (var n in postojeceAkcije)
-                    {
-                        if (n.Id == akcijskaProdaja.Id)
+
+                switch (operacija)
+                {
+
+                    case Operacija.DODAVANJE:
+
+                        if (compare <= 0)
                         {
 
-                            n.Popust = int.Parse(tbPopust.Text);
-                            n.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
-                            n.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
 
-                            AkcijskaProdaja.Update(n);
+                            akcijskaProdaja.Id = postojeceAkcije.Count + 1;
+                            akcijskaProdaja.Popust = int.Parse(tbPopust.Text);
+                            akcijskaProdaja.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
+                            akcijskaProdaja.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
+                            postojeceAkcije.Add(akcijskaProdaja);
+                            AkcijskaProdaja.Create(akcijskaProdaja);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Datum zavrsetka mora da bude kasnije od datuma pocetka akcije", "Pogresan datum", MessageBoxButton.OK);
+                        }
+                        break;
+                    case Operacija.IZMENA:
+                        if (compare <= 0)
+                        {
+
+
+                            foreach (var n in postojeceAkcije)
+                            {
+                                if (n.Id == akcijskaProdaja.Id)
+                                {
+
+                                    n.Popust = int.Parse(tbPopust.Text);
+                                    n.DatumPocetka = (DateTime)datumPocetka.SelectedDate;
+                                    n.DatumZavresetka = (DateTime)datumZavrsetka.SelectedDate;
+
+                                    AkcijskaProdaja.Update(n);
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Datum zavrsetka mora da bude kasnije od datuma pocetka akcije", "Pogresan datum", MessageBoxButton.OK);
 
                         }
-                    }
-                    break;
+                        break;
+                }
             }
-           // GenericSerializer.Serialize("Akcije.xml", postojeceAkcije);
+            else
+            {
+                MessageBox.Show("Akcija ne moze biti manja od 0 ili veca od 95%","Neispravan Popust", MessageBoxButton.OK);
+
+            }
+            // GenericSerializer.Serialize("Akcije.xml", postojeceAkcije);
             this.Close();
         }
     }

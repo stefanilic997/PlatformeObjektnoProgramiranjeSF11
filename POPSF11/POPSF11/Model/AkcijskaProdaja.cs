@@ -90,6 +90,17 @@ namespace POP_SF_11_GUI.Model
 
         }
 
+        public static void AkcijeClean()
+        {
+            foreach (AkcijskaProdaja akcija in Projekat.Instance.AkcijskeProdaje)
+            {
+                if (akcija.DatumZavresetka < DateTime.Now)
+                {
+
+                    AkcijskaProdaja.Delete(akcija);
+                }
+            }
+        }
 
         public override string ToString()
         {
