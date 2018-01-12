@@ -28,15 +28,10 @@ namespace POP_SF_11_GUI
         public mainProdavacWindow()
         {
             InitializeComponent();
-            view = CollectionViewSource.GetDefaultView(Projekat.Instance.Racuni);
+            view = CollectionViewSource.GetDefaultView(Racun.GetAll());
             dgRacuni.ItemsSource = view;
-            view.Filter = RacuniFilter;
             dgRacuni.IsSynchronizedWithCurrentItem = true;
             dgRacuni.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
-        }
-        private bool RacuniFilter(object obj)
-        {
-            return ((Racun)obj).Obrisan == false;
         }
 
         private void Izlaz(object sender, RoutedEventArgs e)
@@ -48,7 +43,7 @@ namespace POP_SF_11_GUI
         {
             var noviRacun = new Racun()
             {
-                
+                Id = Projekat.Instance.Racuni.Count + 1,
                 Kupac = "",
                 BrojRacuna = ""
 
@@ -69,18 +64,19 @@ namespace POP_SF_11_GUI
 
             if (MessageBox.Show($"Da li ste sigurni da zelite da izbrisete: {selektovaniRacun.BrojRacuna}?", "Brisanje", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (var n in Projekat.Instance.Korisnici)
+                foreach (var n in Projekat.Instance.Racuni)
                 {
                     if (n.Id == selektovaniRacun.Id)
                     {
 
                         n.Obrisan = true;
+                        Racun.Delete(n);
                         view.Refresh();
                         break;
                     }
                 }
             }
-            GenericSerializer.Serialize("Racuni.xml", Projekat.Instance.Racuni);
+          //  GenericSerializer.Serialize("Racuni.xml", Projekat.Instance.Racuni);
         }
         private void dgRacuni_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
